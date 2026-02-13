@@ -1,0 +1,482 @@
+{% assign source_collection = section.settings.collection %}
+
+<section
+  id="shopify-section-{{ section.id }}"
+  class="vb-bundle-upsell"
+  style="
+    --vb-bg: {{ section.settings.bg_color }};
+    --vb-text: {{ section.settings.text_color }};
+    --vb-accent: {{ section.settings.accent_color }};
+    --vb-border: {{ section.settings.border_color }};
+    --vb-card: {{ section.settings.card_color }};
+  "
+>
+  <div class="page-width">
+    <header class="vb-bundle-upsell__head">
+      {% if section.settings.heading != blank %}
+        <h2>{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.subheading != blank %}
+        <p>{{ section.settings.subheading }}</p>
+      {% endif %}
+    </header>
+
+    {% if section.settings.show_collection_preview and source_collection != blank and source_collection.products_count > 0 %}
+      <div class="vb-bundle-upsell__products" role="list">
+        {% for product in source_collection.products limit: section.settings.preview_limit %}
+          <article class="vb-bundle-product" role="listitem">
+            <a href="{{ product.url }}" class="vb-bundle-product__media">
+              {% if product.featured_image %}
+                {{
+                  product.featured_image
+                  | image_url: width: 600
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '160,240,320,420,600',
+                    sizes: '(max-width: 749px) 40vw, 180px',
+                    alt: product.featured_image.alt
+                }}
+              {% else %}
+                {{ 'product-1' | placeholder_svg_tag: 'vb-placeholder' }}
+              {% endif %}
+            </a>
+            <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
+          </article>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="vb-bundle-upsell__tiers">
+      {% for block in section.blocks %}
+        <article
+          class="vb-bundle-tier{% if block.settings.is_popular %} is-popular{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          {% if block.settings.badge != blank %}
+            <span class="vb-bundle-tier__badge">{{ block.settings.badge }}</span>
+          {% elsif block.settings.is_popular %}
+            <span class="vb-bundle-tier__badge">{{ section.settings.popular_badge }}</span>
+          {% endif %}
+
+          {% if block.settings.title != blank %}
+            <h3>{{ block.settings.title }}</h3>
+          {% endif %}
+          {% if block.settings.subtitle != blank %}
+            <p class="vb-bundle-tier__subtitle">{{ block.settings.subtitle }}</p>
+          {% endif %}
+
+          <div class="vb-bundle-tier__price">
+            {% if block.settings.price_text != blank %}
+              <strong>{{ block.settings.price_text }}</strong>
+            {% endif %}
+            {% if block.settings.savings_text != blank %}
+              <span>{{ block.settings.savings_text }}</span>
+            {% endif %}
+          </div>
+
+          <div class="vb-bundle-tier__mix">
+            {% if block.settings.mix_note != blank %}
+              <p>{{ block.settings.mix_note }}</p>
+            {% endif %}
+
+            <div class="vb-bundle-tier__items">
+              {% if block.settings.product_1 != blank %}
+                <span>{{ block.settings.product_1.title }}</span>
+              {% endif %}
+              {% if block.settings.product_2 != blank %}
+                <span>{{ block.settings.product_2.title }}</span>
+              {% endif %}
+              {% if block.settings.product_3 != blank %}
+                <span>{{ block.settings.product_3.title }}</span>
+              {% endif %}
+              {% if block.settings.product_1 == blank and block.settings.product_2 == blank and block.settings.product_3 == blank and source_collection != blank and source_collection.products_count > 0 %}
+                {% for product in source_collection.products limit: 3 %}
+                  <span>{{ product.title }}</span>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+
+          {% if block.settings.cta_label != blank and block.settings.cta_link != blank %}
+            <a href="{{ block.settings.cta_link }}" class="vb-bundle-tier__cta">
+              {{ block.settings.cta_label }}
+            </a>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  #shopify-section-{{ section.id }}.vb-bundle-upsell {
+    background: var(--vb-bg);
+    color: var(--vb-text);
+    padding: 2.3rem 0;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-upsell__head {
+    text-align: center;
+    max-width: 64ch;
+    margin: 0 auto 1.1rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-upsell__head h2 {
+    margin: 0;
+    font-size: clamp(1.35rem, 4.2vw, 2rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-upsell__head p {
+    margin: 0.55rem 0 0;
+    color: #4c5b4f;
+    line-height: 1.55;
+    font-size: 0.96rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-upsell__products {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(44%, 1fr);
+    gap: 0.65rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    margin-bottom: 1rem;
+    scrollbar-width: none;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-upsell__products::-webkit-scrollbar {
+    display: none;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-product {
+    border: 1px solid var(--vb-border);
+    border-radius: 0.75rem;
+    background: #fff;
+    padding: 0.55rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-product__media img,
+  #shopify-section-{{ section.id }} .vb-bundle-product__media svg {
+    width: 100%;
+    display: block;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-product h3 {
+    margin: 0.45rem 0 0;
+    font-size: 0.82rem;
+    line-height: 1.35;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-product h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-upsell__tiers {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-tier {
+    position: relative;
+    border: 1px solid var(--vb-border);
+    border-radius: 1rem;
+    background: var(--vb-card);
+    padding: 0.95rem;
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-tier.is-popular {
+    border-color: color-mix(in srgb, var(--vb-accent) 62%, #9bbda4);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--vb-accent) 35%, transparent);
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-tier__badge {
+    justify-self: start;
+    background: #f3f8f4;
+    color: #275036;
+    border: 1px solid #d6e4d8;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    line-height: 1.2;
+    padding: 0.25rem 0.55rem;
+    font-weight: 600;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-tier h3 {
+    margin: 0;
+    font-size: 1.03rem;
+    line-height: 1.3;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-tier__subtitle {
+    margin: 0;
+    font-size: 0.88rem;
+    color: #4a5a4d;
+    line-height: 1.45;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-tier__price {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-tier__price strong {
+    font-size: 1.12rem;
+    line-height: 1.25;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-tier__price span {
+    font-size: 0.8rem;
+    color: color-mix(in srgb, var(--vb-accent) 80%, #48634f);
+    font-weight: 600;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-tier__mix p {
+    margin: 0;
+    font-size: 0.82rem;
+    color: #4c5c4f;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-tier__items {
+    margin-top: 0.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-tier__items span {
+    border: 1px solid #dde8df;
+    border-radius: 999px;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.74rem;
+    line-height: 1.2;
+    background: #ffffff;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-tier__cta {
+    margin-top: 0.2rem;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    background: var(--vb-accent);
+    color: #0f2113;
+    border: 1px solid var(--vb-accent);
+    border-radius: 999px;
+    padding: 0.7rem 1rem;
+    font-size: 0.86rem;
+    font-weight: 600;
+    transition: 0.2s ease;
+  }
+
+  #shopify-section-{{ section.id }} .vb-bundle-tier__cta:hover {
+    filter: brightness(0.96);
+    transform: translateY(-1px);
+  }
+
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .vb-bundle-upsell__products {
+      grid-auto-flow: unset;
+      grid-auto-columns: unset;
+      grid-template-columns: repeat({{ section.settings.preview_limit }}, minmax(0, 1fr));
+      overflow: visible;
+    }
+
+    #shopify-section-{{ section.id }} .vb-bundle-upsell__tiers {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Bundle upsell",
+  "tag": "section",
+  "class": "section section-bundle-upsell",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Ahorra mas con bundles"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Combina lineas y mejora tu ticket con descuentos por cantidad."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Source collection"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_preview",
+      "label": "Show collection product preview",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "preview_limit",
+      "label": "Preview product count",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "popular_badge",
+      "label": "Default popular badge",
+      "default": "Most popular"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#1f2a1f"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "CTA color",
+      "default": "#9bbfa4"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e2ebe4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tier",
+      "name": "Bundle tier",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "is_popular",
+          "label": "Highlight as most popular",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge text (optional)",
+          "default": "Bundle"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Buy 2 and save"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Ideal for starting your routine."
+        },
+        {
+          "type": "text",
+          "id": "price_text",
+          "label": "Price text",
+          "default": "$X total"
+        },
+        {
+          "type": "text",
+          "id": "savings_text",
+          "label": "Savings text",
+          "default": "Save 10%"
+        },
+        {
+          "type": "text",
+          "id": "mix_note",
+          "label": "Mix note",
+          "default": "Mix Belleza, Sport and Vitalidad."
+        },
+        {
+          "type": "product",
+          "id": "product_1",
+          "label": "Product 1 (optional)"
+        },
+        {
+          "type": "product",
+          "id": "product_2",
+          "label": "Product 2 (optional)"
+        },
+        {
+          "type": "product",
+          "id": "product_3",
+          "label": "Product 3 (optional)"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "CTA label",
+          "default": "Choose bundle"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "CTA link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Bundle upsell",
+      "blocks": [
+        {
+          "type": "tier",
+          "settings": {
+            "title": "Buy 2 and save",
+            "savings_text": "Save 10%"
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "is_popular": true,
+            "title": "Buy 3 and save more",
+            "badge": "Most popular",
+            "savings_text": "Save 15%"
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "title": "Mix lines bundle",
+            "savings_text": "Build your custom mix"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

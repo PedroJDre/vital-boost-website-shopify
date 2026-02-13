@@ -1,0 +1,367 @@
+{% assign chosen_collection = section.settings.collection %}
+
+<section id="shopify-section-{{ section.id }}" class="vb-featured-products">
+  <div class="page-width">
+    <header class="vb-featured-products__head">
+      {% if section.settings.heading != blank %}
+        <h2>{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.subheading != blank %}
+        <p>{{ section.settings.subheading }}</p>
+      {% endif %}
+    </header>
+
+    <div class="vb-featured-products__grid">
+      {% if chosen_collection != blank and chosen_collection.products_count > 0 %}
+        {% for product in chosen_collection.products limit: 3 %}
+          {% assign meta_block = section.blocks[forloop.index0] %}
+          <article class="vb-product-card">
+            {% if meta_block != blank and meta_block.settings.badge != blank %}
+              <span class="vb-product-card__badge" {{ meta_block.shopify_attributes }}>
+                {{ meta_block.settings.badge }}
+              </span>
+            {% endif %}
+
+            <a class="vb-product-card__image" href="{{ product.url }}">
+              {% if product.featured_image %}
+                {{
+                  product.featured_image
+                  | image_url: width: 1000
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '320,520,760,1000',
+                    sizes: '(max-width: 989px) 92vw, 30vw',
+                    alt: product.featured_image.alt
+                }}
+              {% else %}
+                {{ 'product-1' | placeholder_svg_tag: 'vb-placeholder' }}
+              {% endif %}
+            </a>
+
+            <div class="vb-product-card__body">
+              <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
+
+              {% if meta_block != blank %}
+                <ul class="vb-product-card__benefits">
+                  {% if meta_block.settings.benefit_1 != blank %}
+                    <li>{{ meta_block.settings.benefit_1 }}</li>
+                  {% endif %}
+                  {% if meta_block.settings.benefit_2 != blank %}
+                    <li>{{ meta_block.settings.benefit_2 }}</li>
+                  {% endif %}
+                  {% if meta_block.settings.benefit_3 != blank %}
+                    <li>{{ meta_block.settings.benefit_3 }}</li>
+                  {% endif %}
+                </ul>
+              {% endif %}
+
+              <div class="vb-product-card__footer">
+                <p class="vb-product-card__price">
+                  {% if product.compare_at_price > product.price %}
+                    <s>{{ product.compare_at_price | money }}</s>
+                  {% endif %}
+                  <strong>{{ product.price | money }}</strong>
+                </p>
+
+                <a href="{{ product.url }}" class="vb-product-card__cta">
+                  {% if meta_block != blank and meta_block.settings.button_label != blank %}
+                    {{ meta_block.settings.button_label }}
+                  {% else %}
+                    {{ section.settings.default_button_label }}
+                  {% endif %}
+                </a>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      {% else %}
+        {% for i in (1..3) %}
+          <article class="vb-product-card">
+            <div class="vb-product-card__image">{{ 'product-' | append: i | placeholder_svg_tag: 'vb-placeholder' }}</div>
+            <div class="vb-product-card__body">
+              <h3>Producto destacado {{ i }}</h3>
+              <ul class="vb-product-card__benefits">
+                <li>Selecciona una coleccion</li>
+                <li>Agrega hasta 3 bloques</li>
+                <li>Edita badge y beneficios</li>
+              </ul>
+              <div class="vb-product-card__footer">
+                <p class="vb-product-card__price"><strong>{{ 0 | money }}</strong></p>
+                <span class="vb-product-card__cta">{{ section.settings.default_button_label }}</span>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  #shopify-section-{{ section.id }}.vb-featured-products {
+    background: #ffffff;
+    color: #1f2a1f;
+    padding: 2.5rem 0;
+  }
+
+  #shopify-section-{{ section.id }} .vb-featured-products__head {
+    text-align: center;
+    max-width: 64ch;
+    margin: 0 auto 1.5rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-featured-products__head h2 {
+    margin: 0;
+    font-size: clamp(1.35rem, 4.2vw, 2rem);
+    letter-spacing: -0.01em;
+  }
+
+  #shopify-section-{{ section.id }} .vb-featured-products__head p {
+    margin: 0.5rem 0 0;
+    color: #4a5a4d;
+  }
+
+  #shopify-section-{{ section.id }} .vb-featured-products__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-card {
+    position: relative;
+    background: #ffffff;
+    border: 1px solid #e2ebe4;
+    border-radius: 1rem;
+    padding: 0.875rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100%;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-card__badge {
+    position: absolute;
+    top: 0.72rem;
+    left: 0.72rem;
+    z-index: 2;
+    background: #ffffff;
+    color: #1f2a1f;
+    border: 1px solid #dbe4de;
+    border-left: 3px solid #9bbfa4;
+    border-radius: 999px;
+    padding: 0.26rem 0.56rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-card__image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.8rem;
+    background: #ffffff;
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-card__image img,
+  #shopify-section-{{ section.id }} .vb-product-card__image svg {
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-card__body {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-card h3 {
+    margin: 0;
+    font-size: 1.03rem;
+    line-height: 1.35;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-card h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-card__benefits {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-card__benefits li {
+    position: relative;
+    padding-left: 0.95rem;
+    font-size: 0.85rem;
+    line-height: 1.45;
+    color: #445547;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-card__benefits li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.45rem;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 999px;
+    background: #9bbfa4;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-card__footer {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 0.2rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-card__price {
+    margin: 0;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-card__price s {
+    color: #809184;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-card__price strong {
+    font-size: 1.05rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-card__cta {
+    text-decoration: none;
+    text-align: center;
+    background: #9bbfa4;
+    color: #102114;
+    border: 1px solid #9bbfa4;
+    border-radius: 1rem;
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 650;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-card__cta:hover {
+    filter: brightness(0.96);
+    transform: translateY(-1px);
+  }
+
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .vb-featured-products__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    #shopify-section-{{ section.id }} .vb-product-card {
+      padding: 0.875rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "tag": "section",
+  "class": "section section-featured-products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Productos destacados"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Tres opciones premium para tu rutina VitalBoost."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "default_button_label",
+      "label": "Default button label",
+      "default": "Comprar"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_meta",
+      "name": "Product meta",
+      "settings": [
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge text",
+          "default": "Top venta"
+        },
+        {
+          "type": "text",
+          "id": "benefit_1",
+          "label": "Benefit 1",
+          "default": "Soporte diario"
+        },
+        {
+          "type": "text",
+          "id": "benefit_2",
+          "label": "Benefit 2",
+          "default": "Formula premium"
+        },
+        {
+          "type": "text",
+          "id": "benefit_3",
+          "label": "Benefit 3",
+          "default": "Facil de incorporar"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Comprar"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Featured Products",
+      "blocks": [
+        {
+          "type": "product_meta",
+          "settings": {
+            "badge": "Top venta"
+          }
+        },
+        {
+          "type": "product_meta",
+          "settings": {
+            "badge": "Nuevo"
+          }
+        },
+        {
+          "type": "product_meta",
+          "settings": {
+            "badge": "Comunidad"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,404 @@
+{% liquid
+  assign featured_product = section.settings.featured_product
+  assign featured_collection = section.settings.featured_collection
+  assign hero_image = blank
+  assign product_url = blank
+  assign product_title = blank
+
+  if featured_product != blank
+    assign hero_image = featured_product.featured_image
+    assign product_url = featured_product.url
+    assign product_title = featured_product.title
+  elsif featured_collection != blank and featured_collection.products_count > 0
+    assign first_product = featured_collection.products.first
+    if first_product != blank
+      assign hero_image = first_product.featured_image
+      assign product_url = first_product.url
+      assign product_title = first_product.title
+    endif
+  endif
+%}
+
+<section id="shopify-section-{{ section.id }}" class="vb-hero-home">
+  <div class="page-width">
+    <div class="vb-hero-home__grid">
+      <div class="vb-hero-home__content">
+        {% if section.settings.heading != blank %}
+          <h1 class="vb-hero-home__title">{{ section.settings.heading }}</h1>
+        {% endif %}
+
+        {% if section.settings.subheading != blank %}
+          <div class="vb-hero-home__subtitle rte">{{ section.settings.subheading }}</div>
+        {% endif %}
+
+        <ul class="vb-hero-home__benefits" aria-label="{{ section.settings.benefits_aria_label | escape }}">
+          {% if section.settings.benefit_1 != blank %}
+            <li>{{ section.settings.benefit_1 }}</li>
+          {% endif %}
+          {% if section.settings.benefit_2 != blank %}
+            <li>{{ section.settings.benefit_2 }}</li>
+          {% endif %}
+          {% if section.settings.benefit_3 != blank %}
+            <li>{{ section.settings.benefit_3 }}</li>
+          {% endif %}
+        </ul>
+
+        <div class="vb-hero-home__actions">
+          {% if section.settings.primary_label != blank and section.settings.primary_link != blank %}
+            <a href="{{ section.settings.primary_link }}" class="vb-hero-home__btn vb-hero-home__btn--primary">
+              {{ section.settings.primary_label }}
+            </a>
+          {% endif %}
+          {% if section.settings.secondary_label != blank and section.settings.secondary_link != blank %}
+            <a href="{{ section.settings.secondary_link }}" class="vb-hero-home__btn vb-hero-home__btn--secondary">
+              {{ section.settings.secondary_label }}
+            </a>
+          {% endif %}
+        </div>
+
+        {% if section.settings.trust_micro_text != blank %}
+          <p class="vb-hero-home__trust">{{ section.settings.trust_micro_text }}</p>
+        {% endif %}
+
+        {% if section.settings.show_review_badge %}
+          <div class="vb-hero-home__review-badge" aria-label="{{ section.settings.review_badge_aria | escape }}">
+            {% if section.settings.review_badge_rating != blank %}
+              <strong>{{ section.settings.review_badge_rating }}</strong>
+            {% endif %}
+            {% if section.settings.review_badge_text != blank %}
+              <span>{{ section.settings.review_badge_text }}</span>
+            {% endif %}
+            {% if section.settings.review_badge_count != blank %}
+              <small>{{ section.settings.review_badge_count }}</small>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="vb-hero-home__visual">
+        {% if product_url != blank %}
+          <a href="{{ product_url }}" class="vb-hero-home__image-wrap" aria-label="{{ product_title | escape }}">
+        {% else %}
+          <div class="vb-hero-home__image-wrap">
+        {% endif %}
+            {% if hero_image != blank %}
+              {{
+                hero_image
+                | image_url: width: 1600
+                | image_tag:
+                  loading: 'eager',
+                  widths: '480, 700, 980, 1280, 1600',
+                  class: 'vb-hero-home__image',
+                  alt: hero_image.alt
+              }}
+            {% else %}
+              {{ 'product-1' | placeholder_svg_tag: 'vb-hero-home__image vb-placeholder' }}
+            {% endif %}
+        {% if product_url != blank %}
+          </a>
+        {% else %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #shopify-section-{{ section.id }}.vb-hero-home {
+    background: #ffffff;
+    color: #1f2a1f;
+    padding: 1.25rem 0 2rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    align-items: center;
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__title {
+    margin: 0;
+    font-size: clamp(2.1rem, 7.2vw, 3.45rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__subtitle {
+    margin-top: 1rem;
+    max-width: 58ch;
+    font-size: 1rem;
+    line-height: 1.58;
+    color: #2f3a31;
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__benefits {
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__benefits li {
+    position: relative;
+    padding-left: 1.2rem;
+    font-size: 0.94rem;
+    line-height: 1.45;
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__benefits li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.45rem;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 999px;
+    background: #9bbfa4;
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__actions {
+    margin-top: 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    border-radius: 1rem;
+    padding: 0.875rem 1.375rem;
+    font-size: 0.95rem;
+    font-weight: 650;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__btn--primary {
+    background: #9bbfa4;
+    color: #0b1c10;
+    border: 1px solid #9bbfa4;
+    box-shadow: 0 1px 0 rgba(16, 33, 20, 0.06);
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__btn--primary:hover {
+    filter: brightness(0.95);
+    transform: translateY(-1px);
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__btn--secondary {
+    background: #ffffff;
+    color: #1f2a1f;
+    border: 1px solid #d5ddd7;
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__btn--secondary:hover {
+    background: #f6f7f6;
+    border-color: #bcc8c0;
+    transform: translateY(-1px);
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__trust {
+    margin: 0.75rem 0 0;
+    font-size: 0.82rem;
+    line-height: 1.35;
+    color: #465548;
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__review-badge {
+    margin-top: 0.75rem;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    background: #ffffff;
+    border: 1px solid #e1e9e3;
+    border-radius: 0.75rem;
+    padding: 0.4rem 0.55rem;
+    color: #1f2a1f;
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__review-badge strong {
+    font-size: 0.84rem;
+    line-height: 1;
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__review-badge span {
+    font-size: 0.78rem;
+    color: #2f3a31;
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__review-badge small {
+    font-size: 0.74rem;
+    color: #536254;
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__visual {
+    order: 2;
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__image-wrap {
+    display: block;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 1px solid #e6eee7;
+    background: #ffffff;
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__image {
+    width: 100%;
+    display: block;
+    aspect-ratio: 1.18 / 1;
+    object-fit: cover;
+  }
+
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }}.vb-hero-home {
+      padding: 2.5rem 0 3.5rem;
+    }
+
+    #shopify-section-{{ section.id }} .vb-hero-home__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      gap: 2.5rem;
+    }
+
+    #shopify-section-{{ section.id }} .vb-hero-home__visual {
+      order: initial;
+    }
+
+    #shopify-section-{{ section.id }} .vb-hero-home__image {
+      aspect-ratio: 1 / 1.08;
+    }
+
+    #shopify-section-{{ section.id }} .vb-hero-home__trust {
+      margin-top: 0.85rem;
+      font-size: 0.84rem;
+    }
+
+    #shopify-section-{{ section.id }} .vb-hero-home__review-badge {
+      margin-top: 0.85rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hero Home",
+  "tag": "section",
+  "class": "section section-hero-home",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Nutricion premium para piel, energia y bienestar diario."
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Descubre una seleccion moderna de suplementos para construir tu rutina VitalBoost.</p>"
+    },
+    {
+      "type": "text",
+      "id": "benefits_aria_label",
+      "label": "Benefits accessibility label",
+      "default": "Beneficios principales"
+    },
+    {
+      "type": "text",
+      "id": "benefit_1",
+      "label": "Benefit 1",
+      "default": "Formulas de alta calidad para uso diario"
+    },
+    {
+      "type": "text",
+      "id": "benefit_2",
+      "label": "Benefit 2",
+      "default": "Linea Belleza incluida dentro de una oferta integral"
+    },
+    {
+      "type": "text",
+      "id": "benefit_3",
+      "label": "Benefit 3",
+      "default": "Compra simple, soporte cercano y envios rapidos"
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Primary button label",
+      "default": "Comprar ahora"
+    },
+    {
+      "type": "url",
+      "id": "primary_link",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary button label",
+      "default": "Explorar lineas"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "text",
+      "id": "trust_micro_text",
+      "label": "Trust micro text",
+      "default": "Envíos a todo el país · Compra 100% segura"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_review_badge",
+      "label": "Show review badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "review_badge_aria",
+      "label": "Review badge accessibility label",
+      "default": "Reseñas de clientes"
+    },
+    {
+      "type": "text",
+      "id": "review_badge_rating",
+      "label": "Review rating",
+      "default": "4.8/5"
+    },
+    {
+      "type": "text",
+      "id": "review_badge_text",
+      "label": "Review text",
+      "default": "Opiniones verificadas"
+    },
+    {
+      "type": "text",
+      "id": "review_badge_count",
+      "label": "Review count text",
+      "default": "2.000+ reseñas"
+    },
+    {
+      "type": "product",
+      "id": "featured_product",
+      "label": "Featured product"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Fallback collection (used if no product selected)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Home"
+    }
+  ]
+}
+{% endschema %}

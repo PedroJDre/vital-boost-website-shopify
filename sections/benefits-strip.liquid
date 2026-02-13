@@ -1,0 +1,181 @@
+<section
+  id="shopify-section-{{ section.id }}"
+  class="vb-benefits-strip"
+  style="
+    --vb-bg: {{ section.settings.bg_color }};
+    --vb-text: {{ section.settings.text_color }};
+    --vb-accent: {{ section.settings.accent_color }};
+  "
+>
+  <div class="page-width">
+    {% if section.settings.heading != blank %}
+      <h2 class="vb-benefits-strip__title">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="vb-benefits-strip__track">
+      {% for block in section.blocks %}
+        <article class="vb-benefits-strip__item" {{ block.shopify_attributes }}>
+          {% if block.settings.icon != blank %}
+            <div class="vb-benefits-strip__icon">
+              {{
+                block.settings.icon
+                | image_url: width: 120
+                | image_tag: loading: 'lazy', widths: '60,80,120', sizes: '20px', alt: block.settings.title
+              }}
+            </div>
+          {% endif %}
+          <h3>{{ block.settings.title }}</h3>
+          {% if block.settings.text != blank %}
+            <p>{{ block.settings.text }}</p>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  #shopify-section-{{ section.id }}.vb-benefits-strip {
+    background: var(--vb-bg);
+    color: var(--vb-text);
+    padding: 1.5rem 0;
+    border-top: 1px solid #e8eeea;
+    border-bottom: 1px solid #e8eeea;
+  }
+
+  #shopify-section-{{ section.id }} .vb-benefits-strip__title {
+    margin: 0 0 1rem;
+    font-size: clamp(1rem, 2.6vw, 1.3rem);
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .vb-benefits-strip__track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(74%, 1fr);
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding-bottom: 0.2rem;
+    scrollbar-width: none;
+  }
+
+  #shopify-section-{{ section.id }} .vb-benefits-strip__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  #shopify-section-{{ section.id }} .vb-benefits-strip__item {
+    background: #fff;
+    border: 1px solid #e2ebe4;
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-benefits-strip__icon img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    margin-bottom: 0.25rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-benefits-strip__item h3 {
+    margin: 0;
+    font-size: 0.92rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-benefits-strip__item p {
+    margin: 0.5rem 0 0;
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .vb-benefits-strip__track {
+      grid-auto-flow: unset;
+      grid-auto-columns: unset;
+      grid-template-columns: repeat({{ section.blocks.size | at_least: 1 }}, minmax(0, 1fr));
+      overflow: visible;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Benefits Strip",
+  "tag": "section",
+  "class": "section section-benefits-strip",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Por que elegir VitalBoost"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#1f2a1f"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#9bbfa4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Ingredientes seleccionados"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Formulas pensadas para uso diario."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Benefits Strip",
+      "blocks": [
+        {
+          "type": "benefit"
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Resultados progresivos"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Compra segura"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

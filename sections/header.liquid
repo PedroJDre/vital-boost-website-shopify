@@ -1,0 +1,160 @@
+﻿<header id="header" class="ct-header" data-id="type-1" data-header="type-1:sticky">
+  <div data-device="desktop" {% if section.settings.transparent_header %}data-transparent{% endif %}>
+    <div class="ct-sticky-container">
+      <div data-sticky="slide">
+        <div data-row="middle" data-column-set="3" {% if section.settings.transparent_header %}data-transparent-row="yes"{% endif %}>
+          <div class="ct-container-fluid">
+            <div data-column="start" data-placements="1">
+              <div data-items="primary">
+                <div class="site-branding" data-id="logo">
+                  <a href="{{ routes.root_url }}" class="site-logo-container" rel="home">
+                    {% if section.settings.logo != blank %}
+          {{
+            section.settings.logo
+            | image_url: width: 500
+            | image_tag: loading: 'lazy', widths: '120,180,240,320,500', sizes: '(max-width: 989px) 140px, 180px', class: 'default-logo', alt: shop.name
+          }}
+                    {% else %}
+                      <span class="default-logo">{{ shop.name }}</span>
+                    {% endif %}
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div data-column="middle">
+              <div data-items="">
+                <nav id="header-menu-1" class="header-menu-1 menu-container" data-id="menu" data-interaction="hover" aria-label="Main Menu">
+                  <ul class="menu">
+                    {% for link in section.settings.menu.links %}
+                      <li class="menu-item">
+                        <a href="{{ link.url }}" class="ct-menu-link">{{ link.title }}</a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </nav>
+              </div>
+            </div>
+
+            <div data-column="end" data-placements="1">
+              <div data-items="primary">
+                {% if section.settings.show_search %}
+                  <a class="ct-header-search ct-toggle" href="{{ routes.search_url }}" aria-label="Buscar" data-id="search">
+                    <span class="ct-label ct-hidden-sm ct-hidden-md ct-hidden-lg" aria-hidden="true">Buscar</span>
+                    <svg class="ct-icon" aria-hidden="true" width="15" height="15" viewBox="0 0 15 15"><path d="M14.8,13.7L12,11c0.9-1.2,1.5-2.6,1.5-4.2c0-3.7-3-6.8-6.8-6.8S0,3,0,6.8s3,6.8,6.8,6.8c1.6,0,3.1-0.6,4.2-1.5l2.8,2.8c0.1,0.1,0.3,0.2,0.5,0.2s0.4-0.1,0.5-0.2C15.1,14.5,15.1,14,14.8,13.7z M1.5,6.8c0-2.9,2.4-5.2,5.2-5.2S12,3.9,12,6.8S9.6,12,6.8,12S1.5,9.6,1.5,6.8z"/></svg>
+                  </a>
+                {% endif %}
+
+                {% if section.settings.show_cart %}
+                  <div class="ct-header-cart" data-id="cart">
+                    <a class="ct-cart-item" href="{{ routes.cart_url }}">
+                      <span class="screen-reader-text">Shopping cart</span>
+                      <span class="ct-label ct-hidden-sm ct-hidden-md ct-hidden-lg" data-price="yes">
+                        <span class="ct-amount">{{ cart.total_price | money }}</span>
+                      </span>
+                      <span class="ct-icon-container" aria-hidden="true">
+                        <span class="ct-dynamic-count-cart" data-count="{{ cart.item_count }}">{{ cart.item_count }}</span>
+                      </span>
+                    </a>
+                  </div>
+                {% endif %}
+
+                {% if section.settings.show_account %}
+                  <div class="ct-header-account" data-id="account">
+                    <a href="{{ routes.account_url }}" class="ct-account-item" aria-label="Acceder" data-label="left">
+                      <span class="ct-label ct-hidden-sm ct-hidden-md" aria-hidden="true">Acceder</span>
+                    </a>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div data-device="mobile" {% if section.settings.transparent_header %}data-transparent{% endif %}>
+    <div class="ct-sticky-container">
+      <div data-sticky="slide">
+        <div data-row="middle" data-column-set="2" {% if section.settings.transparent_header %}data-transparent-row="yes"{% endif %}>
+          <div class="ct-container-fluid">
+            <div data-column="start" data-placements="1">
+              <div data-items="primary">
+                <div class="site-branding" data-id="logo">
+                  <a href="{{ routes.root_url }}" class="site-logo-container" rel="home">
+                    {% assign mobile_logo = section.settings.mobile_logo | default: section.settings.logo %}
+                    {% if mobile_logo != blank %}
+                    {{
+                      mobile_logo
+                      | image_url: width: 500
+                      | image_tag: loading: 'lazy', widths: '120,180,240,320,500', sizes: '140px', class: 'default-logo', alt: shop.name
+                    }}
+                    {% else %}
+                      <span class="default-logo">{{ shop.name }}</span>
+                    {% endif %}
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div data-column="end" data-placements="1">
+              <div data-items="primary">
+                {% if section.settings.show_cart %}
+                  <div class="ct-header-cart" data-id="cart">
+                    <a class="ct-cart-item" href="{{ routes.cart_url }}">
+                      <span class="ct-dynamic-count-cart" data-count="{{ cart.item_count }}">{{ cart.item_count }}</span>
+                    </a>
+                  </div>
+                {% endif %}
+                <button class="ct-header-trigger ct-toggle" type="button" data-id="trigger" aria-label="Menu" onclick="this.closest('#header').querySelector('#offcanvas').toggleAttribute('open')">
+                  <span class="ct-label ct-hidden-sm ct-hidden-md ct-hidden-lg" aria-hidden="true">Menu</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="offcanvas" class="ct-panel ct-header" role="dialog">
+          <div class="ct-panel-content" data-device="mobile">
+            <div class="ct-panel-content-inner">
+              <nav class="mobile-menu menu-container" data-id="mobile-menu" aria-label="Main Menu">
+                <ul>
+                  {% for link in section.settings.menu.links %}
+                    <li class="menu-item">
+                      <a href="{{ link.url }}" class="ct-menu-link">{{ link.title }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </nav>
+              <div class="ct-header-socials" data-id="socials">
+                <div class="ct-social-box">
+                  {% if section.settings.facebook_url != blank %}<a href="{{ section.settings.facebook_url }}" target="_blank" rel="noopener">Facebook</a>{% endif %}
+                  {% if section.settings.instagram_url != blank %}<a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener">Instagram</a>{% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo (desktop)" },
+    { "type": "image_picker", "id": "mobile_logo", "label": "Logo (mobile)" },
+    { "type": "link_list", "id": "menu", "label": "Main menu" },
+    { "type": "checkbox", "id": "transparent_header", "label": "Transparent header style", "default": true },
+    { "type": "checkbox", "id": "show_search", "label": "Show search", "default": true },
+    { "type": "checkbox", "id": "show_cart", "label": "Show cart", "default": true },
+    { "type": "checkbox", "id": "show_account", "label": "Show account", "default": true },
+    { "type": "url", "id": "facebook_url", "label": "Facebook URL" },
+    { "type": "url", "id": "instagram_url", "label": "Instagram URL" }
+  ]
+}
+{% endschema %}

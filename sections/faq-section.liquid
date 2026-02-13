@@ -1,0 +1,259 @@
+<section
+  id="shopify-section-{{ section.id }}"
+  class="vb-faq"
+  style="
+    --vb-bg: {{ section.settings.bg_color }};
+    --vb-text: {{ section.settings.text_color }};
+    --vb-accent: {{ section.settings.accent_color }};
+    --vb-card: {{ section.settings.card_color }};
+  "
+>
+  <div class="page-width">
+    <header class="vb-faq__head">
+      {% if section.settings.heading != blank %}
+        <h2>{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.subheading != blank %}
+        <p>{{ section.settings.subheading }}</p>
+      {% endif %}
+    </header>
+
+    <div class="vb-faq__list" data-faq-wrap>
+      {% for block in section.blocks %}
+        <article class="vb-faq__item" {{ block.shopify_attributes }}>
+          <button
+            class="vb-faq__trigger"
+            type="button"
+            aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+            data-faq-trigger
+          >
+            <span>{{ block.settings.question }}</span>
+            <span class="vb-faq__icon" aria-hidden="true"></span>
+          </button>
+          <div class="vb-faq__panel{% if forloop.first %} is-open{% endif %}" data-faq-panel>
+            <div class="vb-faq__answer rte">{{ block.settings.answer }}</div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  #shopify-section-{{ section.id }}.vb-faq {
+    background: var(--vb-bg);
+    color: var(--vb-text);
+    padding: 2.2rem 0;
+  }
+
+  #shopify-section-{{ section.id }} .vb-faq__head {
+    text-align: center;
+    max-width: 60ch;
+    margin: 0 auto 1rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-faq__head h2 {
+    margin: 0;
+    font-size: clamp(1.3rem, 4.1vw, 1.95rem);
+  }
+
+  #shopify-section-{{ section.id }} .vb-faq__head p {
+    margin: 0.55rem 0 0;
+    color: color-mix(in srgb, var(--vb-text) 74%, white);
+  }
+
+  #shopify-section-{{ section.id }} .vb-faq__list {
+    max-width: 880px;
+    margin: 0 auto;
+    display: grid;
+    gap: 0.62rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-faq__item {
+    border: 1px solid color-mix(in srgb, var(--vb-accent) 26%, #dde9df);
+    border-radius: 0.9rem;
+    overflow: hidden;
+    background: var(--vb-card);
+  }
+
+  #shopify-section-{{ section.id }} .vb-faq__trigger {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    text-align: left;
+    padding: 0.95rem;
+    cursor: pointer;
+    font-size: 0.96rem;
+    font-weight: 600;
+  }
+
+  #shopify-section-{{ section.id }} .vb-faq__icon {
+    width: 0.85rem;
+    height: 0.85rem;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  #shopify-section-{{ section.id }} .vb-faq__icon::before,
+  #shopify-section-{{ section.id }} .vb-faq__icon::after {
+    content: "";
+    position: absolute;
+    background: color-mix(in srgb, var(--vb-accent) 85%, #4b6b52);
+    border-radius: 2px;
+    transition: 0.2s ease;
+  }
+
+  #shopify-section-{{ section.id }} .vb-faq__icon::before {
+    width: 100%;
+    height: 2px;
+    top: calc(50% - 1px);
+    left: 0;
+  }
+
+  #shopify-section-{{ section.id }} .vb-faq__icon::after {
+    width: 2px;
+    height: 100%;
+    left: calc(50% - 1px);
+    top: 0;
+  }
+
+  #shopify-section-{{ section.id }} .vb-faq__trigger[aria-expanded="true"] .vb-faq__icon::after {
+    transform: scaleY(0);
+  }
+
+  #shopify-section-{{ section.id }} .vb-faq__panel {
+    display: none;
+    padding: 0 0.95rem 0.95rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-faq__panel.is-open {
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .vb-faq__answer {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: color-mix(in srgb, var(--vb-text) 78%, white);
+  }
+
+  #shopify-section-{{ section.id }} .vb-faq__answer p {
+    margin: 0;
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.querySelector('#shopify-section-{{ section.id }} [data-faq-wrap]');
+    if (!root) return;
+
+    const triggers = root.querySelectorAll('[data-faq-trigger]');
+    const panels = root.querySelectorAll('[data-faq-panel]');
+
+    triggers.forEach((trigger, index) => {
+      trigger.addEventListener('click', () => {
+        const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+        triggers.forEach((t) => t.setAttribute('aria-expanded', 'false'));
+        panels.forEach((p) => p.classList.remove('is-open'));
+
+        if (!isOpen) {
+          trigger.setAttribute('aria-expanded', 'true');
+          panels[index].classList.add('is-open');
+        }
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "FAQ Section",
+  "tag": "section",
+  "class": "section section-faq",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Preguntas frecuentes"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Respuestas claras para ayudarte a elegir con confianza."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#1f2a1f"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#9bbfa4"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card color",
+      "default": "#f9fcf9"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Cuanto tiempo tarda en verse un resultado?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Depende de la formula y la constancia. En general, sugerimos uso diario por varias semanas para evaluar cambios.</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "FAQ Section",
+      "blocks": [
+        {
+          "type": "faq"
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Puedo combinar varias lineas?"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Como elegir el suplemento correcto?"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

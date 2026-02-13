@@ -1,0 +1,52 @@
+﻿<section class="main-collection page-width">
+  {% if collection == nil %}
+    <p>This section requires a collection template context.</p>
+  {% else %}
+    {% if section.settings.show_collection_image and collection.image %}
+      <div class="collection-image">
+      {{
+        collection.image
+        | image_url: width: 1600
+        | image_tag: loading: 'lazy', widths: '480,720,960,1280,1600', sizes: '100vw', alt: collection.title
+      }}
+      </div>
+    {% endif %}
+
+    <h1>{{ collection.title }}</h1>
+    {% if collection.description != blank %}
+      <div>{{ collection.description }}</div>
+    {% endif %}
+
+    {% paginate collection.products by section.settings.products_per_page %}
+      <div class="product-grid">
+        {% for product in collection.products %}
+          {% render 'product-card', product: product %}
+        {% endfor %}
+      </div>
+      {{ paginate | default_pagination }}
+    {% endpaginate %}
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Main collection",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_collection_image",
+      "label": "Show collection image",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 4,
+      "max": 36,
+      "step": 4,
+      "default": 12
+    }
+  ]
+}
+{% endschema %}

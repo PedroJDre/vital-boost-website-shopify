@@ -1,0 +1,789 @@
+{% liquid
+  assign accent = section.settings.accent_color
+  assign selected_variant = product.selected_or_first_available_variant
+%}
+
+<section
+  id="shopify-section-{{ section.id }}"
+  class="vb-main-product"
+  style="
+    --vb-accent: {{ accent }};
+    --vb-text: {{ section.settings.text_color }};
+    --vb-border: {{ section.settings.border_color }};
+  "
+>
+  <div class="page-width">
+    {% if product == nil %}
+      <p>This section requires a product template context.</p>
+    {% else %}
+      <div class="vb-product-top">
+        <div class="vb-gallery">
+          <div class="vb-gallery__main" data-gallery-main>
+            {% if product.media.size > 0 %}
+              {% assign first_media = product.media.first %}
+              {% if first_media.media_type == 'image' %}
+                {{
+                  first_media
+                  | image_url: width: 1600
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '480, 720, 960, 1280, 1600',
+                    sizes: '(max-width: 989px) 100vw, 52vw',
+                    class: 'vb-gallery__image',
+                    alt: product.title
+                }}
+              {% else %}
+                {{ first_media | media_tag: class: 'vb-gallery__image' }}
+              {% endif %}
+            {% else %}
+              {{ 'product-1' | placeholder_svg_tag: 'vb-gallery__image vb-placeholder' }}
+            {% endif %}
+          </div>
+
+          {% if product.media.size > 1 %}
+            <div class="vb-gallery__thumbs">
+              {% for media in product.media %}
+                <button
+                  type="button"
+                  class="vb-gallery__thumb{% if forloop.first %} is-active{% endif %}"
+                  data-gallery-thumb
+                  data-media-id="{{ media.id }}"
+                  data-media-url="{% if media.media_type == 'image' %}{{ media | image_url: width: 1600 }}{% else %}{{ media.preview_image | image_url: width: 1600 }}{% endif %}"
+                  aria-label="View media {{ forloop.index }}"
+                >
+                  {% if media.preview_image %}
+                    {{
+                      media.preview_image
+                      | image_url: width: 200
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '80,120,160,200',
+                        sizes: '70px',
+                        alt: product.title
+                    }}
+                  {% endif %}
+                </button>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="vb-product-info">
+          {% if section.settings.show_vendor and product.vendor != blank %}
+            <p class="vb-product-info__vendor">{{ product.vendor }}</p>
+          {% endif %}
+
+          <h1 class="vb-product-info__title">{{ product.title }}</h1>
+
+          <p class="vb-product-info__price">
+            {% if product.compare_at_price > product.price %}
+              <s>{{ product.compare_at_price | money }}</s>
+            {% endif %}
+            <strong>{{ product.price | money }}</strong>
+          </p>
+
+          {% if section.settings.show_short_description %}
+            <div class="vb-product-info__description rte">
+              {{ product.description | strip_html | truncate: section.settings.short_description_length }}
+            </div>
+          {% endif %}
+
+          <div class="vb-product-form">
+            {% form 'product', product, class: 'vb-product-form__form' %}
+              {% if product.has_only_default_variant or product.variants.size == 1 %}
+                <input type="hidden" name="id" value="{{ selected_variant.id }}">
+              {% else %}
+                <label for="variant-{{ section.id }}" class="vb-field-label">
+                  {{ section.settings.variant_label }}
+                </label>
+                <select id="variant-{{ section.id }}" name="id" class="vb-select" data-variant-select>
+                  {% for variant in product.variants %}
+                    <option
+                      value="{{ variant.id }}"
+                      data-available="{{ variant.available }}"
+                      {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
+                    >
+                      {{ variant.title }} - {{ variant.price | money }}
+                    </option>
+                  {% endfor %}
+                </select>
+              {% endif %}
+
+              {% if section.settings.show_quantity %}
+                <label for="quantity-{{ section.id }}" class="vb-field-label">
+                  {{ section.settings.quantity_label }}
+                </label>
+                <input id="quantity-{{ section.id }}" class="vb-qty" type="number" name="quantity" min="1" value="1">
+              {% endif %}
+
+              <button type="submit" class="vb-atc" data-main-atc {% unless selected_variant.available %}disabled{% endunless %}>
+                {% if selected_variant.available %}
+                  {{ section.settings.add_to_cart_label }}
+                {% else %}
+                  {{ section.settings.sold_out_label }}
+                {% endif %}
+              </button>
+            {% endform %}
+          </div>
+        </div>
+      </div>
+
+      {% assign benefit_blocks = section.blocks | where: 'type', 'benefit' %}
+      {% if benefit_blocks.size > 0 %}
+        <div class="vb-benefits">
+          {% for block in benefit_blocks limit: 3 %}
+            <article class="vb-benefit" {{ block.shopify_attributes }}>
+              {% if block.settings.icon != blank %}
+                <div class="vb-benefit__icon">
+                  {{
+                    block.settings.icon
+                    | image_url: width: 120
+                    | image_tag: loading: 'lazy', widths: '40,80,120', sizes: '22px', alt: block.settings.title
+                  }}
+                </div>
+              {% endif %}
+              <h3>{{ block.settings.title }}</h3>
+              <p>{{ block.settings.text }}</p>
+            </article>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% assign trust_blocks = section.blocks | where: 'type', 'trust' %}
+      {% if trust_blocks.size > 0 %}
+        <div class="vb-trust-strip">
+          {% for block in trust_blocks %}
+            <div class="vb-trust-item" {{ block.shopify_attributes }}>
+              {% if block.settings.icon != blank %}
+                <div class="vb-trust-item__icon">
+                  {{
+                    block.settings.icon
+                    | image_url: width: 100
+                    | image_tag: loading: 'lazy', widths: '32,64,100', sizes: '18px', alt: block.settings.text
+                  }}
+                </div>
+              {% endif %}
+              <span>{{ block.settings.text }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% assign ingredient_blocks = section.blocks | where: 'type', 'ingredient' %}
+      {% if ingredient_blocks.size > 0 %}
+        <section class="vb-ingredients">
+          <h2>{{ section.settings.ingredients_heading }}</h2>
+          {% for block in ingredient_blocks %}
+            <details class="vb-details" {% if forloop.first %}open{% endif %} {{ block.shopify_attributes }}>
+              <summary>{{ block.settings.title }}</summary>
+              <div class="vb-details__content rte">{{ block.settings.content }}</div>
+            </details>
+          {% endfor %}
+        </section>
+      {% endif %}
+
+      {% assign faq_blocks = section.blocks | where: 'type', 'faq' %}
+      {% if faq_blocks.size > 0 %}
+        <section class="vb-faq">
+          <h2>{{ section.settings.faq_heading }}</h2>
+          {% for block in faq_blocks %}
+            <details class="vb-details" {{ block.shopify_attributes }}>
+              <summary>{{ block.settings.question }}</summary>
+              <div class="vb-details__content rte">{{ block.settings.answer }}</div>
+            </details>
+          {% endfor %}
+        </section>
+      {% endif %}
+
+      <div class="vb-sticky-atc" data-sticky-atc>
+        <div class="vb-sticky-atc__form">
+          <div class="vb-sticky-atc__meta">
+            <strong>{{ product.title | truncate: 34 }}</strong>
+            <span>{{ product.price | money }}</span>
+          </div>
+          <button type="button" class="vb-atc" data-sticky-submit {% unless selected_variant.available %}disabled{% endunless %}>
+            {% if selected_variant.available %}
+              {{ section.settings.add_to_cart_label }}
+            {% else %}
+              {{ section.settings.sold_out_label }}
+            {% endif %}
+          </button>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  #shopify-section-{{ section.id }}.vb-main-product {
+    color: var(--vb-text);
+    padding: 1rem 0 5rem;
+    background: #ffffff;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-top {
+    display: grid;
+    gap: 1.1rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-gallery {
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-gallery__main {
+    border: 1px solid var(--vb-border);
+    border-radius: 1rem;
+    overflow: hidden;
+    background: #ffffff;
+  }
+
+  #shopify-section-{{ section.id }} .vb-gallery__image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+
+  #shopify-section-{{ section.id }} .vb-gallery__thumbs {
+    display: flex;
+    gap: 0.45rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  #shopify-section-{{ section.id }} .vb-gallery__thumbs::-webkit-scrollbar {
+    display: none;
+  }
+
+  #shopify-section-{{ section.id }} .vb-gallery__thumb {
+    border: 1px solid var(--vb-border);
+    border-radius: 0.6rem;
+    background: #fff;
+    width: 70px;
+    min-width: 70px;
+    padding: 0;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  #shopify-section-{{ section.id }} .vb-gallery__thumb img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+
+  #shopify-section-{{ section.id }} .vb-gallery__thumb.is-active {
+    border-color: var(--vb-accent);
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-info__vendor {
+    margin: 0;
+    color: #46624b;
+    color: color-mix(in srgb, var(--vb-accent) 84%, #46624b);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-info__title {
+    margin: 0.45rem 0 0;
+    font-size: clamp(1.6rem, 5vw, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-info__price {
+    margin: 0.7rem 0 0;
+    display: inline-flex;
+    gap: 0.45rem;
+    align-items: baseline;
+    font-size: 1rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-info__price s {
+    color: #79897d;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-info__description {
+    margin-top: 0.7rem;
+    font-size: 0.95rem;
+    line-height: 1.58;
+    color: #465548;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-form {
+    margin-top: 0.85rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-form__form {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-field-label {
+    font-size: 0.8rem;
+    color: #4b5b4e;
+  }
+
+  #shopify-section-{{ section.id }} .vb-select,
+  #shopify-section-{{ section.id }} .vb-qty {
+    border: 1px solid var(--vb-border);
+    border-radius: 0.65rem;
+    padding: 0.62rem 0.7rem;
+    font-size: 0.9rem;
+    background: #ffffff;
+    color: var(--vb-text);
+  }
+
+  #shopify-section-{{ section.id }} .vb-atc {
+    background: var(--vb-accent);
+    border: 1px solid var(--vb-accent);
+    color: #0f2213;
+    border-radius: 999px;
+    padding: 0.72rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.2s ease;
+  }
+
+  #shopify-section-{{ section.id }} .vb-atc:hover {
+    filter: brightness(0.97);
+  }
+
+  #shopify-section-{{ section.id }} .vb-atc[disabled] {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  #shopify-section-{{ section.id }} .vb-benefits {
+    margin-top: 1.3rem;
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-benefit {
+    border: 1px solid var(--vb-border);
+    border-radius: 0.9rem;
+    padding: 0.85rem;
+    background: #ffffff;
+  }
+
+  #shopify-section-{{ section.id }} .vb-benefit__icon img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-benefit h3 {
+    margin: 0;
+    font-size: 0.92rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-benefit p {
+    margin: 0.35rem 0 0;
+    font-size: 0.85rem;
+    line-height: 1.45;
+    color: #49584c;
+  }
+
+  #shopify-section-{{ section.id }} .vb-trust-strip {
+    margin-top: 1rem;
+    display: grid;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border: 1px solid var(--vb-border);
+    border-radius: 0.9rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.84rem;
+    color: #445346;
+  }
+
+  #shopify-section-{{ section.id }} .vb-trust-item__icon img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+  }
+
+  #shopify-section-{{ section.id }} .vb-ingredients,
+  #shopify-section-{{ section.id }} .vb-faq {
+    margin-top: 1.3rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-ingredients h2,
+  #shopify-section-{{ section.id }} .vb-faq h2 {
+    margin: 0 0 0.7rem;
+    font-size: clamp(1.05rem, 3.4vw, 1.5rem);
+  }
+
+  #shopify-section-{{ section.id }} .vb-details {
+    border: 1px solid var(--vb-border);
+    border-radius: 0.8rem;
+    padding: 0.75rem 0.85rem;
+    background: #ffffff;
+  }
+
+  #shopify-section-{{ section.id }} .vb-details + .vb-details {
+    margin-top: 0.5rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-details summary {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-details__content {
+    margin-top: 0.5rem;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: #475649;
+  }
+
+  #shopify-section-{{ section.id }} .vb-sticky-atc {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 35;
+    background: #ffffff;
+    border-top: 1px solid var(--vb-border);
+    padding: 0.6rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-sticky-atc__form {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.6rem;
+    align-items: center;
+  }
+
+  #shopify-section-{{ section.id }} .vb-sticky-atc__meta strong,
+  #shopify-section-{{ section.id }} .vb-sticky-atc__meta span {
+    display: block;
+    line-height: 1.3;
+  }
+
+  #shopify-section-{{ section.id }} .vb-sticky-atc__meta strong {
+    font-size: 0.82rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-sticky-atc__meta span {
+    font-size: 0.78rem;
+    color: #506052;
+  }
+
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }}.vb-main-product {
+      padding-bottom: 2rem;
+    }
+
+    #shopify-section-{{ section.id }} .vb-product-top {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 1.35rem;
+    }
+
+    #shopify-section-{{ section.id }} .vb-benefits {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    #shopify-section-{{ section.id }} .vb-trust-strip {
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      align-items: center;
+    }
+
+    #shopify-section-{{ section.id }} .vb-sticky-atc {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const sectionRoot = document.getElementById('shopify-section-{{ section.id }}');
+    if (!sectionRoot) return;
+
+    const mainImage = sectionRoot.querySelector('[data-gallery-main] img');
+    const thumbs = sectionRoot.querySelectorAll('[data-gallery-thumb]');
+    const variantSelect = sectionRoot.querySelector('[data-variant-select]');
+    const atcBtn = sectionRoot.querySelector('[data-main-atc]');
+    const mainForm = sectionRoot.querySelector('.vb-product-form__form');
+    const stickySubmitBtn = sectionRoot.querySelector('[data-sticky-submit]');
+    const addLabel = {{ section.settings.add_to_cart_label | json }};
+    const soldOutLabel = {{ section.settings.sold_out_label | json }};
+
+    if (mainImage && thumbs.length) {
+      thumbs.forEach((thumb) => {
+        thumb.addEventListener('click', () => {
+          const nextUrl = thumb.getAttribute('data-media-url');
+          if (!nextUrl) return;
+
+          mainImage.src = nextUrl;
+          mainImage.srcset = nextUrl;
+          thumbs.forEach((el) => el.classList.remove('is-active'));
+          thumb.classList.add('is-active');
+        });
+      });
+    }
+
+    const syncStickyState = () => {
+      if (!stickySubmitBtn || !atcBtn) return;
+      stickySubmitBtn.disabled = atcBtn.disabled;
+      stickySubmitBtn.textContent = atcBtn.textContent;
+    };
+
+    if (variantSelect && atcBtn) {
+      const syncVariantAvailability = () => {
+        const selectedOption = variantSelect.options[variantSelect.selectedIndex];
+        const available = selectedOption?.dataset?.available === 'true';
+        atcBtn.disabled = !available;
+        atcBtn.textContent = available ? addLabel : soldOutLabel;
+        syncStickyState();
+      };
+
+      variantSelect.addEventListener('change', syncVariantAvailability);
+      syncVariantAvailability();
+    } else {
+      syncStickyState();
+    }
+
+    if (stickySubmitBtn && mainForm) {
+      stickySubmitBtn.addEventListener('click', () => {
+        if (stickySubmitBtn.disabled) return;
+        if (typeof mainForm.requestSubmit === 'function') {
+          mainForm.requestSubmit();
+        } else {
+          mainForm.submit();
+        }
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Main product",
+  "settings": [
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#9bbfa4"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#1f2a1f"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e3ebe5"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_short_description",
+      "label": "Show short description",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "short_description_length",
+      "label": "Short description max length",
+      "min": 80,
+      "max": 420,
+      "step": 10,
+      "default": 220
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quantity",
+      "label": "Show quantity selector",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "variant_label",
+      "label": "Variant label",
+      "default": "Variant"
+    },
+    {
+      "type": "text",
+      "id": "quantity_label",
+      "label": "Quantity label",
+      "default": "Quantity"
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart_label",
+      "label": "Add to cart label",
+      "default": "Add to cart"
+    },
+    {
+      "type": "text",
+      "id": "sold_out_label",
+      "label": "Sold out label",
+      "default": "Sold out"
+    },
+    {
+      "type": "text",
+      "id": "ingredients_heading",
+      "label": "Ingredients heading",
+      "default": "Ingredients"
+    },
+    {
+      "type": "text",
+      "id": "faq_heading",
+      "label": "FAQ heading",
+      "default": "FAQ"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit highlight",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Daily support"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Designed for routine consistency."
+        }
+      ]
+    },
+    {
+      "type": "trust",
+      "name": "Trust badge",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Quality verified"
+        }
+      ]
+    },
+    {
+      "type": "ingredient",
+      "name": "Ingredient item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Key ingredient"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Describe origin, function and usage details.</p>"
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How should I take this product?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Use as directed on the label or as advised by your healthcare professional.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Main product",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Premium quality"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Daily routine fit"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Clear formulation"
+          }
+        },
+        {
+          "type": "trust",
+          "settings": {
+            "text": "Secure checkout"
+          }
+        },
+        {
+          "type": "trust",
+          "settings": {
+            "text": "Fast shipping"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "title": "Primary ingredient"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "When will I notice results?"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

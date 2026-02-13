@@ -1,0 +1,31 @@
+﻿{
+  "sections": {
+    "main": {
+      "type": "main-index",
+      "settings": {
+        "heading": "Buy Collagen Protein Powder & Collagen Supplements",
+        "subheading": "Vital Proteins gives you the boost you need to support healthy hair, skin, nails, bone and joint health.",
+        "button_label": "Shop now",
+        "button_link": "/collections/all"
+      },
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "title": "Collagen peptides",
+            "text": "Add to coffee, smoothies, or recipes."
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "title": "Daily routine",
+            "text": "Simple wellness support every day."
+          }
+        }
+      },
+      "block_order": ["feature_1", "feature_2"]
+    }
+  },
+  "order": ["main"]
+}

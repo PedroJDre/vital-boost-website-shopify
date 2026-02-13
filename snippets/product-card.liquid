@@ -1,0 +1,9 @@
+﻿<article class="product-card">
+  <a href="{{ product.url }}">
+    {% if product.featured_image %}
+      {{ product.featured_image | image_url: width: 600 | image_tag: alt: product.title }}
+    {% endif %}
+    <h3>{{ product.title }}</h3>
+    <p>{{ product.price | money }}</p>
+  </a>
+</article>

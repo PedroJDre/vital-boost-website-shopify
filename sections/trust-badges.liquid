@@ -1,0 +1,227 @@
+<section
+  id="shopify-section-{{ section.id }}"
+  class="vb-trust-badges"
+  style="
+    --vb-bg: {{ section.settings.bg_color }};
+    --vb-text: {{ section.settings.text_color }};
+    --vb-accent: {{ section.settings.accent_color }};
+    --vb-border: {{ section.settings.border_color }};
+  "
+>
+  <div class="page-width">
+    {% if section.settings.heading != blank %}
+      <header class="vb-trust-badges__head">
+        <h2>{{ section.settings.heading }}</h2>
+      </header>
+    {% endif %}
+
+    <div class="vb-trust-badges__strip" role="list">
+      {% for block in section.blocks %}
+        <article class="vb-trust-badge" role="listitem" {{ block.shopify_attributes }}>
+          {% if block.settings.icon != blank %}
+            <div class="vb-trust-badge__icon">
+              {{
+                block.settings.icon
+                | image_url: width: 120
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '32,64,96,120',
+                  sizes: '24px',
+                  alt: block.settings.title
+              }}
+            </div>
+          {% endif %}
+
+          <div class="vb-trust-badge__content">
+            {% if block.settings.title != blank %}
+              <h3>{{ block.settings.title }}</h3>
+            {% endif %}
+            {% if block.settings.text != blank %}
+              <p>{{ block.settings.text }}</p>
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  #shopify-section-{{ section.id }}.vb-trust-badges {
+    background: var(--vb-bg);
+    color: var(--vb-text);
+    padding: 1.1rem 0;
+    border-top: 1px solid var(--vb-border);
+    border-bottom: 1px solid var(--vb-border);
+  }
+
+  #shopify-section-{{ section.id }} .vb-trust-badges__head {
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-trust-badges__head h2 {
+    margin: 0;
+    font-size: clamp(1rem, 2.8vw, 1.25rem);
+    letter-spacing: -0.01em;
+  }
+
+  #shopify-section-{{ section.id }} .vb-trust-badges__strip {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(78%, 1fr);
+    gap: 0.55rem;
+    overflow-x: auto;
+    padding-bottom: 0.2rem;
+    scrollbar-width: none;
+  }
+
+  #shopify-section-{{ section.id }} .vb-trust-badges__strip::-webkit-scrollbar {
+    display: none;
+  }
+
+  #shopify-section-{{ section.id }} .vb-trust-badge {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    border: 1px solid var(--vb-border);
+    border-radius: 0.8rem;
+    background: #ffffff;
+    padding: 0.68rem 0.72rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-trust-badge__icon img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    display: block;
+    filter: saturate(0.8);
+  }
+
+  #shopify-section-{{ section.id }} .vb-trust-badge__content h3 {
+    margin: 0;
+    font-size: 0.86rem;
+    line-height: 1.35;
+  }
+
+  #shopify-section-{{ section.id }} .vb-trust-badge__content p {
+    margin: 0.2rem 0 0;
+    font-size: 0.79rem;
+    line-height: 1.4;
+    color: color-mix(in srgb, var(--vb-text) 74%, #5f6f62);
+  }
+
+  #shopify-section-{{ section.id }} .vb-trust-badge {
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--vb-accent) 18%, transparent);
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .vb-trust-badges__strip {
+      grid-auto-flow: unset;
+      grid-auto-columns: unset;
+      grid-template-columns: repeat({{ section.blocks.size | at_least: 1 }}, minmax(0, 1fr));
+      overflow: visible;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Trust badges",
+  "tag": "section",
+  "class": "section section-trust-badges",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Confianza VitalBoost"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#1f2a1f"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#9bbfa4"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e2ebe4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Badge",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "ANMAT approved"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Short text",
+          "default": "Cumple estandares regulatorios."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Trust badges",
+      "blocks": [
+        {
+          "type": "badge",
+          "settings": {
+            "title": "ANMAT approved",
+            "text": "Cumple estandares regulatorios."
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "title": "High quality ingredients",
+            "text": "Seleccion premium de materias primas."
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "title": "Made in Argentina",
+            "text": "Desarrollo y produccion local."
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "title": "Lab tested",
+            "text": "Control de calidad por lote."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,279 @@
+<section
+  id="shopify-section-{{ section.id }}"
+  class="vb-education"
+  style="
+    --vb-bg: {{ section.settings.bg_color }};
+    --vb-text: {{ section.settings.text_color }};
+    --vb-accent: {{ section.settings.accent_color }};
+    --vb-card: {{ section.settings.card_color }};
+  "
+>
+  <div class="page-width">
+    <header class="vb-education__head">
+      {% if section.settings.heading != blank %}
+        <h2>{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.subheading != blank %}
+        <p>{{ section.settings.subheading }}</p>
+      {% endif %}
+    </header>
+
+    <div class="vb-education__grid">
+      {% for block in section.blocks %}
+        {% assign picked_article = block.settings.article %}
+        {% assign card_url = block.settings.link %}
+        {% if picked_article != blank %}
+          {% assign card_url = picked_article.url %}
+        {% endif %}
+
+        <article class="vb-education-card" {{ block.shopify_attributes }}>
+          <a href="{{ card_url | default: '#' }}" class="vb-education-card__image">
+            {% if block.settings.image != blank %}
+              {{
+                block.settings.image
+                | image_url: width: 1000
+                | image_tag: loading: 'lazy', widths: '320,520,760,1000', alt: block.settings.title
+              }}
+            {% elsif picked_article != blank and picked_article.image != blank %}
+              {{
+                picked_article.image
+                | image_url: width: 1000
+                | image_tag: loading: 'lazy', widths: '320,520,760,1000', alt: picked_article.title
+              }}
+            {% else %}
+              {{ 'image' | placeholder_svg_tag: 'vb-placeholder' }}
+            {% endif %}
+          </a>
+
+          <div class="vb-education-card__body">
+            {% if block.settings.kicker != blank %}
+              <p class="vb-education-card__kicker">{{ block.settings.kicker }}</p>
+            {% endif %}
+
+            <h3>
+              <a href="{{ card_url | default: '#' }}">
+                {% if block.settings.title != blank %}
+                  {{ block.settings.title }}
+                {% elsif picked_article != blank %}
+                  {{ picked_article.title }}
+                {% endif %}
+              </a>
+            </h3>
+
+            <p class="vb-education-card__excerpt">
+              {% if block.settings.excerpt != blank %}
+                {{ block.settings.excerpt }}
+              {% elsif picked_article != blank %}
+                {{ picked_article.excerpt | strip_html | truncate: 120 }}
+              {% endif %}
+            </p>
+
+            {% if block.settings.button_label != blank %}
+              <a href="{{ card_url | default: '#' }}" class="vb-education-card__cta">
+                {{ block.settings.button_label }}
+              </a>
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  #shopify-section-{{ section.id }}.vb-education {
+    background: var(--vb-bg);
+    color: var(--vb-text);
+    padding: 2.2rem 0;
+  }
+
+  #shopify-section-{{ section.id }} .vb-education__head {
+    text-align: center;
+    max-width: 62ch;
+    margin: 0 auto 1.2rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-education__head h2 {
+    margin: 0;
+    font-size: clamp(1.3rem, 4.1vw, 1.95rem);
+  }
+
+  #shopify-section-{{ section.id }} .vb-education__head p {
+    margin: 0.55rem 0 0;
+    color: color-mix(in srgb, var(--vb-text) 74%, white);
+  }
+
+  #shopify-section-{{ section.id }} .vb-education__grid {
+    display: grid;
+    gap: 0.85rem;
+    grid-template-columns: 1fr;
+  }
+
+  #shopify-section-{{ section.id }} .vb-education-card {
+    background: var(--vb-card);
+    border-radius: 1rem;
+    border: 1px solid color-mix(in srgb, var(--vb-accent) 24%, #deebdf);
+    overflow: hidden;
+  }
+
+  #shopify-section-{{ section.id }} .vb-education-card__image img,
+  #shopify-section-{{ section.id }} .vb-education-card__image svg {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  #shopify-section-{{ section.id }} .vb-education-card__body {
+    padding: 0.9rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-education-card__kicker {
+    margin: 0;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: color-mix(in srgb, var(--vb-accent) 78%, #456247);
+    font-weight: 600;
+  }
+
+  #shopify-section-{{ section.id }} .vb-education-card h3 {
+    margin: 0.35rem 0 0;
+    font-size: 1.02rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-education-card h3 a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  #shopify-section-{{ section.id }} .vb-education-card__excerpt {
+    margin: 0.5rem 0 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  #shopify-section-{{ section.id }} .vb-education-card__cta {
+    margin-top: 0.75rem;
+    display: inline-block;
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    font-size: 0.86rem;
+    color: color-mix(in srgb, var(--vb-accent) 86%, #3e5f46);
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .vb-education__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Education Section",
+  "tag": "section",
+  "class": "section section-education",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Aprende y mejora tu rutina"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Guias rapidas para elegir y usar suplementos de forma inteligente."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#1f2a1f"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#9bbfa4"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card color",
+      "default": "#f8fbf8"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Education card",
+      "settings": [
+        {
+          "type": "article",
+          "id": "article",
+          "label": "Article"
+        },
+        {
+          "type": "text",
+          "id": "kicker",
+          "label": "Kicker",
+          "default": "Guia"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Custom title (optional)"
+        },
+        {
+          "type": "text",
+          "id": "excerpt",
+          "label": "Custom excerpt (optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom image (optional)"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Custom link (optional)"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Leer mas"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Education Section",
+      "blocks": [
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

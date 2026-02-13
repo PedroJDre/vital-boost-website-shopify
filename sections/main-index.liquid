@@ -1,0 +1,216 @@
+﻿<div class="wp-block-group alignfull is-layout-constrained wp-block-group-is-layout-constrained">
+
+  <div class="wp-block-stackable-columns alignfull stk-block-columns stk-block stk-3e20b48 stk-block-background stk--has-background-overlay"
+       style="background-image:url({{ section.settings.hero_bg | image_url }});">
+    <div class="stk-row stk-inner-blocks stk-block-content stk-content-align stk-3e20b48-column alignfull">
+      <div class="wp-block-stackable-column stk-block-column stk-column stk-block stk-4b1ffd2">
+        <div class="stk-column-wrapper stk-block-column__content stk-container stk-4b1ffd2-container stk--no-background stk--no-padding"></div>
+      </div>
+      <div class="wp-block-stackable-column stk-block-column stk-column stk-block stk-882b043">
+        <div class="stk-column-wrapper stk-block-column__content stk-container stk-882b043-container stk--no-background stk--no-padding">
+          <div class="wp-block-stackable-button-group stk-block-button-group stk-block stk-3a1ffe1">
+            <div class="stk-row stk-inner-blocks has-text-align-center stk-block-content stk-button-group">
+              <div class="wp-block-stackable-button stk-block-button stk-block stk-6f86451">
+                <a class="stk-link stk-button stk--hover-effect-darken" href="{{ section.settings.hero_button_link }}">
+                  <span class="stk-button__inner-text">{{ section.settings.hero_button_label }}</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <a class="stk-link stk-block-link stk--transparent-overlay" href="{{ section.settings.hero_button_link }}" aria-hidden="true"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wp-block-stackable-text stk-block-text stk-block stk-6efe303">
+    <p class="stk-block-text__text has-text-align-center">{{ section.settings.categories_kicker }}</p>
+  </div>
+
+  <div class="wp-block-stackable-heading stk-block-heading stk-block stk-aa76f1d">
+    <h2 class="stk-block-heading__text has-text-align-center">{{ section.settings.categories_heading }}</h2>
+  </div>
+
+  <div class="wp-block-stackable-button-group stk-block-button-group stk-block stk-a8c4132">
+    <div class="stk-row stk-inner-blocks has-text-align-center stk-block-content stk-button-group">
+      <div class="wp-block-stackable-button stk-block-button is-style-ghost stk-block stk-f3b0d09">
+        <a class="stk-link stk-button stk--hover-effect-lift-scale" href="{{ section.settings.categories_button_link }}">
+          <span class="stk-button__inner-text">{{ section.settings.categories_button_label }}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wp-block-stackable-columns stk-block-columns stk-block stk-c7d3e1e">
+    <div class="stk-row stk-inner-blocks stk-block-content stk-content-align stk-c7d3e1e-column">
+      {% for block in section.blocks %}
+        {% if block.type == 'category_card' %}
+          <div class="wp-block-stackable-column stk-block-column stk-column stk-block stk-de6a0f9" {{ block.shopify_attributes }}>
+            <div class="stk-column-wrapper stk-block-column__content stk-container stk-de6a0f9-container stk--no-background stk--no-padding">
+              <div class="wp-block-stackable-image-box stk-block-image-box stk-hover-parent stk-block stk-8d74a13 is-style-default">
+                <div class="stk-block-content stk-inner-blocks has-text-align-center stk-row stk-block-image-box__content">
+                  <div class="wp-block-stackable-column stk-block-column stk-column stk-block stk-c22d38c">
+                    <div class="stk--column-flex stk-block-content stk-inner-blocks stk-c22d38c-inner-blocks">
+                      {% if block.settings.image != blank %}
+                        <figure class="wp-block-image size-full">
+                          {{
+                            block.settings.image
+                            | image_url: width: 1024
+                            | image_tag: loading: 'lazy', widths: '240,360,520,760,1024', sizes: '(max-width: 749px) 88vw, 320px', alt: block.settings.title
+                          }}
+                        </figure>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+                <a class="stk-link stk-block-link stk--transparent-overlay" href="{{ block.settings.link }}"></a>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="wp-block-stackable-columns alignfull stk-block-columns stk-block stk-ba85bee stk-block-background stk--has-background-overlay"
+       style="background-image:url({{ section.settings.benefits_bg | image_url }});">
+    <div class="stk-row stk-inner-blocks stk-block-content stk-content-align stk-ba85bee-column alignfull">
+      <div class="wp-block-stackable-column stk-block-column stk-column stk-block stk-0129ff1">
+        <div class="stk-column-wrapper stk-block-column__content stk-container stk-0129ff1-container stk--no-background stk--no-padding">
+          <div class="wp-block-stackable-text stk-block-text stk-block stk-f635f10">
+            <p class="stk-block-text__text has-text-align-center">{{ section.settings.benefits_kicker }}</p>
+          </div>
+          <div class="wp-block-stackable-heading stk-block-heading stk-block stk-528360b">
+            <h2 class="stk-block-heading__text has-text-align-center">{{ section.settings.benefits_heading }}</h2>
+          </div>
+
+          <div class="wp-block-stackable-columns stk-block-columns stk-block stk-d471b21">
+            <div class="stk-row stk-inner-blocks stk-block-content stk-content-align stk-d471b21-column">
+              {% for block in section.blocks %}
+                {% if block.type == 'benefit_item' %}
+                  <div class="wp-block-stackable-column stk-block-column stk-column stk-block stk-60eb318 stk-block-background" {{ block.shopify_attributes }}>
+                    <div class="stk-column-wrapper stk-block-column__content stk-container stk-60eb318-container stk--no-background stk--no-padding">
+                      <div class="stk-block-content stk-inner-blocks stk-60eb318-inner-blocks">
+                        <div class="wp-block-stackable-icon stk-block-icon has-text-align-center stk-block stk-5431aa5">
+                          {% if block.settings.icon != blank %}
+                            <span class="stk--svg-wrapper">
+                              {{
+                                block.settings.icon
+                                | image_url: width: 80
+                                | image_tag: loading: 'lazy', widths: '40,60,80', sizes: '50px', alt: block.settings.title
+                              }}
+                            </span>
+                          {% endif %}
+                        </div>
+                        <div class="wp-block-stackable-heading stk-block-heading stk-block stk-966a585">
+                          <h5 class="stk-block-heading__text has-text-align-center">{{ block.settings.title }}</h5>
+                        </div>
+                        <div class="wp-block-stackable-text stk-block-text stk-block stk-0c4960e">
+                          <p class="stk-block-text__text has-text-align-center">{{ block.settings.text }}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wp-block-stackable-columns alignfull stk-block-columns stk-block stk-79dbbf3 stk-block-background stk--has-background-overlay"
+       style="background-image:url({{ section.settings.newsletter_bg | image_url }});">
+    <div class="stk-row stk-inner-blocks stk-block-content stk-content-align stk-79dbbf3-column alignfull">
+      <div class="wp-block-stackable-column stk-block-column stk-column stk-block stk-f4efb9b">
+        <div class="stk-column-wrapper stk-block-column__content stk-container stk-f4efb9b-container stk--no-background stk--no-padding">
+          <div class="has-text-align-center stk-block-content stk-inner-blocks stk-f4efb9b-inner-blocks">
+            <div class="wp-block-stackable-text stk-block-text stk-block stk-ccff6c4">
+              <p class="stk-block-text__text has-text-align-center">{{ section.settings.newsletter_kicker }}</p>
+            </div>
+            <div class="wp-block-stackable-heading stk-block-heading stk-block stk-74ee4d2">
+              <h2 class="stk-block-heading__text has-text-align-center">{{ section.settings.newsletter_heading }}</h2>
+            </div>
+            <div class="wp-block-stackable-text stk-block-text stk-block stk-3a6303b">
+              <p class="stk-block-text__text has-text-align-center">{{ section.settings.newsletter_text }}</p>
+            </div>
+
+            {% form 'customer', class: 'wpforms-container wpforms-block wpforms-subscribe-form' %}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <div class="wpforms-field-container">
+                <div class="wpforms-field wpforms-field-email">
+                  <input type="email" name="contact[email]" class="wpforms-field-medium" placeholder="{{ section.settings.newsletter_placeholder }}" required>
+                </div>
+              </div>
+              <div class="wpforms-submit-container">
+                <button type="submit" class="wpforms-submit">{{ section.settings.newsletter_button_label }}</button>
+              </div>
+            {% endform %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Main index",
+  "settings": [
+    { "type": "image_picker", "id": "hero_bg", "label": "Hero background image" },
+    { "type": "text", "id": "hero_button_label", "label": "Hero button label", "default": "Explorar" },
+    { "type": "url", "id": "hero_button_link", "label": "Hero button link" },
+
+    { "type": "text", "id": "categories_kicker", "label": "Categories kicker", "default": "Elige tu categoria favorita" },
+    { "type": "text", "id": "categories_heading", "label": "Categories heading", "default": "Categorias para tu bienestar" },
+    { "type": "text", "id": "categories_button_label", "label": "Categories button label", "default": "Nuestros productos" },
+    { "type": "url", "id": "categories_button_link", "label": "Categories button link" },
+
+    { "type": "image_picker", "id": "benefits_bg", "label": "Benefits background image" },
+    { "type": "text", "id": "benefits_kicker", "label": "Benefits kicker", "default": "POTENCIA TU BIENESTAR CON VITALBOOST" },
+    { "type": "text", "id": "benefits_heading", "label": "Benefits heading", "default": "Suplementos de alta calidad, inspirados en la naturaleza, pensados para tu bienestar diario." },
+
+    { "type": "image_picker", "id": "newsletter_bg", "label": "Newsletter background image" },
+    { "type": "text", "id": "newsletter_kicker", "label": "Newsletter kicker", "default": "¿Querés recibir lanzamientos, descuentos y novedades?" },
+    { "type": "text", "id": "newsletter_heading", "label": "Newsletter heading", "default": "Suscribite y sé parte de nuestra comunidad Vital Boost." },
+    { "type": "textarea", "id": "newsletter_text", "label": "Newsletter text", "default": "Recibí actualizaciones por correo electrónico y ofertas especiales" },
+    { "type": "text", "id": "newsletter_placeholder", "label": "Newsletter input placeholder", "default": "Email address" },
+    { "type": "text", "id": "newsletter_button_label", "label": "Newsletter button label", "default": "Subscribe" }
+  ],
+  "blocks": [
+    {
+      "type": "category_card",
+      "name": "Category card",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Categoria" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    },
+    {
+      "type": "benefit_item",
+      "name": "Benefit item",
+      "limit": 6,
+      "settings": [
+        { "type": "image_picker", "id": "icon", "label": "Icon" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Beneficio" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Texto del beneficio." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Main index",
+      "blocks": [
+        { "type": "category_card" },
+        { "type": "benefit_item" },
+        { "type": "benefit_item" },
+        { "type": "benefit_item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

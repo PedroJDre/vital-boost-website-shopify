@@ -1,0 +1,123 @@
+﻿<footer id="footer" class="ct-footer" data-id="type-1">
+  <div data-row="top">
+    <div class="ct-container-fluid" data-columns-divider="md">
+
+      <div data-column="widget-area-1">
+        <div class="ct-widget is-layout-flow widget_block">
+          <div class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
+            <p><strong>{{ section.settings.contact_title }}</strong></p>
+            <p>
+              {{ section.settings.contact_phone_label }}<br>{{ section.settings.contact_phone }}<br>
+              {{ section.settings.contact_email_label }}<br>{{ section.settings.contact_email }}<br>
+              {{ section.settings.contact_address_label }}<br>{{ section.settings.contact_address }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div data-column="widget-area-2">
+        <div class="ct-widget is-layout-flow widget_block">
+          <div class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
+            <h4 class="wp-block-heading has-medium-font-size">{{ section.settings.menu_title }}</h4>
+            <p>
+              {% for link in section.settings.footer_menu.links %}
+                <a href="{{ link.url }}">{{ link.title }}</a><br>
+              {% endfor %}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div data-column="widget-area-3">
+        <div class="ct-widget is-layout-flow widget_block">
+          <div class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
+            <h4 class="wp-block-heading has-medium-font-size">{{ section.settings.account_title }}</h4>
+            <p>
+              <a href="{{ routes.account_url }}">{{ section.settings.account_link_1 }}</a><br>
+              <a href="{{ routes.cart_url }}">{{ section.settings.account_link_2 }}</a><br>
+              <a href="{{ routes.cart_url }}">{{ section.settings.account_link_3 }}</a><br>
+              <a href="{{ section.settings.support_link }}">{{ section.settings.account_link_4 }}</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div data-column="widget-area-4">
+        <div class="ct-widget is-layout-flow widget_block">
+          <div class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
+            <h4 class="wp-block-heading has-medium-font-size">{{ section.settings.payment_title }}</h4>
+            {% if section.settings.payment_image != blank %}
+              <figure class="wp-block-image size-full">
+                {{
+                  section.settings.payment_image
+                  | image_url: width: 700
+                  | image_tag: loading: 'lazy', widths: '180,280,420,560,700', sizes: '(max-width: 989px) 50vw, 260px', alt: section.settings.payment_title
+                }}
+              </figure>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div data-row="bottom">
+    <div class="ct-container" data-columns-divider="md">
+      <div data-column="copyright">
+        <div class="ct-footer-copyright" data-id="copyright">
+          <p>{{ section.settings.copyright_text }}</p>
+        </div>
+      </div>
+
+      <div data-column="socials">
+        <div class="ct-footer-socials" data-id="socials">
+          <div class="ct-social-box" data-color="custom" data-icon-size="custom" data-icons-type="simple">
+            {% if section.settings.facebook_url != blank %}
+              <a href="{{ section.settings.facebook_url }}" data-network="facebook" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                <span class="ct-label">Facebook</span>
+              </a>
+            {% endif %}
+            {% if section.settings.instagram_url != blank %}
+              <a href="{{ section.settings.instagram_url }}" data-network="instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                <span class="ct-label">Instagram</span>
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "text", "id": "contact_title", "label": "Contact title", "default": "Contacto" },
+    { "type": "text", "id": "contact_phone_label", "label": "Phone label", "default": "Teléfono:" },
+    { "type": "text", "id": "contact_phone", "label": "Phone", "default": "(+54) 1156607163" },
+    { "type": "text", "id": "contact_email_label", "label": "Email label", "default": "Correo electrónico:" },
+    { "type": "text", "id": "contact_email", "label": "Email", "default": "vitalboostarg@gmail.com" },
+    { "type": "text", "id": "contact_address_label", "label": "Address label", "default": "Dirección:" },
+    { "type": "textarea", "id": "contact_address", "label": "Address", "default": "Nordelta, Argentina." },
+
+    { "type": "text", "id": "menu_title", "label": "Main menu title", "default": "Menu Principal" },
+    { "type": "link_list", "id": "footer_menu", "label": "Footer menu" },
+
+    { "type": "text", "id": "account_title", "label": "Account title", "default": "Cuenta" },
+    { "type": "text", "id": "account_link_1", "label": "Account link label 1", "default": "Mi cuenta" },
+    { "type": "text", "id": "account_link_2", "label": "Account link label 2", "default": "Mi carrito" },
+    { "type": "text", "id": "account_link_3", "label": "Account link label 3", "default": "Pagar" },
+    { "type": "text", "id": "account_link_4", "label": "Account link label 4", "default": "Centro de soporte" },
+    { "type": "url", "id": "support_link", "label": "Support link" },
+
+    { "type": "text", "id": "payment_title", "label": "Payment methods title", "default": "Metodos de pago" },
+    { "type": "image_picker", "id": "payment_image", "label": "Payment image" },
+
+    { "type": "text", "id": "copyright_text", "label": "Copyright", "default": "Copyright © 2026 Vitalboost.com.ar" },
+    { "type": "url", "id": "facebook_url", "label": "Facebook URL" },
+    { "type": "url", "id": "instagram_url", "label": "Instagram URL" }
+  ]
+}
+{% endschema %}
