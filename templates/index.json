@@ -10,21 +10,21 @@
       },
       "blocks": {
         "message_1": {
-          "type": "message",
+          "type": "item",
           "settings": {
             "text": "Envios a todo el pais",
             "link": ""
           }
         },
         "message_2": {
-          "type": "message",
+          "type": "item",
           "settings": {
             "text": "Descuentos por suscripcion",
             "link": ""
           }
         },
         "message_3": {
-          "type": "message",
+          "type": "item",
           "settings": {
             "text": "Soporte personalizado por WhatsApp",
             "link": ""
