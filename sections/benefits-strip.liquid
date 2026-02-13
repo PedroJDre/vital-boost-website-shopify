@@ -23,6 +23,8 @@
                 | image_tag: loading: 'lazy', widths: '60,80,120', sizes: '20px', alt: block.settings.title
               }}
             </div>
+          {% else %}
+            <div class="vb-benefits-strip__icon vb-benefits-strip__icon--fallback" aria-hidden="true"></div>
           {% endif %}
           <h3>{{ block.settings.title }}</h3>
           {% if block.settings.text != blank %}
@@ -75,6 +77,27 @@
     height: 20px;
     object-fit: contain;
     margin-bottom: 0.25rem;
+  }
+
+  #shopify-section-{{ section.id }} .vb-benefits-strip__icon--fallback {
+    width: 20px;
+    height: 20px;
+    margin-bottom: 0.25rem;
+    border-radius: 999px;
+    border: 2px solid var(--vb-accent);
+    position: relative;
+  }
+
+  #shopify-section-{{ section.id }} .vb-benefits-strip__icon--fallback::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border-right: 2px solid var(--vb-accent);
+    border-bottom: 2px solid var(--vb-accent);
+    transform: rotate(38deg);
   }
 
   #shopify-section-{{ section.id }} .vb-benefits-strip__item h3 {

@@ -24,15 +24,32 @@
 
             <a class="vb-product-card__image" href="{{ product.url }}">
               {% if product.featured_image %}
-                {{
-                  product.featured_image
-                  | image_url: width: 1000
-                  | image_tag:
-                    loading: 'lazy',
-                    widths: '320,520,760,1000',
-                    sizes: '(max-width: 989px) 92vw, 30vw',
-                    alt: product.featured_image.alt
-                }}
+                {% assign secondary_image = product.images[1] %}
+                <span class="vb-product-card__image-wrap">
+                  {{
+                    product.featured_image
+                    | image_url: width: 1000
+                    | image_tag:
+                      class: 'vb-product-card__image-asset vb-product-card__image-asset--primary',
+                      loading: 'lazy',
+                      widths: '320,520,760,1000',
+                      sizes: '(max-width: 989px) 92vw, 30vw',
+                      alt: product.featured_image.alt
+                  }}
+                  {% if secondary_image != blank %}
+                    {% assign secondary_alt = secondary_image.alt | default: product.title %}
+                    {{
+                      secondary_image
+                      | image_url: width: 1000
+                      | image_tag:
+                        class: 'vb-product-card__image-asset vb-product-card__image-asset--secondary',
+                        loading: 'lazy',
+                        widths: '320,520,760,1000',
+                        sizes: '(max-width: 989px) 92vw, 30vw',
+                        alt: secondary_alt
+                    }}
+                  {% endif %}
+                </span>
               {% else %}
                 {{ 'product-1' | placeholder_svg_tag: 'vb-placeholder' }}
               {% endif %}
@@ -160,19 +177,47 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
     margin-bottom: 0.7rem;
     background: #f7f9f7;
     border-radius: 0.85rem;
     overflow: hidden;
   }
 
-  #shopify-section-{{ section.id }} .vb-product-card__image img,
+  #shopify-section-{{ section.id }} .vb-product-card__image-wrap {
+    display: block;
+    width: 100%;
+    position: relative;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-card__image .vb-product-card__image-asset,
   #shopify-section-{{ section.id }} .vb-product-card__image svg {
     width: 100%;
     max-width: 300px;
     aspect-ratio: 1 / 1;
     object-fit: contain;
     display: block;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-card__image-asset--primary,
+  #shopify-section-{{ section.id }} .vb-product-card__image-asset--secondary {
+    transition: opacity 0.24s ease;
+  }
+
+  #shopify-section-{{ section.id }} .vb-product-card__image-asset--secondary {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    #shopify-section-{{ section.id }} .vb-product-card:hover .vb-product-card__image-asset--primary {
+      opacity: 0;
+    }
+
+    #shopify-section-{{ section.id }} .vb-product-card:hover .vb-product-card__image-asset--secondary {
+      opacity: 1;
+    }
   }
 
   #shopify-section-{{ section.id }} .vb-product-card__body {

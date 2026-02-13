@@ -424,7 +424,8 @@
         "show_newsletter": true,
         "newsletter_placeholder": "Tu email",
         "newsletter_button": "Suscribirme",
-        "success_text": "Gracias por suscribirte."
+        "success_text": "Gracias por suscribirte.",
+        "fallback_collection": "all"
       }
     }
   },

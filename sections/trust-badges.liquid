@@ -30,6 +30,8 @@
                   alt: block.settings.title
               }}
             </div>
+          {% else %}
+            <div class="vb-trust-badge__icon vb-trust-badge__icon--fallback" aria-hidden="true"></div>
           {% endif %}
 
           <div class="vb-trust-badge__content">
@@ -96,6 +98,28 @@
     object-fit: contain;
     display: block;
     filter: saturate(0.8);
+  }
+
+  #shopify-section-{{ section.id }} .vb-trust-badge__icon--fallback {
+    width: 20px;
+    height: 20px;
+    border-radius: 999px;
+    border: 2px solid var(--vb-accent);
+    position: relative;
+    flex: 0 0 20px;
+    margin-top: 1px;
+  }
+
+  #shopify-section-{{ section.id }} .vb-trust-badge__icon--fallback::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border-right: 2px solid var(--vb-accent);
+    border-bottom: 2px solid var(--vb-accent);
+    transform: rotate(38deg);
   }
 
   #shopify-section-{{ section.id }} .vb-trust-badge__content h3 {

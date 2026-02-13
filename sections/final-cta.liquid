@@ -9,6 +9,16 @@
   "
 >
   <div class="page-width">
+    {% liquid
+      assign cta_image = section.settings.image
+      assign fallback_collection = section.settings.fallback_collection
+      if cta_image == blank and fallback_collection != blank and fallback_collection.products_count > 0
+        assign fallback_product = fallback_collection.products.first
+        if fallback_product != blank and fallback_product.featured_image != blank
+          assign cta_image = fallback_product.featured_image
+        endif
+      endif
+    %}
     <div class="vb-final-cta__card">
       <div class="vb-final-cta__content">
         {% if section.settings.eyebrow != blank %}
@@ -63,11 +73,11 @@
       </div>
 
       <div class="vb-final-cta__media">
-        {% if section.settings.image != blank %}
+        {% if cta_image != blank %}
           {{
-            section.settings.image
+            cta_image
             | image_url: width: 1200
-            | image_tag: loading: 'lazy', widths: '420,680,960,1200', alt: section.settings.image.alt
+            | image_tag: loading: 'lazy', widths: '420,680,960,1200', sizes: '(max-width: 989px) 94vw, 36vw', alt: cta_image.alt
           }}
         {% else %}
           {{ 'lifestyle-2' | placeholder_svg_tag: 'vb-placeholder' }}
@@ -275,6 +285,11 @@
       "type": "image_picker",
       "id": "image",
       "label": "Image"
+    },
+    {
+      "type": "collection",
+      "id": "fallback_collection",
+      "label": "Fallback collection for image"
     },
     {
       "type": "color",

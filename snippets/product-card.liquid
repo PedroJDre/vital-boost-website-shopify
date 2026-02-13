@@ -1,9 +1,88 @@
-﻿<article class="product-card">
-  <a href="{{ product.url }}">
+{% liquid
+  assign tags_down = product.tags | join: ',' | downcase
+  assign card_is_bundle = is_bundle | default: false
+  assign card_is_popular = is_popular | default: false
+  assign button_label = cta_label | default: 'Ver producto'
+
+  assign has_discount = false
+  if product.compare_at_price > product.price
+    assign has_discount = true
+  endif
+
+  assign badge_text = ''
+  if has_discount
+    assign badge_text = 'Sale'
+  elsif tags_down contains 'belleza'
+    assign badge_text = 'Belleza'
+  elsif tags_down contains 'sport'
+    assign badge_text = 'Sport'
+  elsif tags_down contains 'vitalidad'
+    assign badge_text = 'Vitalidad'
+  endif
+
+  assign savings_amount = 0
+  if has_discount
+    assign savings_amount = product.compare_at_price | minus: product.price
+  endif
+%}
+
+<article class="vb-product-card{% if card_is_bundle %} is-bundle{% endif %}{% if card_is_popular %} is-popular{% endif %}">
+  {% if badge_text != blank %}
+    <span class="vb-product-card__badge">{{ badge_text }}</span>
+  {% endif %}
+  {% if card_is_popular %}
+    <span class="vb-product-card__popular">{{ popular_label | default: 'Mas popular' }}</span>
+  {% endif %}
+
+  <a class="vb-product-card__image-link" href="{{ product.url }}">
     {% if product.featured_image %}
-      {{ product.featured_image | image_url: width: 600 | image_tag: alt: product.title }}
+      {% assign secondary_image = product.images[1] %}
+      <span class="vb-product-card__image-wrap">
+        {{
+          product.featured_image
+          | image_url: width: 960
+          | image_tag:
+            class: 'vb-product-card__image vb-product-card__image--primary',
+            loading: 'lazy',
+            widths: '320,480,640,800,960',
+            sizes: '(max-width: 749px) 92vw, (max-width: 989px) 46vw, 31vw',
+            alt: product.featured_image.alt
+        }}
+        {% if secondary_image != blank %}
+          {% assign secondary_alt = secondary_image.alt | default: product.title %}
+          {{
+            secondary_image
+            | image_url: width: 960
+            | image_tag:
+              class: 'vb-product-card__image vb-product-card__image--secondary',
+              loading: 'lazy',
+              widths: '320,480,640,800,960',
+              sizes: '(max-width: 749px) 92vw, (max-width: 989px) 46vw, 31vw',
+              alt: secondary_alt
+          }}
+        {% endif %}
+      </span>
+    {% else %}
+      {{ 'product-1' | placeholder_svg_tag: 'vb-product-card__placeholder' }}
     {% endif %}
-    <h3>{{ product.title }}</h3>
-    <p>{{ product.price | money }}</p>
   </a>
+
+  <div class="vb-product-card__content">
+    <h3 class="vb-product-card__title">
+      <a href="{{ product.url }}">{{ product.title }}</a>
+    </h3>
+
+    {% if card_is_bundle and has_discount %}
+      <p class="vb-product-card__savings">Ahorras {{ savings_amount | money }}</p>
+    {% endif %}
+
+    <p class="vb-product-card__price-wrap">
+      {% if has_discount %}
+        <span class="vb-product-card__compare">{{ product.compare_at_price | money }}</span>
+      {% endif %}
+      <strong class="vb-product-card__price">{{ product.price | money }}</strong>
+    </p>
+
+    <a class="vb-product-card__cta" href="{{ product.url }}">{{ button_label }}</a>
+  </div>
 </article>

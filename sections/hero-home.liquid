@@ -1,21 +1,26 @@
 {% liquid
   assign featured_product = section.settings.featured_product
   assign featured_collection = section.settings.featured_collection
+  assign custom_hero_image = section.settings.hero_image
   assign hero_image = blank
   assign product_url = blank
   assign product_title = blank
 
   if featured_product != blank
-    assign hero_image = featured_product.featured_image
     assign product_url = featured_product.url
     assign product_title = featured_product.title
+    assign hero_image = featured_product.featured_image
   elsif featured_collection != blank and featured_collection.products_count > 0
     assign first_product = featured_collection.products.first
     if first_product != blank
-      assign hero_image = first_product.featured_image
       assign product_url = first_product.url
       assign product_title = first_product.title
+      assign hero_image = first_product.featured_image
     endif
+  endif
+
+  if custom_hero_image != blank
+    assign hero_image = custom_hero_image
   endif
 %}
 
@@ -85,16 +90,40 @@
         {% else %}
           <div class="vb-hero-home__image-wrap">
         {% endif %}
-            {% if hero_image != blank %}
+            {% if custom_hero_image != blank or featured_product != blank %}
               {{
                 hero_image
                 | image_url: width: 1600
                 | image_tag:
                   loading: 'eager',
                   widths: '480, 700, 980, 1280, 1600',
+                  sizes: '(max-width: 989px) 94vw, 48vw',
                   class: 'vb-hero-home__image',
-                  alt: hero_image.alt
+                  alt: hero_image.alt | default: shop.name
               }}
+            {% elsif featured_collection != blank and featured_collection.products_count > 0 %}
+              <div class="vb-hero-home__trio">
+                {% for p in featured_collection.products limit: 3 %}
+                  <div class="vb-hero-home__trio-item">
+                    <a href="{{ p.url }}" aria-label="{{ p.title | escape }}">
+                      {% if p.featured_image != blank %}
+                        {{
+                          p.featured_image
+                          | image_url: width: 900
+                          | image_tag:
+                            loading: 'eager',
+                            widths: '320,520,760,900',
+                            sizes: '(max-width: 989px) 31vw, 16vw',
+                            class: 'vb-hero-home__trio-image',
+                            alt: p.featured_image.alt | default: p.title
+                        }}
+                      {% else %}
+                        {{ 'product-1' | placeholder_svg_tag: 'vb-hero-home__trio-image vb-placeholder' }}
+                      {% endif %}
+                    </a>
+                  </div>
+                {% endfor %}
+              </div>
             {% else %}
               {{ 'product-1' | placeholder_svg_tag: 'vb-hero-home__image vb-placeholder' }}
             {% endif %}
@@ -197,7 +226,6 @@
     background: #5a8139;
     color: #ffffff;
     border: 1px solid #5a8139;
-    box-shadow: 0 1px 0 rgba(16, 33, 20, 0.06);
   }
 
   #shopify-section-{{ section.id }} .vb-hero-home__btn--primary:hover {
@@ -261,13 +289,42 @@
     overflow: hidden;
     border: 1px solid #e6eee7;
     background: #ffffff;
-    box-shadow: 0 12px 34px rgba(20, 35, 24, 0.08);
+    box-shadow: 0 8px 22px rgba(20, 35, 24, 0.08);
   }
 
   #shopify-section-{{ section.id }} .vb-hero-home__image {
     width: 100%;
     display: block;
     aspect-ratio: 1.18 / 1;
+    object-fit: cover;
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__trio {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.35rem;
+    padding: 0.4rem;
+    background: #eef2ef;
+    align-items: end;
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__trio-item {
+    background: #ffffff;
+    border: 1px solid #dbe4de;
+    border-radius: 0.8rem;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(20, 35, 24, 0.06);
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__trio-item a {
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .vb-hero-home__trio-image {
+    width: 100%;
+    display: block;
+    aspect-ratio: 1 / 1.15;
     object-fit: cover;
   }
 
@@ -287,6 +344,15 @@
 
     #shopify-section-{{ section.id }} .vb-hero-home__image {
       aspect-ratio: 1 / 1.05;
+    }
+
+    #shopify-section-{{ section.id }} .vb-hero-home__trio {
+      gap: 0.55rem;
+      padding: 0.55rem;
+    }
+
+    #shopify-section-{{ section.id }} .vb-hero-home__trio-item {
+      border-radius: 0.95rem;
     }
 
     #shopify-section-{{ section.id }} .vb-hero-home__trust {
@@ -374,7 +440,7 @@
       "type": "text",
       "id": "trust_micro_text",
       "label": "Trust micro text",
-      "default": "Envíos a todo el país · Compra 100% segura"
+      "default": "Envios a todo el pais - Compra 100% segura"
     },
     {
       "type": "checkbox",
@@ -386,7 +452,7 @@
       "type": "text",
       "id": "review_badge_aria",
       "label": "Review badge accessibility label",
-      "default": "Reseñas de clientes"
+      "default": "Resenas de clientes"
     },
     {
       "type": "text",
@@ -404,7 +470,12 @@
       "type": "text",
       "id": "review_badge_count",
       "label": "Review count text",
-      "default": "2.000+ reseñas"
+      "default": "2.000+ resenas"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero main image"
     },
     {
       "type": "product",
