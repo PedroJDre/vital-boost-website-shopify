@@ -29,6 +29,23 @@ body {
   line-height: 1.5;
 }
 
+.page-width {
+  width: min(1280px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 img {
   max-width: 100%;
   display: block;
@@ -82,6 +99,14 @@ h6 {
   background: rgba(255, 255, 255, 0.96);
   border-bottom: 1px solid var(--vb-border-soft);
   backdrop-filter: blur(8px);
+}
+
+.ct-header [data-device="desktop"] {
+  display: none;
+}
+
+.ct-header [data-device="mobile"] {
+  display: block;
 }
 
 .ct-container-fluid,
@@ -169,6 +194,12 @@ h6 {
   margin-top: 12px;
   font-size: 14px;
   color: var(--vb-text-soft);
+}
+
+[class*="vb-"] h1,
+[class*="vb-"] h2,
+[class*="vb-"] h3 {
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
 }
 
 /* Main index sections */
@@ -407,6 +438,14 @@ h6 {
     display: block;
   }
 
+  .ct-header [data-device="desktop"] {
+    display: block;
+  }
+
+  .ct-header [data-device="mobile"] {
+    display: none;
+  }
+
   .header-menu-1 .menu {
     display: flex;
     align-items: center;
@@ -424,10 +463,6 @@ h6 {
 
   .header-menu-1 .ct-menu-link:hover {
     color: var(--vb-accent);
-  }
-
-  .ct-header [data-device="mobile"] {
-    display: none;
   }
 
   .stk-3e20b48 {

@@ -26,11 +26,18 @@
               <div data-items="">
                 <nav id="header-menu-1" class="header-menu-1 menu-container" data-id="menu" data-interaction="hover" aria-label="Main Menu">
                   <ul class="menu">
-                    {% for link in section.settings.menu.links %}
-                      <li class="menu-item">
-                        <a href="{{ link.url }}" class="ct-menu-link">{{ link.title }}</a>
-                      </li>
-                    {% endfor %}
+                    {% if section.settings.menu != blank and section.settings.menu.links.size > 0 %}
+                      {% for link in section.settings.menu.links %}
+                        <li class="menu-item">
+                          <a href="{{ link.url }}" class="ct-menu-link">{{ link.title }}</a>
+                        </li>
+                      {% endfor %}
+                    {% else %}
+                      <li class="menu-item"><a href="{{ routes.root_url }}" class="ct-menu-link">Inicio</a></li>
+                      <li class="menu-item"><a href="{{ routes.all_products_collection_url }}" class="ct-menu-link">Productos</a></li>
+                      <li class="menu-item"><a href="/pages/faq" class="ct-menu-link">FAQ</a></li>
+                      <li class="menu-item"><a href="/pages/contact" class="ct-menu-link">Contacto</a></li>
+                    {% endif %}
                   </ul>
                 </nav>
               </div>
@@ -120,11 +127,18 @@
             <div class="ct-panel-content-inner">
               <nav class="mobile-menu menu-container" data-id="mobile-menu" aria-label="Main Menu">
                 <ul>
-                  {% for link in section.settings.menu.links %}
-                    <li class="menu-item">
-                      <a href="{{ link.url }}" class="ct-menu-link">{{ link.title }}</a>
-                    </li>
-                  {% endfor %}
+                  {% if section.settings.menu != blank and section.settings.menu.links.size > 0 %}
+                    {% for link in section.settings.menu.links %}
+                      <li class="menu-item">
+                        <a href="{{ link.url }}" class="ct-menu-link">{{ link.title }}</a>
+                      </li>
+                    {% endfor %}
+                  {% else %}
+                    <li class="menu-item"><a href="{{ routes.root_url }}" class="ct-menu-link">Inicio</a></li>
+                    <li class="menu-item"><a href="{{ routes.all_products_collection_url }}" class="ct-menu-link">Productos</a></li>
+                    <li class="menu-item"><a href="/pages/faq" class="ct-menu-link">FAQ</a></li>
+                    <li class="menu-item"><a href="/pages/contact" class="ct-menu-link">Contacto</a></li>
+                  {% endif %}
                 </ul>
               </nav>
               <div class="ct-header-socials" data-id="socials">

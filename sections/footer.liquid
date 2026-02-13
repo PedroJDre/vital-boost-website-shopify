@@ -20,9 +20,16 @@
           <div class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
             <h4 class="wp-block-heading has-medium-font-size">{{ section.settings.menu_title }}</h4>
             <p>
-              {% for link in section.settings.footer_menu.links %}
-                <a href="{{ link.url }}">{{ link.title }}</a><br>
-              {% endfor %}
+              {% if section.settings.footer_menu != blank and section.settings.footer_menu.links.size > 0 %}
+                {% for link in section.settings.footer_menu.links %}
+                  <a href="{{ link.url }}">{{ link.title }}</a><br>
+                {% endfor %}
+              {% else %}
+                <a href="{{ routes.root_url }}">Inicio</a><br>
+                <a href="{{ routes.all_products_collection_url }}">Productos</a><br>
+                <a href="/pages/faq">FAQ</a><br>
+                <a href="/pages/contact">Contacto</a><br>
+              {% endif %}
             </p>
           </div>
         </div>
@@ -95,11 +102,11 @@
   "name": "Footer",
   "settings": [
     { "type": "text", "id": "contact_title", "label": "Contact title", "default": "Contacto" },
-    { "type": "text", "id": "contact_phone_label", "label": "Phone label", "default": "Teléfono:" },
+    { "type": "text", "id": "contact_phone_label", "label": "Phone label", "default": "Telefono:" },
     { "type": "text", "id": "contact_phone", "label": "Phone", "default": "(+54) 1156607163" },
-    { "type": "text", "id": "contact_email_label", "label": "Email label", "default": "Correo electrónico:" },
+    { "type": "text", "id": "contact_email_label", "label": "Email label", "default": "Correo electronico:" },
     { "type": "text", "id": "contact_email", "label": "Email", "default": "vitalboostarg@gmail.com" },
-    { "type": "text", "id": "contact_address_label", "label": "Address label", "default": "Dirección:" },
+    { "type": "text", "id": "contact_address_label", "label": "Address label", "default": "Direccion:" },
     { "type": "textarea", "id": "contact_address", "label": "Address", "default": "Nordelta, Argentina." },
 
     { "type": "text", "id": "menu_title", "label": "Main menu title", "default": "Menu Principal" },
