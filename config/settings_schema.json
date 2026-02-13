@@ -1,21 +1,23 @@
-{
-  "name": "Vital Boost OS 2.0",
-  "settings": [
-    {
-      "type": "header",
-      "content": "Colors"
-    },
-    {
-      "type": "color",
-      "id": "color_button",
-      "label": "Button color",
-      "default": "#183f86"
-    },
-    {
-      "type": "color",
-      "id": "color_button_text",
-      "label": "Button text",
-      "default": "#ffffff"
-    }
-  ]
-}
+[
+  {
+    "name": "Vital Boost OS 2.0",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Colors"
+      },
+      {
+        "type": "color",
+        "id": "color_button",
+        "label": "Button color",
+        "default": "#183f86"
+      },
+      {
+        "type": "color",
+        "id": "color_button_text",
+        "label": "Button text",
+        "default": "#ffffff"
+      }
+    ]
+  }
+]
