@@ -3,28 +3,48 @@
     "main": {
       "type": "main-index",
       "settings": {
-        "heading": "Buy Collagen Protein Powder & Collagen Supplements",
-        "subheading": "Vital Proteins gives you the boost you need to support healthy hair, skin, nails, bone and joint health.",
-        "button_label": "Shop now",
-        "button_link": "/collections/all"
+        "hero_button_label": "Explorar",
+        "categories_kicker": "Elige tu categoria favorita",
+        "categories_heading": "Categorias para tu bienestar",
+        "categories_button_label": "Nuestros productos",
+        "benefits_kicker": "POTENCIA TU BIENESTAR CON VITALBOOST",
+        "benefits_heading": "Suplementos de alta calidad, inspirados en la naturaleza, pensados para tu bienestar diario.",
+        "newsletter_kicker": "¿Querés recibir lanzamientos, descuentos y novedades?",
+        "newsletter_heading": "Suscribite y sé parte de nuestra comunidad Vital Boost.",
+        "newsletter_text": "Recibí actualizaciones por correo electrónico y ofertas especiales",
+        "newsletter_placeholder": "Email address",
+        "newsletter_button_label": "Subscribe"
       },
       "blocks": {
-        "feature_1": {
-          "type": "feature",
+        "category_1": {
+          "type": "category_card",
           "settings": {
-            "title": "Collagen peptides",
-            "text": "Add to coffee, smoothies, or recipes."
+            "title": "Belleza"
           }
         },
-        "feature_2": {
-          "type": "feature",
+        "benefit_1": {
+          "type": "benefit_item",
           "settings": {
-            "title": "Daily routine",
-            "text": "Simple wellness support every day."
+            "title": "Suplementos confiables",
+            "text": "Solo trabajamos con fórmulas respaldadas científicamente."
+          }
+        },
+        "benefit_2": {
+          "type": "benefit_item",
+          "settings": {
+            "title": "Vital Boost Colágeno",
+            "text": "Natural, eficaz y pensado para tu rutina."
+          }
+        },
+        "benefit_3": {
+          "type": "benefit_item",
+          "settings": {
+            "title": "Atención personalizada",
+            "text": "Te acompañamos para elegir lo que realmente necesitás."
           }
         }
       },
-      "block_order": ["feature_1", "feature_2"]
+      "block_order": ["category_1", "benefit_1", "benefit_2", "benefit_3"]
     }
   },
   "order": ["main"]
