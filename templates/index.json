@@ -159,6 +159,100 @@
         "default_button_label": "Comprar"
       }
     },
+    "featured_products_NDbUCp": {
+      "type": "featured-products",
+      "blocks": {
+        "product_meta_MJjR3B": {
+          "type": "product_meta",
+          "settings": {
+            "badge": "Top venta",
+            "benefit_1": "Soporte diario",
+            "benefit_2": "Formula premium",
+            "benefit_3": "Facil de incorporar",
+            "button_label": "Comprar"
+          }
+        },
+        "product_meta_qhrhXq": {
+          "type": "product_meta",
+          "settings": {
+            "badge": "Nuevo",
+            "benefit_1": "Soporte diario",
+            "benefit_2": "Formula premium",
+            "benefit_3": "Facil de incorporar",
+            "button_label": "Comprar"
+          }
+        },
+        "product_meta_A4R9mi": {
+          "type": "product_meta",
+          "settings": {
+            "badge": "Comunidad",
+            "benefit_1": "Soporte diario",
+            "benefit_2": "Formula premium",
+            "benefit_3": "Facil de incorporar",
+            "button_label": "Comprar"
+          }
+        }
+      },
+      "block_order": [
+        "product_meta_MJjR3B",
+        "product_meta_qhrhXq",
+        "product_meta_A4R9mi"
+      ],
+      "name": "Featured Products",
+      "settings": {
+        "heading": "Productos destacados",
+        "subheading": "Tres opciones premium para tu rutina VitalBoost.",
+        "collection": "",
+        "default_button_label": "Comprar"
+      }
+    },
+    "featured_products_MFxDER": {
+      "type": "featured-products",
+      "blocks": {
+        "product_meta_qMdKb7": {
+          "type": "product_meta",
+          "settings": {
+            "badge": "Top venta",
+            "benefit_1": "Soporte diario",
+            "benefit_2": "Formula premium",
+            "benefit_3": "Facil de incorporar",
+            "button_label": "Comprar"
+          }
+        },
+        "product_meta_JcF7ng": {
+          "type": "product_meta",
+          "settings": {
+            "badge": "Nuevo",
+            "benefit_1": "Soporte diario",
+            "benefit_2": "Formula premium",
+            "benefit_3": "Facil de incorporar",
+            "button_label": "Comprar"
+          }
+        },
+        "product_meta_JCY9C6": {
+          "type": "product_meta",
+          "settings": {
+            "badge": "Comunidad",
+            "benefit_1": "Soporte diario",
+            "benefit_2": "Formula premium",
+            "benefit_3": "Facil de incorporar",
+            "button_label": "Comprar"
+          }
+        }
+      },
+      "block_order": [
+        "product_meta_qMdKb7",
+        "product_meta_JcF7ng",
+        "product_meta_JCY9C6"
+      ],
+      "name": "Featured Products",
+      "settings": {
+        "heading": "Productos destacados",
+        "subheading": "Tres opciones premium para tu rutina VitalBoost.",
+        "collection": "",
+        "default_button_label": "Comprar"
+      }
+    },
     "lines_comparison": {
       "type": "product-lines-comparison",
       "blocks": {
@@ -498,6 +592,8 @@
     "hero",
     "benefits_strip",
     "featured_products",
+    "featured_products_NDbUCp",
+    "featured_products_MFxDER",
     "lines_comparison",
     "trust_badges",
     "bundle_upsell",
