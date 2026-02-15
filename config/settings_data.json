@@ -1,6 +1,56 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "color_button": "#183f86",
-    "color_button_text": "#ffffff"
+    "color_button_text": "#ffffff",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo": "shopify://shop_images/Screenshot_2025-10-29_at_1.20.13_PM.png",
+          "mobile_logo": "shopify://shop_images/Screenshot_2025-10-29_at_1.20.13_PM.png",
+          "menu": "",
+          "transparent_header": true,
+          "show_search": true,
+          "show_cart": true,
+          "show_account": true,
+          "facebook_url": "",
+          "instagram_url": ""
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "contact_title": "Contacto",
+          "contact_phone_label": "Telefono:",
+          "contact_phone": "(+54) 1156607163",
+          "contact_email_label": "Correo electronico:",
+          "contact_email": "vitalboostarg@gmail.com",
+          "contact_address_label": "Direccion:",
+          "contact_address": "Nordelta, Argentina.",
+          "menu_title": "Menu Principal",
+          "footer_menu": "",
+          "account_title": "Cuenta",
+          "account_link_1": "Mi cuenta",
+          "account_link_2": "Mi carrito",
+          "account_link_3": "Pagar",
+          "account_link_4": "Centro de soporte",
+          "support_link": "",
+          "payment_title": "Metodos de pago",
+          "copyright_text": "Copyright © 2026 Vitalboost.com.ar",
+          "facebook_url": "",
+          "instagram_url": ""
+        }
+      }
+    },
+    "content_for_index": []
   }
 }
