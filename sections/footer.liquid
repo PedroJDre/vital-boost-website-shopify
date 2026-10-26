@@ -1,5 +1,24 @@
 <footer class="site-footer">
   <div class="wrap">
+    {%- if section.settings.show_newsletter -%}
+      <div class="news">
+        <div>
+          <h2>{{ section.settings.news_heading }}</h2>
+          {%- if section.settings.news_text != blank -%}<p>{{ section.settings.news_text }}</p>{%- endif -%}
+        </div>
+        {%- form 'customer', id: 'FooterNewsletter' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          {%- if form.posted_successfully? -%}
+            <p class="notice" role="status">¡Listo! Ya estás suscripto.</p>
+          {%- else -%}
+            <label class="visually-hidden" for="NewsEmail">Tu email</label>
+            <input id="NewsEmail" type="email" name="contact[email]" placeholder="Tu email" autocomplete="email" required>
+            <button type="submit" class="btn">Suscribirme</button>
+            {%- if form.errors -%}<p class="notice" role="alert">Revisá el email e intentá de nuevo.</p>{%- endif -%}
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    {%- endif -%}
     <div class="footer__grid">
       <div class="footer__brand">
         <img class="footer-logo" src="{{ 'logo-white.png' | asset_url }}" width="726" height="526" alt="{{ settings.brand_name | default: shop.name | escape }}" loading="lazy">
@@ -68,6 +87,9 @@
 {
   "name": "Pie de página",
   "settings": [
+    { "type": "checkbox", "id": "show_newsletter", "label": "Mostrar suscripción al newsletter", "default": true },
+    { "type": "text", "id": "news_heading", "label": "Título del newsletter", "default": "Sumate a la comunidad" },
+    { "type": "text", "id": "news_text", "label": "Texto del newsletter", "default": "Lanzamientos, recetas y beneficios para suscriptores. Sin spam." },
     { "type": "textarea", "id": "text", "label": "Texto", "default": "Colágeno hidrolizado con activos para cada objetivo. Desarrollado y elaborado en Argentina." },
     { "type": "link_list", "id": "menu_1", "label": "Links extra en Ayuda", "default": "footer" },
     { "type": "url", "id": "regret_link", "label": "Link del botón de arrepentimiento", "info": "Obligatorio en Argentina (Res. 424/2020). Creá una página con el formulario y elegila acá." },

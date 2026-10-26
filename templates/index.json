@@ -65,6 +65,7 @@
     "howto": {
       "type": "ritual",
       "settings": {
+        "scheme": "bg-lime",
         "heading": "Diez segundos al día.",
         "text": "Un scoop al ras (10 g) en lo que ya tomás. No tiene sabor artificial, así que no cambia nada."
       },
@@ -106,12 +107,13 @@
         "heading": "Lo que cuentan quienes ya lo toman",
         "scope": "all",
         "max": 6,
-        "scheme": "bg-mist"
+        "scheme": "bg-pink"
       }
     },
     "reels": {
       "type": "video-reels",
       "settings": {
+        "scheme": "bg-sky",
         "heading": "Nuestra comunidad",
         "text": "Lo que cuentan quienes lo suman a su rutina."
       },

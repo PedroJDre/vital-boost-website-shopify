@@ -3,7 +3,7 @@
    ===================================================================== */
 .ed-hero { padding-top: clamp(28px, 5vw, 72px); }
 .ed-hero__head { display: grid; gap: 22px; align-items: end; }
-.ed-hero__title { font-family: 'Gloock', Georgia, serif; font-weight: 400; font-size: clamp(3.25rem, 11.5vw, 9.5rem); line-height: .9; letter-spacing: -0.03em; white-space: pre-line; text-wrap: balance; }
+.ed-hero__title { font-family: 'VBDisplay', Georgia, serif; font-size: clamp(3.25rem, 11.5vw, 9.5rem); line-height: .9; letter-spacing: -0.03em; white-space: pre-line; text-wrap: balance; font-weight: 800; }
 .ed-hero__aside { display: grid; gap: 22px; justify-items: start; max-width: 30rem; }
 .ed-hero__aside .lead { color: var(--muted); }
 @media (min-width: 990px) { .ed-hero__head { grid-template-columns: 1.7fr 1fr; gap: 56px; } .ed-hero__aside { padding-bottom: 14px; } }
@@ -15,17 +15,17 @@
 .ed-trip__item:hover img { transform: scale(1.035); }
 .ed-trip__item::after { content: ''; position: absolute; inset: 45% 0 0; background: linear-gradient(to top, rgba(8, 10, 30, .62), transparent); }
 .ed-trip__label { position: absolute; left: 20px; right: 20px; bottom: 18px; z-index: 1; display: grid; gap: 2px; }
-.ed-trip__name { font-family: 'Gloock', serif; font-size: clamp(2.1rem, 3.6vw, 3.25rem); line-height: 1; }
+.ed-trip__name { font-family: 'VBDisplay', Georgia, serif; font-size: clamp(2.1rem, 3.6vw, 3.25rem); line-height: 1; font-weight: 800; }
 .ed-trip__goal { font-weight: 700; font-size: .9375rem; opacity: .92; }
 .ed-trip__item img.ed-trip__tub { inset: 10% 15%; width: 70%; height: 80%; object-fit: contain; }
 @media (min-width: 990px) { .ed-trip { grid-auto-flow: row; grid-template-columns: repeat(3, 1fr); overflow: visible; padding: 0 8px; contain: none; } .ed-trip__item { aspect-ratio: 3 / 4; max-height: 86vh; width: 100%; } }
 
 .ed-manifesto { padding-block: clamp(80px, 13vw, 176px); }
-.ed-manifesto__text { font-family: 'Gloock', serif; font-size: clamp(1.9rem, 4.6vw, 3.75rem); line-height: 1.1; letter-spacing: -0.015em; max-width: 19em; text-wrap: pretty; }
+.ed-manifesto__text { font-family: 'VBDisplay', Georgia, serif; font-size: clamp(1.9rem, 4.6vw, 3.75rem); line-height: 1.1; letter-spacing: -0.015em; max-width: 19em; text-wrap: pretty; font-weight: 800; }
 .ed-manifesto__text p + p { margin-top: .6em; }
 .ed-facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 20px; margin: clamp(40px, 6vw, 72px) 0 0; }
 .ed-facts div { border-top: 1px solid var(--line); padding: 16px 0 20px; }
-.ed-facts dt { font-family: 'Gloock', serif; font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1; }
+.ed-facts dt { font-family: 'VBDisplay', Georgia, serif; font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1; font-weight: 800; }
 .ed-facts dd { margin: 6px 0 0; font-weight: 700; font-size: .9375rem; color: var(--muted); }
 @media (min-width: 750px) { .ed-facts { grid-template-columns: repeat(4, 1fr); gap: 0 32px; } }
 
@@ -36,7 +36,7 @@
 .ed-chapter__panel { display: flex; align-items: center; }
 .ed-chapter__inner { width: 100%; max-width: 580px; padding: 36px 20px 48px; display: grid; gap: 18px; }
 .ed-chapter__goal { font-weight: 800; font-size: .9375rem; }
-.ed-chapter__name { font-family: 'Gloock', serif; font-weight: 400; font-size: clamp(3.5rem, 10vw, 7.5rem); line-height: .88; letter-spacing: -0.03em; margin-top: -6px; }
+.ed-chapter__name { font-family: 'VBDisplay', Georgia, serif; font-size: clamp(3.5rem, 10vw, 7.5rem); line-height: .88; letter-spacing: -0.03em; margin-top: -6px; font-weight: 800; }
 .ed-chapter__stars .stars__row { color: currentColor; }
 .ed-chapter__stars .muted { color: inherit; opacity: .75; }
 .ed-chapter__pitch { font-size: 1.125rem; line-height: 1.5; max-width: 30em; }
@@ -72,7 +72,7 @@
 .ed-ritual__item { scroll-snap-align: start; display: grid; gap: 14px; align-content: start; }
 .ed-ritual__item img, .ed-ritual__item svg { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 4px; background: var(--mist); }
 .ed-ritual__item figcaption { display: grid; gap: 4px; }
-.ed-ritual__item strong { font-family: 'Gloock', serif; font-weight: 400; font-size: 1.625rem; line-height: 1.1; }
+.ed-ritual__item strong { font-family: 'VBDisplay', Georgia, serif; font-size: 1.625rem; line-height: 1.1; font-weight: 800; }
 .ed-ritual__item span { color: var(--muted); }
 @media (min-width: 990px) { .ed-ritual__head { grid-template-columns: 1fr 1fr; align-items: end; } .ed-ritual__row { grid-auto-flow: row; grid-template-columns: repeat(3, 1fr); overflow: visible; margin: 0; padding: 0; contain: none; gap: 24px; } }
 
@@ -80,14 +80,14 @@
 .ed-banner__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .ed-banner__veil { position: absolute; inset: 0; background: linear-gradient(to top, rgba(8, 10, 30, .72) 0%, rgba(8, 10, 30, .15) 55%, transparent 100%); }
 .ed-banner__content { position: relative; padding-block: 48px clamp(48px, 8vw, 96px); display: grid; gap: 18px; justify-items: start; }
-.ed-banner__title { font-family: 'Gloock', serif; font-weight: 400; font-size: clamp(3.25rem, 11vw, 8.5rem); line-height: .9; letter-spacing: -0.03em; }
+.ed-banner__title { font-family: 'VBDisplay', Georgia, serif; font-size: clamp(3.25rem, 11vw, 8.5rem); line-height: .9; letter-spacing: -0.03em; font-weight: 800; }
 .ed-banner .lead { color: rgba(255,255,255,.88); }
 .ed-banner__links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
 .ed-pill { display: inline-flex; align-items: center; min-height: 56px; padding: 0 28px; border-radius: 999px; background: var(--f-bg); color: var(--f-ink); font-weight: 800; font-size: 1.0625rem; text-decoration: none; transition: transform .15s; }
 .ed-pill:hover { transform: translateY(-2px); }
 
 /* Editorial treatment for shared pieces */
-.quote blockquote { font-family: 'Gloock', serif; font-size: 1.3125rem; line-height: 1.3; }
+.quote blockquote { font-family: 'VBDisplay', Georgia, serif; font-size: 1.3125rem; line-height: 1.3; font-weight: 800; }
 .quote__img, .split__media img { border-radius: 4px; }
 .quote { border-radius: 6px; }
 @media (min-width: 990px) {
@@ -107,7 +107,7 @@
 .hero2__copy { display: flex; align-items: center; }
 .hero2__inner { width: 100%; padding: 36px 20px 40px; display: grid; gap: 20px; justify-items: start; }
 .hero2__rating { text-decoration: none; }
-.hero2__title { font-family: 'Gloock', Georgia, serif; font-weight: 400; font-size: clamp(2.9rem, 9.5vw, 5.4rem); line-height: 1.04; letter-spacing: -0.02em; text-wrap: balance; max-width: 10.5em; }
+.hero2__title { font-family: 'VBDisplay', Georgia, serif; font-size: clamp(2.9rem, 9.5vw, 5.4rem); line-height: 1.04; letter-spacing: -0.02em; text-wrap: balance; max-width: 10.5em; font-weight: 800; }
 .hero2__text { font-size: clamp(1.0625rem, 1.5vw, 1.25rem); line-height: 1.55; color: rgba(255,255,255,.88); max-width: 30em; }
 .hero2__cta { margin-top: 4px; }
 .hero2__proof { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 4px; font-size: .875rem; font-weight: 700; color: rgba(255,255,255,.9); padding: 0; list-style: none; }
@@ -151,7 +151,7 @@
 .ed-close__media { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #e9e9ea; }
 .ed-close__media img, .ed-close__media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .ed-close__body { padding: 44px 20px 56px; display: grid; gap: 18px; align-content: center; justify-items: start; }
-.ed-close__title { font-family: 'Gloock', serif; font-weight: 400; font-size: clamp(3rem, 9vw, 6.5rem); line-height: .95; letter-spacing: -0.025em; }
+.ed-close__title { font-family: 'VBDisplay', Georgia, serif; font-size: clamp(3rem, 9vw, 6.5rem); line-height: .95; letter-spacing: -0.025em; font-weight: 800; }
 .ed-close .lead { color: rgba(255,255,255,.85); }
 @media (min-width: 990px) {
   .ed-close { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); min-height: min(88vh, 860px); }

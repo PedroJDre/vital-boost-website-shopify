@@ -1,4 +1,4 @@
-<section class="ed-ritual section">
+<section class="ed-ritual section {{ section.settings.scheme }}">
   <div class="wrap">
     <div class="ed-ritual__head">
       <h2 class="h1">{{ section.settings.heading }}</h2>
@@ -29,7 +29,10 @@
   "name": "Ritual (fotos con texto)",
   "settings": [
     { "type": "text", "id": "heading", "label": "Título", "default": "Diez segundos al día." },
-    { "type": "textarea", "id": "text", "label": "Texto", "default": "Un scoop al ras, en lo que ya tomás. No cambia el sabor." }
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "Un scoop al ras, en lo que ya tomás. No cambia el sabor." },
+    { "type": "select", "id": "scheme", "label": "Fondo", "default": "", "options": [
+      { "value": "", "label": "Blanco" }, { "value": "bg-mist", "label": "Celeste" }, { "value": "bg-pink", "label": "Rosa" }, { "value": "bg-lime", "label": "Lima" }, { "value": "bg-sky", "label": "Azul claro" }
+    ] }
   ],
   "blocks": [
     { "type": "item", "name": "Foto", "settings": [

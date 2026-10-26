@@ -21,6 +21,13 @@
           "type": "buy",
           "settings": {}
         },
+        "pair": {
+          "type": "pair",
+          "settings": {
+            "heading": "Combinalo con",
+            "note": "Envío gratis igual"
+          }
+        },
         "use": {
           "type": "accordion",
           "settings": {
@@ -46,6 +53,7 @@
       "block_order": [
         "facts",
         "buy",
+        "pair",
         "use",
         "ship",
         "warn"
@@ -56,13 +64,14 @@
       "settings": {
         "heading": "Lo que cuentan quienes ya lo toman",
         "scope": "auto",
-        "max": 9,
-        "scheme": "bg-mist"
+        "max": 6,
+        "scheme": "bg-pink"
       }
     },
     "howto": {
       "type": "ritual",
       "settings": {
+        "scheme": "bg-lime",
         "heading": "Diez segundos al día.",
         "text": "Un scoop al ras (10 g) en lo que ya tomás. No tiene sabor artificial, así que no cambia nada."
       },

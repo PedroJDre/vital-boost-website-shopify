@@ -1,0 +1,101 @@
+/* =====================================================================
+   Bloom-inspired layer: color-blocked sections, soft retro display type,
+   generous radii, centered section heads, dark pill buttons.
+   ===================================================================== */
+:root {
+  --pink-soft: #FCE7EE;
+  --lime-soft: #F2F5CC;
+  --sky-soft: #E3E7FC;
+  --r-lg: 28px;
+  --r-md: 20px;
+}
+
+/* Section color blocks */
+.bg-pink { background: var(--pink-soft); }
+.bg-lime { background: var(--lime-soft); }
+.bg-sky { background: var(--sky-soft); }
+
+/* Display type: Fraunces soft black reads like the logo — tighten a touch */
+.display, .h1, .h2, .h3, .hero2__title, .stage__name, .ed-close__title, .ed-ritual__item strong, .card__title, .strip__big, .facts strong, .step::before {
+  letter-spacing: -0.015em;
+}
+.h2 { font-size: clamp(2rem, 4.6vw, 3.1rem); line-height: 1.06; }
+.hero2__title { font-size: clamp(2.7rem, 9vw, 5rem); line-height: 1.02; }
+@media (min-width: 990px) { .hero2__title { font-size: clamp(3.2rem, 4.3vw, 4.5rem); } }
+.stage__name { font-size: clamp(2.9rem, 10vw, 6.4rem); }
+.ed-close__title { font-size: clamp(2.8rem, 8vw, 5.8rem); }
+
+/* Centered section heads, like Bloom */
+.section-head, .ed-ritual__head { text-align: center; margin-inline: auto; justify-items: center; }
+.section-head .lead, .ed-ritual__head .lead { margin-inline: auto; }
+.reviews__summary { justify-content: center; }
+@media (min-width: 990px) { .ed-ritual__head { grid-template-columns: 1fr; } }
+.faq .section-head { text-align: center; }
+
+/* Generous rounding on cards and media */
+.stage { border-radius: 32px; }
+.quote { border-radius: var(--r-lg); }
+.quote__img { border-radius: 0; }
+.reel { border-radius: var(--r-lg); }
+.ed-ritual__item img, .ed-ritual__item video, .ed-ritual__item svg { border-radius: var(--r-lg); }
+.pack { border-radius: 18px; }
+.gallery__track { border-radius: var(--r-lg); }
+@media (min-width: 990px) { .gallery__slide { border-radius: var(--r-lg); } }
+.card { border-radius: var(--r-lg); }
+.facts div { border-radius: 18px; }
+.final__f { border-radius: var(--r-md); }
+
+/* Buttons: heavier pills */
+.btn { min-height: 58px; font-size: 1.0625rem; font-weight: 800; padding: 0 32px; }
+.btn--ink { --btn-bg: var(--ink); }
+
+/* Quality block: rounded photo inset on desktop */
+@media (min-width: 990px) {
+  .quality2 { padding: 24px; gap: 0; background: var(--royal); }
+  .quality2__media { border-radius: var(--r-lg); }
+}
+
+/* Closing block media rounded on desktop */
+@media (min-width: 990px) {
+  .ed-close { padding: 24px; }
+  .ed-close__media { border-radius: var(--r-lg); }
+}
+
+/* ---------- Product page additions ---------- */
+.pdp__chip { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1.5px solid var(--line); border-radius: 999px; font-size: .875rem; font-weight: 700; text-decoration: none; background: #fff; }
+.pdp__chip .stars__row { width: 80px; height: 15px; color: #E8A317; }
+.pdp__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; padding: 0; list-style: none; }
+.pdp__tags li { display: inline-flex; align-items: center; gap: 7px; padding: 7px 13px; border-radius: 999px; background: var(--f-soft, var(--mist)); font-size: .8125rem; font-weight: 800; }
+.pdp__tags .icon { width: 16px; height: 16px; }
+
+.pair { margin-top: 26px; padding: 18px; border-radius: var(--r-md); background: var(--f-soft, var(--mist)); }
+.pair__head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+.pair__head strong { font-size: 1rem; }
+.pair__head span { font-size: .8125rem; font-weight: 700; color: var(--muted); }
+.pair__item { display: grid; grid-template-columns: 64px 1fr auto; gap: 12px; align-items: center; padding: 10px; border-radius: 16px; background: #fff; }
+.pair__item + .pair__item { margin-top: 8px; }
+.pair__img { width: 64px; height: 64px; border-radius: 12px; background: var(--p-soft); display: grid; place-items: center; overflow: hidden; }
+.pair__img img { width: 80%; height: 80%; object-fit: contain; }
+.pair__name { font-weight: 800; line-height: 1.2; display: block; text-decoration: none; }
+.pair__goal { font-size: .8125rem; color: var(--muted); }
+.pair__add { min-height: 44px; padding: 0 16px; font-size: .9375rem; border-radius: 999px; border: 0; background: var(--ink); color: #fff; font-weight: 800; white-space: nowrap; }
+.pair__add.is-loading { opacity: .6; }
+
+/* ---------- Footer newsletter ---------- */
+.news { display: grid; gap: 12px; padding-bottom: 36px; margin-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,.16); }
+.news h2 { font-family: 'VBDisplay', Georgia, serif; font-weight: 800; font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.1; }
+.news p { color: rgba(255,255,255,.75); max-width: 34em; }
+.news form { display: flex; gap: 8px; flex-wrap: wrap; max-width: 520px; }
+.news input { flex: 1 1 220px; min-height: 52px; padding: 0 20px; border-radius: 999px; border: 0; font-size: 1rem; color: var(--ink); }
+.news .btn { --btn-bg: #F4C2CE; --btn-fg: var(--ink); min-height: 52px; }
+.news .notice { background: rgba(255,255,255,.12); color: #fff; }
+@media (min-width: 990px) { .news { grid-template-columns: 1fr 1fr; align-items: center; } }
+
+/* Review fixes */
+.quote blockquote { font-family: 'Nunito Sans', system-ui, sans-serif; font-weight: 700; font-size: 1.0625rem; line-height: 1.5; }
+.facts strong { font-size: 1.2rem; white-space: nowrap; }
+@media (max-width: 600px) {
+  .pair__item { grid-template-columns: 56px 1fr; }
+  .pair__img { width: 56px; height: 56px; }
+  .pair__add { grid-column: 1 / -1; width: 100%; }
+}

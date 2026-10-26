@@ -247,6 +247,29 @@
     if (e.persisted) $$('.is-loading').forEach((b) => b.classList.remove('is-loading'));
   });
 
+  /* ---------- "Combinalo con" quick add ---------- */
+  document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-pair-add]');
+    if (!btn) return;
+    btn.classList.add('is-loading');
+    try {
+      const res = await fetch(VB.routes.cartAdd, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ items: [{ id: Number(btn.dataset.pairAdd), quantity: 1 }], sections: 'cart-drawer' })
+      });
+      let data = null;
+      try { data = await res.json(); } catch (_) { /* not JSON */ }
+      if (!res.ok || !data) throw new Error((data && data.description) || 'No pudimos agregarlo.');
+      renderDrawer(data.sections && data.sections['cart-drawer']);
+      openCart();
+    } catch (err) {
+      alert(err.message);
+    } finally {
+      btn.classList.remove('is-loading');
+    }
+  });
+
   /* ---------- Formula picker ---------- */
   $$('[data-picker]').forEach((picker) => {
     const tabs = $$('[role="tab"]', picker);
