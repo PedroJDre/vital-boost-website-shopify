@@ -159,7 +159,7 @@
     const discs = VB.packDiscounts || [];
     $$('.pack', form).forEach((label) => {
       const input = $('input', label);
-      const q = Number(input.value);
+      const q = Number(input.dataset.qty || input.value);
       const d = Number(input.dataset.discount || 0);
       const full = unitPrice * q;
       const total = Math.floor(full * (100 - d) / 100);
@@ -171,13 +171,18 @@
   }
 
   function selectedTotal(form) {
-    const checked = $('input[name="quantity"]:checked', form);
+    const checked = $('[data-packs] input[name="vb_pack"]:checked', form);
     const label = checked && checked.closest('.pack');
     const t = label && $('[data-pack-total]', label);
     return t ? t.textContent : '';
   }
 
+  // Third-party pack widgets (Bundler) inject their own quantity inputs into
+  // product forms. Our selector replaces them, so strip anything they add.
+  const strip = (form) => form.querySelectorAll('.bundler-volume-target-element, [class*="bndlr-"]').forEach((n) => n.remove());
   $$('[data-buy-form]').forEach((form) => {
+    strip(form);
+    new MutationObserver(() => strip(form)).observe(form, { childList: true, subtree: true });
     const select = $('[data-variant-select]', form);
     if (select) {
       select.addEventListener('change', () => {
@@ -188,7 +193,7 @@
     }
 
     form.addEventListener('change', (e) => {
-      if (e.target.name === 'quantity') {
+      if (e.target.name === 'vb_pack') {
         const sp = $('[data-sticky-price]');
         if (sp && form.closest('[data-main-buy]')) sp.textContent = selectedTotal(form);
       }
@@ -200,8 +205,10 @@
       const buyNow = submitter && submitter.hasAttribute('data-buy-now');
       const err = $('[data-buy-error]', form);
       const id = Number($('input[name="id"]', form).value);
-      const qInput = $('input[name="quantity"]:checked', form);
-      const quantity = qInput ? Number(qInput.value) : 1;
+      const qInput = $('[data-packs] input[name="vb_pack"]:checked', form);
+      const quantity = qInput ? Number(qInput.dataset.qty || qInput.value) : 1;
+      const hiddenQty = $('[data-qty-hidden]', form);
+      if (hiddenQty) hiddenQty.value = quantity;
       err && (err.hidden = true);
       submitter && submitter.classList.add('is-loading');
       try {

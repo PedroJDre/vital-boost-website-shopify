@@ -456,3 +456,4 @@ html, body { overflow-x: clip; }
 #bndlr-discount-message, .bndlr-go-to-checkout, .bndlr-popup-wrapper { display: none !important; }
 .line__img { position: relative; }
 .line__img img { position: absolute; inset: 6%; width: 88%; height: 88%; object-fit: contain; }
+@media (max-width: 989px) { .hero-tubs { aspect-ratio: 1.45; } .hero__grid { gap: 8px; } }

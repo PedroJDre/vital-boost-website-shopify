@@ -30,6 +30,8 @@
     </div>
   {%- endif -%}
 
+  {%- assign default_q = qtys[default_index] | strip | plus: 0 -%}
+  <input type="hidden" name="quantity" value="{{ default_q }}" data-qty-hidden>
   <fieldset class="packs" data-packs data-price="{{ variant.price }}">
     <legend>Elegí cuántos llevás</legend>
     {%- for q in qtys -%}
@@ -45,7 +47,7 @@
         assign phint = hints[forloop.index0] | strip
       -%}
       <label class="pack">
-        <input type="radio" name="quantity" value="{{ qn }}" data-discount="{{ dn }}" {% if forloop.index0 == default_index %}checked{% endif %}>
+        <input type="radio" name="vb_pack" value="{{ qn }}" data-qty="{{ qn }}" data-discount="{{ dn }}" {% if forloop.index0 == default_index %}checked{% endif %}>
         <span class="pack__dot" aria-hidden="true"></span>
         <span>
           <span class="pack__title">
