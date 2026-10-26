@@ -1,0 +1,29 @@
+<section class="section cart-page">
+  <div class="wrap">
+    <div class="section-head"><h1 class="h1">Tu carrito</h1></div>
+    {%- if cart.item_count > 0 -%}
+      <div class="cart-page__grid">
+        <div data-cart-page>{% render 'cart-lines' %}</div>
+        <form action="{{ routes.cart_url }}" method="post" class="summary">
+          {%- assign savings = cart.original_total_price | minus: cart.total_price -%}
+          {%- if savings > 0 -%}<div class="drawer__row drawer__savings"><span>Ahorrás</span><span>{{ savings | money_without_trailing_zeros }}</span></div>{%- endif -%}
+          <div class="drawer__row"><span class="muted">Envío</span><strong>Gratis</strong></div>
+          <div class="drawer__row drawer__total"><span>Total</span><span>{{ cart.total_price | money_without_trailing_zeros }}</span></div>
+          <div class="field">
+            <label for="CartNote">Nota para tu pedido (opcional)</label>
+            <textarea id="CartNote" name="note" style="min-height:80px">{{ cart.note }}</textarea>
+          </div>
+          <button type="submit" name="checkout" class="btn btn--block">Finalizar compra</button>
+          <p class="buy__note"><span>{% render 'icon', name: 'shield' %}Pago seguro</span><span>{% render 'icon', name: 'truck' %}{{ settings.shipping_note }}</span></p>
+        </form>
+      </div>
+    {%- else -%}
+      <p class="lead">Tu carrito está vacío.</p>
+      <p style="margin-top:24px"><a class="btn" href="{{ routes.root_url }}#formulas">Elegí tu fórmula</a></p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Carrito", "settings": [] }
+{% endschema %}

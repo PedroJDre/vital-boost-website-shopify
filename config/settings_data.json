@@ -1,63 +1,35 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "current": {
-    "color_button": "#183f86",
-    "color_button_text": "#ffffff",
-    "sections": {
-      "header": {
-        "type": "header",
+    "logo": "shopify://shop_images/Vital_Boost_Logo_Change_copy_2.png",
+    "logo_width": 112,
+    "favicon": "shopify://shop_images/Screenshot_2025-10-29_at_1.20.13_PM.png",
+    "formula_1_product": "colageno-deporte",
+    "formula_2_product": "colageno-belleza",
+    "formula_3_product": "colageno-vitalidad",
+    "payment_note": "Pago seguro",
+    "blocks": {
+      "15683396631634586217": {
+        "type": "shopify://apps/inbox/blocks/chat/841fc607-4181-4ad1-842d-e24d7f8bad6b",
+        "disabled": false,
         "settings": {
-          "logo": "shopify://shop_images/Screenshot_2025-10-29_at_1.20.13_PM.png",
-          "mobile_logo": "shopify://shop_images/Screenshot_2025-10-29_at_1.20.13_PM.png",
-          "menu": "",
-          "transparent_header": true,
-          "show_search": true,
-          "show_cart": true,
-          "show_account": true,
-          "facebook_url": "",
-          "instagram_url": ""
+          "button_color": "#121A52",
+          "secondary_color": "#FFFFFF",
+          "ternary_color": "#6A6A6A",
+          "button_icon": "chat_bubble",
+          "button_text": "no_text",
+          "button_horizontal_position": "bottom_right",
+          "button_vertical_position": "lowest",
+          "greeting_message": ""
         }
       },
-      "footer": {
-        "type": "footer",
-        "settings": {
-          "contact_title": "Contacto",
-          "contact_phone_label": "Telefono:",
-          "contact_phone": "(+54) 1156607163",
-          "contact_email_label": "Correo electronico:",
-          "contact_email": "vitalboostarg@gmail.com",
-          "contact_address_label": "Direccion:",
-          "contact_address": "Nordelta, Argentina.",
-          "menu_title": "Menu Principal",
-          "footer_menu": "",
-          "account_title": "Cuenta",
-          "account_link_1": "Mi cuenta",
-          "account_link_2": "Mi carrito",
-          "account_link_3": "Pagar",
-          "account_link_4": "Centro de soporte",
-          "support_link": "",
-          "payment_title": "Metodos de pago",
-          "copyright_text": "Copyright © 2026 Vitalboost.com.ar",
-          "facebook_url": "",
-          "instagram_url": ""
-        }
-      }
-    },
-    "content_for_index": [],
-    "blocks": {
       "14060646107696862457": {
         "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
         "disabled": false,
         "settings": {}
       }
     }
+  },
+  "presets": {
+    "Default": {}
   }
 }

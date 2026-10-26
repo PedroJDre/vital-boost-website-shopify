@@ -1,0 +1,13 @@
+{%- comment -%}
+  Outputs CSS custom properties for a formula (1-3). Usage:
+  <div style="{% render 'formula-style', fi: 2 %}">
+{%- endcomment -%}
+{%- if fi and fi > 0 -%}
+  {%- liquid
+    assign k_bg = 'formula_' | append: fi | append: '_bg'
+    assign k_ink = 'formula_' | append: fi | append: '_ink'
+    assign k_soft = 'formula_' | append: fi | append: '_soft'
+  -%}
+  {%- assign ink_b = settings[k_ink] | color_brightness -%}
+  --f-bg: {{ settings[k_bg] }}; --f-ink: {{ settings[k_ink] }}; --f-soft: {{ settings[k_soft] }}; --f-strong: {% if ink_b < 128 %}{{ settings[k_ink] }}{% else %}{{ settings[k_bg] }}{% endif %};
+{%- endif -%}

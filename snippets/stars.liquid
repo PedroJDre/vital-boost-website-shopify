@@ -1,0 +1,24 @@
+{%- comment -%}
+  Renders a star rating. Pass either `product` (reads Shopify's standard
+  reviews metafields, filled by Judge.me) or `rating` + `count` directly.
+{%- endcomment -%}
+{%- liquid
+  assign r = rating
+  assign c = count
+  if product != blank
+    assign r = product.metafields.reviews.rating.value.rating
+    assign c = product.metafields.reviews.rating_count.value
+  endif
+-%}
+{%- if bare and r != blank -%}
+  {%- assign pct = r | times: 20 -%}
+  <span class="stars"><span class="stars__row" style="--pct: {{ pct }}%" aria-hidden="true"></span><span class="visually-hidden">{{ r }} de 5 estrellas</span></span>
+{%- elsif r != blank and c != blank and c > 0 -%}
+  {%- assign pct = r | times: 20 | round: 1 -%}
+  <span class="stars">
+    <span class="stars__row" style="--pct: {{ pct }}%" aria-hidden="true"></span>
+    <span class="stars__text">{{ r | round: 1 | replace: '.', ',' }}</span>
+    <span class="{% if light %}{% else %}muted{% endif %}">({{ c }} {% if c == 1 %}reseña{% else %}reseñas{% endif %})</span>
+    <span class="visually-hidden">{{ r | round: 1 }} de 5 estrellas</span>
+  </span>
+{%- endif -%}

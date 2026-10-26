@@ -2,8 +2,180 @@
   "sections": {
     "main": {
       "type": "main-product",
-      "settings": {}
+      "settings": {
+        "color_first": true
+      },
+      "blocks": {
+        "facts": {
+          "type": "facts",
+          "settings": {
+            "f1_big": "9 g",
+            "f1_label": "proteína por porción",
+            "f2_big": "30",
+            "f2_label": "porciones por pote",
+            "f3_big": "Sin TACC",
+            "f3_label": "libre de gluten"
+          }
+        },
+        "buy": {
+          "type": "buy",
+          "settings": {}
+        },
+        "use": {
+          "type": "accordion",
+          "settings": {
+            "title": "Modo de uso",
+            "content": "<p>Disolvé 1 scoop al ras (10 g) en 200 ml de agua, jugo, café o un batido. Una vez por día, en cualquier momento. Lo importante es tomarlo todos los días.</p>"
+          }
+        },
+        "ship": {
+          "type": "accordion",
+          "settings": {
+            "title": "Envío y pago",
+            "content": "<p>Envío gratis a todo el país. Pagás en el checkout seguro y, cuando despachamos, te avisamos por mail.</p><p>Si llevás 2 o más potes de la misma fórmula, el descuento del pack se aplica solo en el carrito.</p>"
+          }
+        },
+        "warn": {
+          "type": "accordion",
+          "settings": {
+            "title": "Advertencias",
+            "content": "<p>Suplemento dietario. No utilizar en embarazo, lactancia ni en niños. Mantener fuera del alcance de los niños. No reemplaza una dieta variada y equilibrada. Consultá a tu médico antes de consumirlo de forma habitual.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "facts",
+        "buy",
+        "use",
+        "ship",
+        "warn"
+      ]
+    },
+    "reviews": {
+      "type": "reviews",
+      "settings": {
+        "heading": "Lo que cuentan quienes ya lo toman",
+        "scope": "auto",
+        "max": 9,
+        "scheme": "bg-mist"
+      }
+    },
+    "howto": {
+      "type": "how-to",
+      "settings": {
+        "heading": "Se toma en 10 segundos",
+        "text": "No tiene sabor artificial: lo sumás a lo que ya tomás todos los días.",
+        "image": "shopify://shop_images/IMG_8779.png",
+        "flip": false
+      },
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "title": "Un scoop al ras",
+            "text": "Cada pote trae su medidor: 10 g por porción."
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "title": "Mezclalo con lo que quieras",
+            "text": "Agua, café, jugo o un batido. No cambia el sabor."
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "title": "Todos los días",
+            "text": "A la hora que te quede cómoda. La constancia es lo que hace la diferencia."
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ]
+    },
+    "related": {
+      "type": "related-formulas",
+      "settings": {
+        "heading": "Conocé las otras fórmulas"
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "settings": {
+        "heading": "Preguntas frecuentes",
+        "scheme": ""
+      },
+      "blocks": {
+        "q1": {
+          "type": "item",
+          "settings": {
+            "question": "¿Cuál elijo?",
+            "answer": "<p><strong>Deporte</strong> si entrenás seguido y querés cuidar músculos y articulaciones. <strong>Belleza</strong> si tu foco es la piel, el pelo y las uñas. <strong>Vitalidad</strong> si sentís desgaste o molestias articulares y buscás moverte mejor día a día. Las tres tienen la misma base de colágeno hidrolizado.</p>"
+          }
+        },
+        "q2": {
+          "type": "item",
+          "settings": {
+            "question": "¿Cuánto tarda en notarse?",
+            "answer": "<p>La mayoría de las personas nota cambios entre las 4 y 8 semanas de uso diario. Los resultados varían según cada persona: la clave es la constancia.</p>"
+          }
+        },
+        "q3": {
+          "type": "item",
+          "settings": {
+            "question": "¿Cómo se toma?",
+            "answer": "<p>Un scoop al ras (10 g) por día, en cualquier momento. Como no tiene sabor artificial, lo podés mezclar con agua, café, jugo, un batido o incorporarlo a tus comidas.</p>"
+          }
+        },
+        "q4": {
+          "type": "item",
+          "settings": {
+            "question": "¿Cuánto dura un pote?",
+            "answer": "<p>Cada pote trae 300 g: 30 porciones, un mes de uso diario.</p>"
+          }
+        },
+        "q5": {
+          "type": "item",
+          "settings": {
+            "question": "¿Cuánto tarda el envío?",
+            "answer": "<p>El envío es gratis a todo el país. Cuando despachamos tu pedido te avisamos por mail.</p>"
+          }
+        },
+        "q6": {
+          "type": "item",
+          "settings": {
+            "question": "¿Dónde se fabrica?",
+            "answer": "<p>Desarrollamos las fórmulas junto a Foodgrade, especialistas en suplementos. Se elaboran en un establecimiento habilitado de Bernal, Provincia de Buenos Aires (RNE 02-040266), y cada fórmula tiene su Registro Nacional de Producto Alimenticio (RNPA).</p>"
+          }
+        },
+        "q7": {
+          "type": "item",
+          "settings": {
+            "question": "¿Quién puede tomarlo?",
+            "answer": "<p>Está pensado para adultos. No se recomienda en embarazo, lactancia ni en niños. Si tomás medicación o tenés alguna condición de salud, consultá a tu médico antes de empezar.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7"
+      ]
     }
   },
-  "order": ["main"]
+  "order": [
+    "main",
+    "reviews",
+    "howto",
+    "related",
+    "faq"
+  ]
 }

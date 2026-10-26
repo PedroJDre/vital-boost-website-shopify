@@ -1,0 +1,23 @@
+<section class="section">
+  <div class="wrap page-narrow">
+    <h1 class="h1">{{ page.title }}</h1>
+    {%- if page.content != blank -%}<div class="rte lead" style="margin-top:16px">{{ page.content }}</div>{%- endif -%}
+    {%- if settings.whatsapp_number != blank -%}
+      <p style="margin-top:24px"><a class="btn" style="--btn-bg:#1DA851" href="https://wa.me/{{ settings.whatsapp_number }}" target="_blank" rel="noopener">Escribinos por WhatsApp</a></p>
+      <p class="muted" style="margin-top:28px">O dejanos tu mensaje:</p>
+    {%- endif -%}
+    {%- form 'contact', class: 'form-grid' -%}
+      {%- if form.posted_successfully? -%}<p class="notice" role="status">Recibimos tu mensaje. Te respondemos a la brevedad.</p>{%- endif -%}
+      {%- if form.errors -%}<p class="notice notice--error" role="alert">Revisá los datos: {{ form.errors | default_errors }}</p>{%- endif -%}
+      <div class="field"><label for="ContactName">Nombre</label><input id="ContactName" name="contact[name]" autocomplete="name" value="{{ form.name }}"></div>
+      <div class="field"><label for="ContactEmail">Email</label><input id="ContactEmail" type="email" name="contact[email]" autocomplete="email" required value="{{ form.email }}"></div>
+      <div class="field"><label for="ContactPhone">Teléfono (opcional)</label><input id="ContactPhone" type="tel" name="contact[phone]" autocomplete="tel" value="{{ form.phone }}"></div>
+      <div class="field"><label for="ContactBody">Mensaje</label><textarea id="ContactBody" name="contact[body]" required>{{ form.body }}</textarea></div>
+      <button type="submit" class="btn">Enviar mensaje</button>
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Contacto", "settings": [] }
+{% endschema %}

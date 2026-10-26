@@ -1,0 +1,13 @@
+<article class="section">
+  <div class="wrap page-narrow">
+    <p class="muted small">{{ article.published_at | date: '%d/%m/%Y' }}</p>
+    <h1 class="h1" style="margin-top:8px">{{ article.title }}</h1>
+    {%- if article.image -%}<div style="margin-top:28px">{{ article.image | image_url: width: 1400 | image_tag: loading: 'eager', style: 'border-radius:24px;width:100%', widths: '600,900,1400', sizes: '(min-width: 800px) 760px, 100vw' }}</div>{%- endif -%}
+    <div class="rte" style="margin-top:28px">{{ article.content }}</div>
+    <p style="margin-top:40px"><a class="link" href="{{ blog.url }}">Volver a {{ blog.title }}</a></p>
+  </div>
+</article>
+
+{% schema %}
+{ "name": "Artículo", "settings": [] }
+{% endschema %}

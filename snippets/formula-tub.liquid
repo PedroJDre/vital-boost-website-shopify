@@ -1,0 +1,35 @@
+{%- comment -%}
+  Cut-out tub image for a formula. Params: fi (1-3), small (bool), class, eager (bool)
+  Uses the image chosen in theme settings, or the bundled cut-out.
+{%- endcomment -%}
+{%- liquid
+  assign k_img = 'formula_' | append: fi | append: '_tub'
+  assign k_name = 'formula_' | append: fi | append: '_name'
+  assign fname = settings[k_name] | default: 'Vital Boost'
+  assign alt = 'Pote de Colágeno ' | append: fname
+  assign loading = 'lazy'
+  if eager
+    assign loading = 'eager'
+  endif
+-%}
+{%- if settings[k_img] != blank -%}
+  {%- if small -%}
+    {{ settings[k_img] | image_url: width: 360 | image_tag: alt: alt, class: class, loading: loading, widths: '180,360', sizes: '180px' }}
+  {%- else -%}
+    {{ settings[k_img] | image_url: width: 900 | image_tag: alt: alt, class: class, loading: loading, widths: '360,600,900', sizes: '(min-width: 990px) 420px, 78vw' }}
+  {%- endif -%}
+{%- else -%}
+  {%- liquid
+    assign file = 'tub-' | append: fname | handleize
+    if small
+      assign file = file | append: '-sm'
+      assign w = 360
+      assign h = 518
+    else
+      assign w = 626
+      assign h = 900
+    endif
+    assign file = file | append: '.webp'
+  -%}
+  <img src="{{ file | asset_url }}" alt="{{ alt | escape }}" class="{{ class }}" loading="{{ loading }}" width="{{ w }}" height="{{ h }}">
+{%- endif -%}

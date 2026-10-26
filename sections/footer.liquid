@@ -1,130 +1,82 @@
-﻿<footer id="footer" class="ct-footer" data-id="type-1">
-  <div data-row="top">
-    <div class="ct-container-fluid" data-columns-divider="md">
-
-      <div data-column="widget-area-1">
-        <div class="ct-widget is-layout-flow widget_block">
-          <div class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
-            <p><strong>{{ section.settings.contact_title }}</strong></p>
-            <p>
-              {{ section.settings.contact_phone_label }}<br>{{ section.settings.contact_phone }}<br>
-              {{ section.settings.contact_email_label }}<br>{{ section.settings.contact_email }}<br>
-              {{ section.settings.contact_address_label }}<br>{{ section.settings.contact_address }}
-            </p>
-          </div>
-        </div>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        {%- if settings.logo != blank -%}
+          {{ settings.logo | image_url: width: 300 | image_tag: alt: settings.brand_name, loading: 'lazy', widths: '150,300', sizes: '132px' }}
+        {%- else -%}
+          <p class="h3">Vital Boost</p>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
+        <p style="display:flex;gap:8px;margin-top:18px">
+          {%- if settings.social_instagram != blank -%}<a class="icon-btn" style="background:rgba(255,255,255,.1)" href="{{ settings.social_instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{% render 'icon', name: 'instagram' %}</a>{%- endif -%}
+          {%- if settings.social_tiktok != blank -%}<a class="icon-btn" style="background:rgba(255,255,255,.1)" href="{{ settings.social_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">{% render 'icon', name: 'tiktok' %}</a>{%- endif -%}
+        </p>
       </div>
 
-      <div data-column="widget-area-2">
-        <div class="ct-widget is-layout-flow widget_block">
-          <div class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
-            <h4 class="wp-block-heading has-medium-font-size">{{ section.settings.menu_title }}</h4>
-            <p>
-              {% if section.settings.footer_menu != blank and section.settings.footer_menu.links.size > 0 %}
-                {% for link in section.settings.footer_menu.links %}
-                  <a href="{{ link.url }}">{{ link.title }}</a><br>
-                {% endfor %}
-              {% else %}
-                <a href="{{ routes.root_url }}">Inicio</a><br>
-                <a href="{{ routes.all_products_collection_url }}">Productos</a><br>
-                <a href="/pages/faq">FAQ</a><br>
-                <a href="/pages/contact">Contacto</a><br>
-              {% endif %}
-            </p>
-          </div>
-        </div>
+      <div class="footer__col">
+        <h2>Fórmulas</h2>
+        <ul>
+          {%- for i in (1..3) -%}
+            {%- liquid
+              assign kp = 'formula_' | append: i | append: '_product'
+              assign kn = 'formula_' | append: i | append: '_name'
+              assign p = settings[kp]
+              if p == blank
+                assign h = 'colageno-' | append: settings[kn] | handleize
+                assign p = all_products[h]
+              endif
+            -%}
+            {%- if p != blank -%}<li><a href="{{ p.url }}">Colágeno {{ settings[kn] }}</a></li>{%- endif -%}
+          {%- endfor -%}
+        </ul>
       </div>
 
-      <div data-column="widget-area-3">
-        <div class="ct-widget is-layout-flow widget_block">
-          <div class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
-            <h4 class="wp-block-heading has-medium-font-size">{{ section.settings.account_title }}</h4>
-            <p>
-              <a href="{{ routes.account_url }}">{{ section.settings.account_link_1 }}</a><br>
-              <a href="{{ routes.cart_url }}">{{ section.settings.account_link_2 }}</a><br>
-              <a href="{{ routes.cart_url }}">{{ section.settings.account_link_3 }}</a><br>
-              <a href="{{ section.settings.support_link }}">{{ section.settings.account_link_4 }}</a>
-            </p>
-          </div>
-        </div>
+      <div class="footer__col">
+        <h2>Ayuda</h2>
+        <ul>
+          <li><a href="{{ routes.root_url }}#preguntas">Preguntas frecuentes</a></li>
+          {%- for link in linklists[section.settings.menu_1].links -%}
+            {%- unless link.url contains '/search' or link.url == routes.root_url -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endunless -%}
+          {%- endfor -%}
+          {%- if settings.whatsapp_number != blank -%}<li><a href="https://wa.me/{{ settings.whatsapp_number }}" target="_blank" rel="noopener">WhatsApp</a></li>{%- endif -%}
+        </ul>
       </div>
 
-      <div data-column="widget-area-4">
-        <div class="ct-widget is-layout-flow widget_block">
-          <div class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
-            <h4 class="wp-block-heading has-medium-font-size">{{ section.settings.payment_title }}</h4>
-            {% if section.settings.payment_image != blank %}
-              <figure class="wp-block-image size-full">
-                {{
-                  section.settings.payment_image
-                  | image_url: width: 700
-                  | image_tag: loading: 'lazy', widths: '180,280,420,560,700', sizes: '(max-width: 989px) 50vw, 260px', alt: section.settings.payment_title
-                }}
-              </figure>
-            {% endif %}
-          </div>
-        </div>
+      <div class="footer__col">
+        <h2>Legales</h2>
+        <ul>
+          {%- for policy in shop.policies -%}<li><a href="{{ policy.url }}">{{ policy.title }}</a></li>{%- endfor -%}
+          {%- if section.settings.regret_link != blank -%}<li><a href="{{ section.settings.regret_link }}">Botón de arrepentimiento</a></li>{%- endif -%}
+          <li><a href="https://www.argentina.gob.ar/produccion/defensadelconsumidor/formulario" target="_blank" rel="noopener">Defensa de las y los consumidores</a></li>
+        </ul>
       </div>
-
     </div>
-  </div>
 
-  <div data-row="bottom">
-    <div class="ct-container" data-columns-divider="md">
-      <div data-column="copyright">
-        <div class="ct-footer-copyright" data-id="copyright">
-          <p>{{ section.settings.copyright_text }}</p>
-        </div>
-      </div>
-
-      <div data-column="socials">
-        <div class="ct-footer-socials" data-id="socials">
-          <div class="ct-social-box" data-color="custom" data-icon-size="custom" data-icons-type="simple">
-            {% if section.settings.facebook_url != blank %}
-              <a href="{{ section.settings.facebook_url }}" data-network="facebook" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
-                <span class="ct-label">Facebook</span>
-              </a>
-            {% endif %}
-            {% if section.settings.instagram_url != blank %}
-              <a href="{{ section.settings.instagram_url }}" data-network="instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-                <span class="ct-label">Instagram</span>
-              </a>
-            {% endif %}
-          </div>
-        </div>
-      </div>
+    <div class="footer__bottom">
+      <p>© {{ 'now' | date: '%Y' }} {{ settings.brand_name | default: shop.name }}. {{ section.settings.legal }}</p>
+      {%- if shop.enabled_payment_types.size > 0 -%}
+        <ul class="payments" role="list" aria-label="Medios de pago">
+          {%- for type in shop.enabled_payment_types -%}<li>{{ type | payment_type_svg_tag }}</li>{%- endfor -%}
+        </ul>
+      {%- endif -%}
     </div>
   </div>
 </footer>
 
+{%- if section.settings.show_whatsapp and settings.whatsapp_number != blank -%}
+  <a class="wa" href="https://wa.me/{{ settings.whatsapp_number }}?text={{ 'Hola! Quiero consultar por Vital Boost' | url_encode }}" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp">{% render 'icon', name: 'whatsapp' %}</a>
+{%- endif -%}
+
 {% schema %}
 {
-  "name": "Footer",
+  "name": "Pie de página",
   "settings": [
-    { "type": "text", "id": "contact_title", "label": "Contact title", "default": "Contacto" },
-    { "type": "text", "id": "contact_phone_label", "label": "Phone label", "default": "Telefono:" },
-    { "type": "text", "id": "contact_phone", "label": "Phone", "default": "(+54) 1156607163" },
-    { "type": "text", "id": "contact_email_label", "label": "Email label", "default": "Correo electronico:" },
-    { "type": "text", "id": "contact_email", "label": "Email", "default": "vitalboostarg@gmail.com" },
-    { "type": "text", "id": "contact_address_label", "label": "Address label", "default": "Direccion:" },
-    { "type": "textarea", "id": "contact_address", "label": "Address", "default": "Nordelta, Argentina." },
-
-    { "type": "text", "id": "menu_title", "label": "Main menu title", "default": "Menu Principal" },
-    { "type": "link_list", "id": "footer_menu", "label": "Footer menu" },
-
-    { "type": "text", "id": "account_title", "label": "Account title", "default": "Cuenta" },
-    { "type": "text", "id": "account_link_1", "label": "Account link label 1", "default": "Mi cuenta" },
-    { "type": "text", "id": "account_link_2", "label": "Account link label 2", "default": "Mi carrito" },
-    { "type": "text", "id": "account_link_3", "label": "Account link label 3", "default": "Pagar" },
-    { "type": "text", "id": "account_link_4", "label": "Account link label 4", "default": "Centro de soporte" },
-    { "type": "url", "id": "support_link", "label": "Support link" },
-
-    { "type": "text", "id": "payment_title", "label": "Payment methods title", "default": "Metodos de pago" },
-    { "type": "image_picker", "id": "payment_image", "label": "Payment image" },
-
-    { "type": "text", "id": "copyright_text", "label": "Copyright", "default": "Copyright © 2026 Vitalboost.com.ar" },
-    { "type": "url", "id": "facebook_url", "label": "Facebook URL" },
-    { "type": "url", "id": "instagram_url", "label": "Instagram URL" }
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "Colágeno hidrolizado con activos para cada objetivo. Desarrollado y elaborado en Argentina." },
+    { "type": "link_list", "id": "menu_1", "label": "Links extra en Ayuda", "default": "footer" },
+    { "type": "url", "id": "regret_link", "label": "Link del botón de arrepentimiento", "info": "Obligatorio en Argentina (Res. 424/2020). Creá una página con el formulario y elegila acá." },
+    { "type": "text", "id": "legal", "label": "Texto legal", "default": "Suplemento dietario. Consultá a tu médico antes de consumirlo." },
+    { "type": "checkbox", "id": "show_whatsapp", "label": "Mostrar botón flotante de WhatsApp", "default": false, "info": "Si usás el chat de Shopify Inbox, dejalo apagado para que no se superpongan." }
   ]
 }
 {% endschema %}

@@ -1,0 +1,10 @@
+{
+  "general": {
+    "password_page": {
+      "login_form_heading": "Enter using password"
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to content"
+  }
+}

@@ -1,0 +1,77 @@
+{%- comment -%}
+  Cart line items with quantity controls and a "next pack" nudge.
+  Used by the cart drawer and the cart page.
+{%- endcomment -%}
+{%- liquid
+  assign qtys = settings.pack_quantities | split: ','
+  assign discs = settings.pack_discounts | split: ','
+-%}
+<ul role="list" class="lines">
+  {%- for item in cart.items -%}
+    {%- liquid
+      assign fi = 0
+      for i in (1..3)
+        assign kp = 'formula_' | append: i | append: '_product'
+        assign kn = 'formula_' | append: i | append: '_name'
+        assign fh = settings[kn] | handleize
+        if settings[kp] != blank and settings[kp].id == item.product_id
+          assign fi = i
+        elsif settings[kp] == blank and fh != blank and item.product.handle contains fh
+          assign fi = i
+        endif
+      endfor
+
+      assign next_q = 0
+      assign next_d = 0
+      for q in qtys
+        assign qn = q | strip | plus: 0
+        if qn > item.quantity
+          assign next_q = qn
+          assign next_d = discs[forloop.index0] | strip | plus: 0
+          break
+        endif
+      endfor
+      assign add_n = next_q | minus: item.quantity
+    -%}
+    <li class="line" style="{% render 'formula-style', fi: fi %}" data-line="{{ forloop.index }}" data-key="{{ item.key }}">
+      <a href="{{ item.url }}" class="line__img" tabindex="-1" aria-hidden="true">
+        {%- if fi > 0 -%}
+          {%- render 'formula-tub', fi: fi, small: true -%}
+        {%- elsif item.image -%}
+          {{ item.image | image_url: width: 200 | image_tag: loading: 'lazy', alt: '' }}
+        {%- endif -%}
+      </a>
+      <div>
+        <div class="line__top">
+          <a href="{{ item.url }}" class="line__title">{{ item.product.title }}</a>
+          <p class="line__price">
+            {{ item.final_line_price | money_without_trailing_zeros }}
+            {%- if item.original_line_price > item.final_line_price -%}
+              <s>{{ item.original_line_price | money_without_trailing_zeros }}</s>
+            {%- endif -%}
+          </p>
+        </div>
+        {%- unless item.product.has_only_default_variant -%}
+          <p class="small muted">{{ item.variant.title }}</p>
+        {%- endunless -%}
+        {%- for d in item.line_level_discount_allocations -%}
+          <p class="line__disc">{{ d.discount_application.title }}: −{{ d.amount | money_without_trailing_zeros }}</p>
+        {%- endfor -%}
+        <div class="line__bottom">
+          <div class="qty">
+            <button type="button" data-qty-change="{{ item.quantity | minus: 1 }}" aria-label="Quitar uno de {{ item.product.title | escape }}">−</button>
+            <input type="number" min="0" value="{{ item.quantity }}" aria-label="Cantidad de {{ item.product.title | escape }}" data-qty-input inputmode="numeric">
+            <button type="button" data-qty-change="{{ item.quantity | plus: 1 }}" aria-label="Sumar uno de {{ item.product.title | escape }}">+</button>
+          </div>
+          <button type="button" class="line__remove" data-qty-change="0">Quitar</button>
+        </div>
+        {%- if next_q > 0 and next_d > 0 -%}
+          <button type="button" class="nudge" data-qty-change="{{ next_q }}">
+            <span>Sumá {{ add_n }} más y llevás {{ next_q }} con {{ next_d }}% off</span>
+            <strong>Sumar</strong>
+          </button>
+        {%- endif -%}
+      </div>
+    </li>
+  {%- endfor -%}
+</ul>

@@ -1,0 +1,117 @@
+{%- comment -%}
+  Reviews rendered natively from Judge.me's product metafields
+  (judgeme.review_widget_data). On a product page it shows that product's
+  reviews; elsewhere it mixes the three formulas.
+{%- endcomment -%}
+{%- liquid
+  assign total_r = 0
+  assign total_c = 0
+  assign max = section.settings.max
+
+  if product != blank and section.settings.scope == 'auto'
+    assign scoped = true
+  endif
+
+  for i in (1..3)
+    assign kp = 'formula_' | append: i | append: '_product'
+    assign kn = 'formula_' | append: i | append: '_name'
+    assign p = settings[kp]
+    if p == blank
+      assign h = 'colageno-' | append: settings[kn] | handleize
+      assign p = all_products[h]
+    endif
+    if p == blank
+      continue
+    endif
+    if scoped and p.id != product.id
+      continue
+    endif
+    assign c = p.metafields.reviews.rating_count.value | default: 0
+    if c > 0
+      assign r = p.metafields.reviews.rating.value.rating | times: c
+      assign total_r = total_r | plus: r
+      assign total_c = total_c | plus: c
+    endif
+  endfor
+  if total_c > 0
+    assign avg = total_r | divided_by: total_c
+  endif
+-%}
+<section class="section {{ section.settings.scheme }}" id="resenas">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="h2">{{ section.settings.heading }}</h2>
+      {%- if total_c > 0 -%}
+        <div class="reviews__summary">{% render 'stars', rating: avg, count: total_c %}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="quotes">
+      {%- for n in (0..20) -%}
+        {%- assign shown_any = false -%}
+        {%- for i in (1..3) -%}
+          {%- liquid
+            assign kp = 'formula_' | append: i | append: '_product'
+            assign kn = 'formula_' | append: i | append: '_name'
+            assign p = settings[kp]
+            if p == blank
+              assign h = 'colageno-' | append: settings[kn] | handleize
+              assign p = all_products[h]
+            endif
+            if p == blank
+              continue
+            endif
+            if scoped and p.id != product.id
+              continue
+            endif
+            assign rv = p.metafields.judgeme.review_widget_data.value.photo_gallery[n]
+          -%}
+          {%- if rv and max > 0 -%}
+            {%- assign shown_any = true -%}
+            {%- assign max = max | minus: 1 -%}
+            {%- assign rating_n = rv.rating | plus: 0 -%}
+            <figure class="quote" style="{% render 'formula-style', fi: i %}">
+              {%- if rv.pictures_urls.size > 0 -%}
+                <img class="quote__img" src="{{ rv.pictures_urls.first.huge | replace: 'width=1024', 'width=640' }}" alt="Foto de {{ rv.reviewer_name | escape }}" loading="lazy" width="640" height="640">
+              {%- endif -%}
+              <div class="quote__body">
+                {% render 'stars', rating: rating_n, count: 0, bare: true %}
+                <blockquote>{{ rv.body_html | strip_html | strip }}</blockquote>
+                <figcaption>
+                  <strong>{{ rv.reviewer_name }}</strong>
+                  <span class="chip">Colágeno {{ settings[kn] }}</span>
+                </figcaption>
+              </div>
+            </figure>
+          {%- endif -%}
+        {%- endfor -%}
+        {%- unless shown_any -%}{%- break -%}{%- endunless -%}
+      {%- endfor -%}
+    </div>
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == '@app' -%}
+        <div class="app-area">{% render block %}</div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Reseñas",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "Lo que cuentan quienes ya lo toman" },
+    { "type": "select", "id": "scope", "label": "Qué reseñas mostrar", "default": "auto", "options": [
+      { "value": "auto", "label": "En un producto, solo las de ese producto" },
+      { "value": "all", "label": "Siempre las de las tres fórmulas" }
+    ] },
+    { "type": "range", "id": "max", "label": "Máximo de reseñas", "min": 3, "max": 18, "step": 3, "default": 9 },
+    { "type": "select", "id": "scheme", "label": "Fondo", "default": "bg-mist", "options": [
+      { "value": "", "label": "Blanco" }, { "value": "bg-mist", "label": "Celeste" }
+    ] }
+  ],
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "Reseñas" }]
+}
+{% endschema %}

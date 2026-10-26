@@ -1,605 +1,266 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "announcement": {
-      "type": "announcement-bar",
-      "blocks": {
-        "message_1": {
-          "type": "item",
-          "settings": {
-            "text": "Envios a todo el pais",
-            "link": ""
-          }
-        },
-        "message_2": {
-          "type": "item",
-          "settings": {
-            "text": "Descuentos por suscripcion",
-            "link": ""
-          }
-        },
-        "message_3": {
-          "type": "item",
-          "settings": {
-            "text": "Soporte personalizado por WhatsApp",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "message_1",
-        "message_2",
-        "message_3"
-      ],
-      "settings": {
-        "fallback_text": "Envio gratis a todo el pais desde cierto monto.",
-        "enable_rotation": true,
-        "rotation_speed": 4,
-        "show_countdown": false,
-        "countdown_label": "Termina en",
-        "countdown_end": "2026-12-31T23:59:59-03:00",
-        "bg_color": "#f8fbf8",
-        "text_color": "#1f2a1f",
-        "accent_color": "#9bbfa4"
-      }
-    },
     "hero": {
-      "type": "hero-home",
+      "type": "hero",
       "settings": {
-        "eyebrow": "Suplementos de Calidad",
-        "heading": "Vital Boost",
-        "subheading": "<p>VitalBoost combina formulas de alta calidad para que construyas una rutina simple, moderna y efectiva.</p>",
-        "benefits_aria_label": "Beneficios principales",
-        "benefit_1": "Ingredientes seleccionados y formulaciones premium",
-        "benefit_2": "Soporte para belleza, deporte y vitalidad",
-        "benefit_3": "Resultados progresivos con uso diario",
-        "primary_label": "Ver Nuestra Colleción",
-        "primary_link": "/collections/all",
-        "secondary_label": "",
-        "secondary_link": "/collections/all",
-        "trust_micro_text": "Envios a todo el pais",
-        "show_review_badge": true,
-        "review_badge_aria": "Resenas de clientes",
-        "review_badge_rating": "4.8/5",
-        "review_badge_text": "Clientes satisfechos",
-        "review_badge_count": "+1.000 opiniones",
-        "hero_image": "shopify://shop_images/Whisk_cba304ddc87997bb3f04f103d079bafbeg.png",
-        "featured_product": "",
-        "featured_collection": "all"
+        "heading": "Un colágeno para cada objetivo.",
+        "text": "Colágeno hidrolizado con activos que suman: para entrenar, para tu piel o para moverte mejor cada día. Una dosis diaria, sin sabor.",
+        "button_label": "Elegí tu fórmula",
+        "show_rating": true,
+        "proof_1": "Envío gratis a todo el país",
+        "proof_2": "Producto registrado (RNPA)",
+        "proof_3": "Hecho en Argentina"
       }
     },
-    "benefits_strip": {
-      "type": "benefits-strip",
+    "picker": {
+      "type": "formula-picker",
+      "settings": {
+        "heading": "¿Cuál es tu objetivo?",
+        "text": "Las tres parten de la misma base: colágeno hidrolizado con 9 g de proteína por porción. Cambia lo que suma cada una."
+      }
+    },
+    "strip": {
+      "type": "proof-strip",
+      "settings": {
+        "heading": "En todas las fórmulas",
+        "scheme": ""
+      },
       "blocks": {
-        "benefit_a": {
-          "type": "benefit",
+        "a": {
+          "type": "item",
           "settings": {
-            "title": "Calidad premium",
-            "text": "Seleccion de ingredientes con estandares altos."
+            "big": "9 g",
+            "label": "de proteína por porción"
           }
         },
-        "benefit_b": {
-          "type": "benefit",
+        "b": {
+          "type": "item",
           "settings": {
-            "title": "Resultados consistentes",
-            "text": "Pensado para una rutina diaria sostenible."
+            "big": "30",
+            "label": "porciones por pote"
           }
         },
-        "benefit_c": {
-          "type": "benefit",
+        "c": {
+          "type": "item",
           "settings": {
-            "title": "Compra segura",
-            "text": "Atencion personalizada y envio confiable."
+            "big": "Sin TACC",
+            "label": "libre de gluten"
+          }
+        },
+        "d": {
+          "type": "item",
+          "settings": {
+            "big": "Sin sabor",
+            "label": "artificial: va con todo"
           }
         }
       },
       "block_order": [
-        "benefit_a",
-        "benefit_b",
-        "benefit_c"
-      ],
-      "settings": {
-        "heading": "Por que elegir VitalBoost",
-        "bg_color": "#ffffff",
-        "text_color": "#1f2a1f",
-        "accent_color": "#9bbfa4"
-      }
+        "a",
+        "b",
+        "c",
+        "d"
+      ]
     },
-    "featured_products": {
-      "type": "featured-products",
+    "howto": {
+      "type": "how-to",
+      "settings": {
+        "heading": "Se toma en 10 segundos",
+        "text": "No tiene sabor artificial: lo sumás a lo que ya tomás todos los días.",
+        "image": "shopify://shop_images/IMG_8779.png",
+        "flip": false
+      },
       "blocks": {
-        "meta_1": {
-          "type": "product_meta",
+        "s1": {
+          "type": "step",
           "settings": {
-            "badge": "Top venta",
-            "benefit_1": "Uso diario",
-            "benefit_2": "Formula premium",
-            "benefit_3": "Facil de incorporar",
-            "button_label": "Comprar"
+            "title": "Un scoop al ras",
+            "text": "Cada pote trae su medidor: 10 g por porción."
           }
         },
-        "meta_2": {
-          "type": "product_meta",
+        "s2": {
+          "type": "step",
           "settings": {
-            "badge": "Nuevo",
-            "benefit_1": "Soporte integral",
-            "benefit_2": "Excelente sabor",
-            "benefit_3": "Alta calidad",
-            "button_label": "Comprar"
+            "title": "Mezclalo con lo que quieras",
+            "text": "Agua, café, jugo o un batido. No cambia el sabor."
           }
         },
-        "meta_3": {
-          "type": "product_meta",
+        "s3": {
+          "type": "step",
           "settings": {
-            "badge": "Comunidad",
-            "benefit_1": "Rendimiento y bienestar",
-            "benefit_2": "Rutina simple",
-            "benefit_3": "Entrega rapida",
-            "button_label": "Comprar"
+            "title": "Todos los días",
+            "text": "A la hora que te quede cómoda. La constancia es lo que hace la diferencia."
           }
         }
       },
       "block_order": [
-        "meta_1",
-        "meta_2",
-        "meta_3"
-      ],
-      "settings": {
-        "heading": "Productos destacados",
-        "subheading": "Tres productos clave para empezar tu rutina VitalBoost.",
-        "collection": "all",
-        "default_button_label": "Comprar"
-      }
-    },
-    "featured_products_NDbUCp": {
-      "type": "featured-products",
-      "blocks": {
-        "product_meta_MJjR3B": {
-          "type": "product_meta",
-          "settings": {
-            "badge": "Top venta",
-            "benefit_1": "Soporte diario",
-            "benefit_2": "Formula premium",
-            "benefit_3": "Facil de incorporar",
-            "button_label": "Comprar"
-          }
-        },
-        "product_meta_qhrhXq": {
-          "type": "product_meta",
-          "settings": {
-            "badge": "Nuevo",
-            "benefit_1": "Soporte diario",
-            "benefit_2": "Formula premium",
-            "benefit_3": "Facil de incorporar",
-            "button_label": "Comprar"
-          }
-        },
-        "product_meta_A4R9mi": {
-          "type": "product_meta",
-          "settings": {
-            "badge": "Comunidad",
-            "benefit_1": "Soporte diario",
-            "benefit_2": "Formula premium",
-            "benefit_3": "Facil de incorporar",
-            "button_label": "Comprar"
-          }
-        }
-      },
-      "block_order": [
-        "product_meta_MJjR3B",
-        "product_meta_qhrhXq",
-        "product_meta_A4R9mi"
-      ],
-      "name": "Featured Products",
-      "settings": {
-        "heading": "Productos destacados",
-        "subheading": "Tres opciones premium para tu rutina VitalBoost.",
-        "collection": "",
-        "default_button_label": "Comprar"
-      }
-    },
-    "featured_products_MFxDER": {
-      "type": "featured-products",
-      "blocks": {
-        "product_meta_qMdKb7": {
-          "type": "product_meta",
-          "settings": {
-            "badge": "Top venta",
-            "benefit_1": "Soporte diario",
-            "benefit_2": "Formula premium",
-            "benefit_3": "Facil de incorporar",
-            "button_label": "Comprar"
-          }
-        },
-        "product_meta_JcF7ng": {
-          "type": "product_meta",
-          "settings": {
-            "badge": "Nuevo",
-            "benefit_1": "Soporte diario",
-            "benefit_2": "Formula premium",
-            "benefit_3": "Facil de incorporar",
-            "button_label": "Comprar"
-          }
-        },
-        "product_meta_JCY9C6": {
-          "type": "product_meta",
-          "settings": {
-            "badge": "Comunidad",
-            "benefit_1": "Soporte diario",
-            "benefit_2": "Formula premium",
-            "benefit_3": "Facil de incorporar",
-            "button_label": "Comprar"
-          }
-        }
-      },
-      "block_order": [
-        "product_meta_qMdKb7",
-        "product_meta_JcF7ng",
-        "product_meta_JCY9C6"
-      ],
-      "name": "Featured Products",
-      "settings": {
-        "heading": "Productos destacados",
-        "subheading": "Tres opciones premium para tu rutina VitalBoost.",
-        "collection": "",
-        "default_button_label": "Comprar"
-      }
-    },
-    "lines_comparison": {
-      "type": "product-lines-comparison",
-      "blocks": {
-        "line_1": {
-          "type": "line",
-          "settings": {
-            "accent_color": "#9bbfa4",
-            "title": "Belleza",
-            "positioning": "Cuidado visible para piel, cabello y unas.",
-            "benefit_1": "Soporte diario para piel",
-            "benefit_2": "Rutina simple y consistente",
-            "benefit_3": "Formula premium",
-            "button_label": "Ver linea",
-            "button_link": "/collections/all"
-          }
-        },
-        "line_2": {
-          "type": "line",
-          "settings": {
-            "accent_color": "#8ea9bf",
-            "title": "Sport",
-            "positioning": "Rendimiento y recuperacion para un ritmo activo.",
-            "benefit_1": "Soporte para entrenamiento",
-            "benefit_2": "Mejor recuperacion",
-            "benefit_3": "Energia sostenida",
-            "button_label": "Ver linea",
-            "button_link": "/collections/all"
-          }
-        },
-        "line_3": {
-          "type": "line",
-          "settings": {
-            "accent_color": "#b4c79b",
-            "title": "Vitalidad",
-            "positioning": "Bienestar integral para tu dia a dia.",
-            "benefit_1": "Soporte inmune",
-            "benefit_2": "Balance general",
-            "benefit_3": "Habitos saludables",
-            "button_label": "Ver linea",
-            "button_link": "/collections/all"
-          }
-        }
-      },
-      "block_order": [
-        "line_1",
-        "line_2",
-        "line_3"
-      ],
-      "settings": {
-        "heading": "Elige tu linea VitalBoost",
-        "subheading": "Belleza, Sport y Vitalidad en una experiencia premium unificada."
-      }
-    },
-    "trust_badges": {
-      "type": "trust-badges",
-      "blocks": {
-        "badge_1": {
-          "type": "badge",
-          "settings": {
-            "title": "Aprovado por ANMAT",
-            "text": "Cumple estandares regulatorios."
-          }
-        },
-        "badge_2": {
-          "type": "badge",
-          "settings": {
-            "title": "Ingredientes de calidad",
-            "text": "Seleccion premium de materias primas."
-          }
-        },
-        "badge_3": {
-          "type": "badge",
-          "settings": {
-            "title": "Made in Argentina",
-            "text": "Desarrollo y produccion local."
-          }
-        },
-        "badge_4": {
-          "type": "badge",
-          "settings": {
-            "title": "Testeado en laboratorios",
-            "text": "Control de calidad por lote."
-          }
-        }
-      },
-      "block_order": [
-        "badge_1",
-        "badge_2",
-        "badge_3",
-        "badge_4"
-      ],
-      "settings": {
-        "heading": "Confianza VitalBoost",
-        "bg_color": "#ffffff",
-        "text_color": "#1f2a1f",
-        "accent_color": "#9bbfa4",
-        "border_color": "#e2ebe4"
-      }
-    },
-    "bundle_upsell": {
-      "type": "bundle-upsell",
-      "blocks": {
-        "tier_1": {
-          "type": "tier",
-          "settings": {
-            "is_popular": false,
-            "badge": "Bundle",
-            "title": "Compra 2",
-            "subtitle": "Ideal para empezar",
-            "price_text": "2 unidades",
-            "savings_text": "Ahorra 10%",
-            "mix_note": "Combina productos de distintas lineas",
-            "product_1": "",
-            "product_2": "",
-            "product_3": "",
-            "cta_label": "Armar bundle",
-            "cta_link": "/collections/all"
-          }
-        },
-        "tier_2": {
-          "type": "tier",
-          "settings": {
-            "is_popular": true,
-            "badge": "Bundle",
-            "title": "Compra 3",
-            "subtitle": "Mejor relacion precio/calidad",
-            "price_text": "3 unidades",
-            "savings_text": "Ahorra 15%",
-            "mix_note": "Bundle flexible para tu rutina",
-            "product_1": "",
-            "product_2": "",
-            "product_3": "",
-            "cta_label": "Elegir bundle",
-            "cta_link": "/collections/all"
-          }
-        },
-        "tier_3": {
-          "type": "tier",
-          "settings": {
-            "is_popular": false,
-            "badge": "Bundle",
-            "title": "Mix lineas",
-            "subtitle": "Belleza + Sport + Vitalidad",
-            "price_text": "Pack mix",
-            "savings_text": "Ahorra 12%",
-            "mix_note": "Arma combinaciones segun tus objetivos",
-            "product_1": "",
-            "product_2": "",
-            "product_3": "",
-            "cta_label": "Ver combinaciones",
-            "cta_link": "/collections/all"
-          }
-        }
-      },
-      "block_order": [
-        "tier_1",
-        "tier_2",
-        "tier_3"
-      ],
-      "settings": {
-        "heading": "Ahorra con packs",
-        "subheading": "Escala tu rutina con ofertas por cantidad.",
-        "collection": "all",
-        "show_collection_preview": true,
-        "preview_limit": 3,
-        "popular_badge": "Most popular",
-        "bg_color": "#ffffff",
-        "card_color": "#ffffff",
-        "text_color": "#1f2a1f",
-        "accent_color": "#9bbfa4",
-        "border_color": "#e2ebe4"
-      }
+        "s1",
+        "s2",
+        "s3"
+      ]
     },
     "reviews": {
-      "type": "reviews-section",
-      "blocks": {
-        "review_1": {
-          "type": "review",
-          "settings": {
-            "rating": 5,
-            "text": "Excelente calidad y muy facil de incorporar a mi rutina diaria.",
-            "name": "Martina C.",
-            "location": "Buenos Aires",
-            "product_tag": "Linea Belleza"
-          }
-        },
-        "review_2": {
-          "type": "review",
-          "settings": {
-            "rating": 5,
-            "text": "Note cambios en energia y recuperacion en pocas semanas.",
-            "name": "Franco L.",
-            "location": "Cordoba",
-            "product_tag": "Linea Sport"
-          }
-        },
-        "review_3": {
-          "type": "review",
-          "settings": {
-            "rating": 4,
-            "text": "Muy buena atencion y envio rapido. Seguire comprando.",
-            "name": "Carla M.",
-            "location": "Rosario",
-            "product_tag": "Linea Vitalidad"
-          }
-        }
-      },
-      "block_order": [
-        "review_1",
-        "review_2",
-        "review_3"
-      ],
+      "type": "reviews",
       "settings": {
-        "heading": "Resenas de la comunidad",
-        "subheading": "Historias reales de clientes VitalBoost.",
-        "bg_color": "#ffffff",
-        "card_color": "#ffffff",
-        "text_color": "#1f2a1f",
-        "accent_color": "#9bbfa4",
-        "border_color": "#e2ebe4"
+        "heading": "Lo que cuentan quienes ya lo toman",
+        "scope": "all",
+        "max": 9,
+        "scheme": "bg-mist"
       }
     },
-    "education": {
-      "type": "education-section",
+    "reels": {
+      "type": "video-reels",
+      "settings": {
+        "heading": "Nuestra comunidad",
+        "text": ""
+      },
       "blocks": {
-        "card_1": {
-          "type": "card",
+        "v1": {
+          "type": "video",
           "settings": {
-            "article": "",
-            "kicker": "Guia",
-            "title": "Como elegir tu suplemento ideal",
-            "excerpt": "Te mostramos una forma simple para encontrar el producto adecuado segun tu objetivo.",
-            "link": "/pages/faq",
-            "button_label": "Leer mas"
+            "video": "shopify://files/videos/v1c044g50000d5sg10fog65g98i9i5sg.mov"
           }
         },
-        "card_2": {
-          "type": "card",
+        "v2": {
+          "type": "video",
           "settings": {
-            "article": "",
-            "kicker": "Bienestar",
-            "title": "Habitos que potencian resultados",
-            "excerpt": "Nutricion, descanso y constancia: la base para una mejora sostenible.",
-            "link": "/pages/faq",
-            "button_label": "Leer mas"
-          }
-        },
-        "card_3": {
-          "type": "card",
-          "settings": {
-            "article": "",
-            "kicker": "Tips",
-            "title": "Como combinar lineas VitalBoost",
-            "excerpt": "Ideas practicas para integrar Belleza, Sport y Vitalidad en una rutina semanal.",
-            "link": "/pages/faq",
-            "button_label": "Leer mas"
+            "video": "shopify://files/videos/copy_AD412A4C-0779-4C4E-8CE4-AB4B0C7675B8.mov"
           }
         }
       },
       "block_order": [
-        "card_1",
-        "card_2",
-        "card_3"
-      ],
+        "v1",
+        "v2"
+      ]
+    },
+    "quality": {
+      "type": "quality",
       "settings": {
-        "heading": "Aprende y mejora tu rutina",
-        "subheading": "Guias rapidas para elegir suplementos con confianza.",
-        "bg_color": "#ffffff",
-        "text_color": "#1f2a1f",
-        "accent_color": "#9bbfa4",
-        "card_color": "#f8fbf8"
-      }
+        "heading": "Hecho en Argentina, con todos los registros",
+        "text": "<p>Desarrollamos las fórmulas junto a Foodgrade y se elaboran en un establecimiento habilitado de Bernal, Buenos Aires, con procesos auditados y materias primas seleccionadas.</p>"
+      },
+      "blocks": {
+        "r1": {
+          "type": "row",
+          "settings": {
+            "label": "Establecimiento elaborador",
+            "value": "RNE 02-040266"
+          }
+        },
+        "r2": {
+          "type": "row",
+          "settings": {
+            "label": "Vital Boost Deporte",
+            "value": "RNPA EX-2025-41668852"
+          }
+        },
+        "r3": {
+          "type": "row",
+          "settings": {
+            "label": "Vital Boost Belleza",
+            "value": "RNPA EX-2025-41504371"
+          }
+        },
+        "r4": {
+          "type": "row",
+          "settings": {
+            "label": "Vital Boost Vitalidad",
+            "value": "RNPA EX-2025-41715246"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4"
+      ]
     },
     "faq": {
-      "type": "faq-section",
+      "type": "faq",
+      "settings": {
+        "heading": "Preguntas frecuentes",
+        "scheme": ""
+      },
       "blocks": {
-        "faq_1": {
-          "type": "faq",
+        "q1": {
+          "type": "item",
           "settings": {
-            "question": "Cuanto tiempo tarda en verse un resultado?",
-            "answer": "<p>Depende de la formula y la constancia. Sugerimos uso diario por varias semanas para evaluar cambios.</p>"
+            "question": "¿Cuál elijo?",
+            "answer": "<p><strong>Deporte</strong> si entrenás seguido y querés cuidar músculos y articulaciones. <strong>Belleza</strong> si tu foco es la piel, el pelo y las uñas. <strong>Vitalidad</strong> si sentís desgaste o molestias articulares y buscás moverte mejor día a día. Las tres tienen la misma base de colágeno hidrolizado.</p>"
           }
         },
-        "faq_2": {
-          "type": "faq",
+        "q2": {
+          "type": "item",
           "settings": {
-            "question": "Puedo combinar varias lineas?",
-            "answer": "<p>Si, puedes combinar productos de Belleza, Sport y Vitalidad segun tus objetivos personales.</p>"
+            "question": "¿Cuánto tarda en notarse?",
+            "answer": "<p>La mayoría de las personas nota cambios entre las 4 y 8 semanas de uso diario. Los resultados varían según cada persona: la clave es la constancia.</p>"
           }
         },
-        "faq_3": {
-          "type": "faq",
+        "q3": {
+          "type": "item",
           "settings": {
-            "question": "Como elijo el suplemento correcto?",
-            "answer": "<p>Revisa tus metas principales y empieza por una linea base. Luego puedes sumar productos complementarios.</p>"
+            "question": "¿Cómo se toma?",
+            "answer": "<p>Un scoop al ras (10 g) por día, en cualquier momento. Como no tiene sabor artificial, lo podés mezclar con agua, café, jugo, un batido o incorporarlo a tus comidas.</p>"
+          }
+        },
+        "q4": {
+          "type": "item",
+          "settings": {
+            "question": "¿Cuánto dura un pote?",
+            "answer": "<p>Cada pote trae 300 g: 30 porciones, un mes de uso diario.</p>"
+          }
+        },
+        "q5": {
+          "type": "item",
+          "settings": {
+            "question": "¿Cuánto tarda el envío?",
+            "answer": "<p>El envío es gratis a todo el país. Cuando despachamos tu pedido te avisamos por mail.</p>"
+          }
+        },
+        "q6": {
+          "type": "item",
+          "settings": {
+            "question": "¿Dónde se fabrica?",
+            "answer": "<p>Desarrollamos las fórmulas junto a Foodgrade, especialistas en suplementos. Se elaboran en un establecimiento habilitado de Bernal, Provincia de Buenos Aires (RNE 02-040266), y cada fórmula tiene su Registro Nacional de Producto Alimenticio (RNPA).</p>"
+          }
+        },
+        "q7": {
+          "type": "item",
+          "settings": {
+            "question": "¿Quién puede tomarlo?",
+            "answer": "<p>Está pensado para adultos. No se recomienda en embarazo, lactancia ni en niños. Si tomás medicación o tenés alguna condición de salud, consultá a tu médico antes de empezar.</p>"
           }
         }
       },
       "block_order": [
-        "faq_1",
-        "faq_2",
-        "faq_3"
-      ],
-      "settings": {
-        "heading": "Preguntas frecuentes",
-        "subheading": "Respuestas claras para ayudarte a decidir.",
-        "bg_color": "#ffffff",
-        "text_color": "#1f2a1f",
-        "accent_color": "#9bbfa4",
-        "card_color": "#f9fcf9"
-      }
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7"
+      ]
     },
-    "final_cta": {
+    "final": {
       "type": "final-cta",
       "settings": {
-        "eyebrow": "Empieza hoy",
-        "heading": "Arma tu rutina premium con VitalBoost",
-        "subheading": "<p>Selecciona productos para belleza, energia y bienestar integral desde una sola tienda.</p>",
-        "primary_label": "Comprar ahora",
-        "primary_link": "/collections/all",
-        "secondary_label": "Ver todas las lineas",
-        "secondary_link": "/collections/all",
-        "show_newsletter": true,
-        "newsletter_placeholder": "Tu email",
-        "newsletter_button": "Suscribirme",
-        "success_text": "Gracias por suscribirte.",
-        "fallback_collection": "",
-        "bg_color": "#ffffff",
-        "text_color": "#1f2a1f",
-        "accent_color": "#9bbfa4",
-        "card_color": "#f5faf6"
+        "heading": "Empezá hoy. Se nota con constancia.",
+        "text": "La mayoría nota cambios entre las 4 y 8 semanas de uso diario. Por eso el pack de 3 es el más elegido.",
+        "scheme": "bg-mist"
       }
     }
   },
   "order": [
-    "announcement",
     "hero",
-    "benefits_strip",
-    "featured_products",
-    "featured_products_NDbUCp",
-    "featured_products_MFxDER",
-    "lines_comparison",
-    "trust_badges",
-    "bundle_upsell",
+    "picker",
+    "strip",
+    "howto",
     "reviews",
-    "education",
+    "reels",
+    "quality",
     "faq",
-    "final_cta"
+    "final"
   ]
 }

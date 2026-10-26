@@ -1,23 +1,91 @@
 [
   {
-    "name": "Vital Boost OS 2.0",
+    "name": "theme_info",
+    "theme_name": "Vital Boost 2026",
+    "theme_version": "2.0.0",
+    "theme_author": "Vital Boost",
+    "theme_documentation_url": "https://vitalboost.com.ar",
+    "theme_support_url": "https://vitalboost.com.ar"
+  },
+  {
+    "name": "Marca",
     "settings": [
-      {
-        "type": "header",
-        "content": "Colors"
-      },
-      {
-        "type": "color",
-        "id": "color_button",
-        "label": "Button color",
-        "default": "#183f86"
-      },
-      {
-        "type": "color",
-        "id": "color_button_text",
-        "label": "Button text",
-        "default": "#ffffff"
-      }
+      { "type": "text", "id": "brand_name", "label": "Nombre de la marca", "default": "Vital Boost" },
+      { "type": "image_picker", "id": "logo", "label": "Logo" },
+      { "type": "range", "id": "logo_width", "label": "Ancho del logo (mobile)", "min": 60, "max": 200, "step": 4, "unit": "px", "default": 104 },
+      { "type": "image_picker", "id": "favicon", "label": "Favicon" },
+      { "type": "color", "id": "color_royal", "label": "Azul Vital Boost", "default": "#2B35B4" },
+      { "type": "color", "id": "color_ink", "label": "Texto", "default": "#121A52" },
+      { "type": "color", "id": "color_mist", "label": "Fondo secundario", "default": "#EDEFFA" },
+      { "type": "color", "id": "color_paper", "label": "Fondo principal", "default": "#FFFFFF" }
+    ]
+  },
+  {
+    "name": "Fórmulas",
+    "settings": [
+      { "type": "paragraph", "content": "Cada fórmula tiene su color y sus textos. Se usan en el selector de la home, en la ficha de producto y en el carrito." },
+      { "type": "header", "content": "Fórmula 1" },
+      { "type": "product", "id": "formula_1_product", "label": "Producto" },
+      { "type": "text", "id": "formula_1_name", "label": "Nombre corto", "default": "Deporte" },
+      { "type": "text", "id": "formula_1_goal", "label": "Objetivo (para el selector)", "default": "Entreno y recuperación" },
+      { "type": "text", "id": "formula_1_actives", "label": "Activos", "default": "Creatina, L-Carnitina, Magnesio y Vitamina C" },
+      { "type": "textarea", "id": "formula_1_pitch", "label": "Descripción breve", "default": "Para quienes entrenan seguido y quieren cuidar músculos y articulaciones mientras suman carga." },
+      { "type": "textarea", "id": "formula_1_benefits", "label": "Beneficios (uno por línea)", "default": "Acompaña la recuperación muscular\nCuida articulaciones y tendones\nEnergía sostenida para entrenar" },
+      { "type": "color", "id": "formula_1_bg", "label": "Color", "default": "#2B35B4" },
+      { "type": "color", "id": "formula_1_ink", "label": "Texto sobre el color", "default": "#FFFFFF" },
+      { "type": "image_picker", "id": "formula_1_tub", "label": "Foto del pote sin fondo (opcional)", "info": "PNG o WebP con fondo transparente. Si lo dejás vacío se usa el recorte incluido en el tema." },
+      { "type": "color", "id": "formula_1_soft", "label": "Color suave", "default": "#E5E7FA" },
+      { "type": "header", "content": "Fórmula 2" },
+      { "type": "product", "id": "formula_2_product", "label": "Producto" },
+      { "type": "text", "id": "formula_2_name", "label": "Nombre corto", "default": "Belleza" },
+      { "type": "text", "id": "formula_2_goal", "label": "Objetivo (para el selector)", "default": "Piel, pelo y uñas" },
+      { "type": "text", "id": "formula_2_actives", "label": "Activos", "default": "Ácido hialurónico, Resveratrol, Biotina, Q10 y Vitamina C" },
+      { "type": "textarea", "id": "formula_2_pitch", "label": "Descripción breve", "default": "Para quienes quieren una piel más firme y luminosa, y pelo y uñas más fuertes, desde adentro." },
+      { "type": "textarea", "id": "formula_2_benefits", "label": "Beneficios (uno por línea)", "default": "Mejorá la firmeza y elasticidad de tu piel\nPelo y uñas más fuertes\nAntioxidantes para una piel más luminosa" },
+      { "type": "color", "id": "formula_2_bg", "label": "Color", "default": "#F4C2CE" },
+      { "type": "color", "id": "formula_2_ink", "label": "Texto sobre el color", "default": "#8E1238" },
+      { "type": "image_picker", "id": "formula_2_tub", "label": "Foto del pote sin fondo (opcional)", "info": "PNG o WebP con fondo transparente. Si lo dejás vacío se usa el recorte incluido en el tema." },
+      { "type": "color", "id": "formula_2_soft", "label": "Color suave", "default": "#FCECF0" },
+      { "type": "header", "content": "Fórmula 3" },
+      { "type": "product", "id": "formula_3_product", "label": "Producto" },
+      { "type": "text", "id": "formula_3_name", "label": "Nombre corto", "default": "Vitalidad" },
+      { "type": "text", "id": "formula_3_goal", "label": "Objetivo (para el selector)", "default": "Movilidad y energía diaria" },
+      { "type": "text", "id": "formula_3_actives", "label": "Activos", "default": "Cúrcuma, Zinc, Magnesio y Vitamina C" },
+      { "type": "textarea", "id": "formula_3_pitch", "label": "Descripción breve", "default": "Para quienes sienten desgaste o molestias articulares y quieren mantenerse flexibles y con energía." },
+      { "type": "textarea", "id": "formula_3_benefits", "label": "Beneficios (uno por línea)", "default": "Acompaña la movilidad articular\nMenos sensación de cansancio\nCúrcuma y zinc para tu bienestar diario" },
+      { "type": "color", "id": "formula_3_bg", "label": "Color", "default": "#D9E13F" },
+      { "type": "color", "id": "formula_3_ink", "label": "Texto sobre el color", "default": "#1F2A0E" },
+      { "type": "image_picker", "id": "formula_3_tub", "label": "Foto del pote sin fondo (opcional)", "info": "PNG o WebP con fondo transparente. Si lo dejás vacío se usa el recorte incluido en el tema." },
+      { "type": "color", "id": "formula_3_soft", "label": "Color suave", "default": "#F4F6D2" }
+    ]
+  },
+  {
+    "name": "Packs y descuentos",
+    "settings": [
+      { "type": "paragraph", "content": "Estos valores solo muestran los precios. El descuento real lo aplica Shopify en el carrito: tienen que coincidir con tus descuentos por cantidad." },
+      { "type": "text", "id": "pack_quantities", "label": "Cantidades", "default": "1,2,3,6" },
+      { "type": "text", "id": "pack_discounts", "label": "Descuento % de cada cantidad", "default": "0,10,15,20" },
+      { "type": "text", "id": "pack_badges", "label": "Etiqueta de cada cantidad", "default": ",,Más elegido,Mejor precio", "info": "Separadas por coma. Dejá vacío para no mostrar etiqueta." },
+      { "type": "text", "id": "pack_names", "label": "Nombre de cada cantidad", "default": "1 pote,Pack x2,Pack x3,Pack x6" },
+      { "type": "text", "id": "pack_hints", "label": "Detalle de cada cantidad", "default": "1 mes,2 meses,3 meses de tratamiento,6 meses" },
+      { "type": "range", "id": "pack_default_index", "label": "Pack preseleccionado (posición)", "min": 1, "max": 4, "step": 1, "default": 3 }
+    ]
+  },
+  {
+    "name": "Compra",
+    "settings": [
+      { "type": "text", "id": "shipping_note", "label": "Mensaje de envío", "default": "Envío gratis a todo el país" },
+      { "type": "text", "id": "payment_note", "label": "Mensaje de pago", "default": "Pago seguro" },
+      { "type": "text", "id": "buy_now_label", "label": "Botón principal", "default": "Comprar ahora" },
+      { "type": "text", "id": "add_label", "label": "Botón secundario", "default": "Agregar al carrito" },
+      { "type": "text", "id": "whatsapp_number", "label": "WhatsApp (con código de país, sin +)", "default": "5491156607163" }
+    ]
+  },
+  {
+    "name": "Redes",
+    "settings": [
+      { "type": "text", "id": "social_instagram", "label": "Instagram", "default": "https://www.instagram.com/vitalboostarg" },
+      { "type": "text", "id": "social_tiktok", "label": "TikTok" }
     ]
   }
 ]

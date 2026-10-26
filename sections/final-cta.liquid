@@ -1,325 +1,39 @@
-<section
-  id="shopify-section-{{ section.id }}"
-  class="vb-final-cta"
-  style="
-    --vb-bg: {{ section.settings.bg_color }};
-    --vb-text: {{ section.settings.text_color }};
-    --vb-accent: {{ section.settings.accent_color }};
-    --vb-card: {{ section.settings.card_color }};
-  "
->
-  <div class="page-width">
-    {% liquid
-      assign cta_image = section.settings.image
-      assign fallback_collection = section.settings.fallback_collection
-      if cta_image == blank and fallback_collection != blank and fallback_collection.products_count > 0
-        assign fallback_product = fallback_collection.products.first
-        if fallback_product != blank and fallback_product.featured_image != blank
-          assign cta_image = fallback_product.featured_image
-        endif
-      endif
-    %}
-    <div class="vb-final-cta__card">
-      <div class="vb-final-cta__content">
-        {% if section.settings.eyebrow != blank %}
-          <p class="vb-final-cta__eyebrow">{{ section.settings.eyebrow }}</p>
-        {% endif %}
-
-        {% if section.settings.heading != blank %}
-          <h2>{{ section.settings.heading }}</h2>
-        {% endif %}
-
-        {% if section.settings.subheading != blank %}
-          <div class="vb-final-cta__subheading rte">{{ section.settings.subheading }}</div>
-        {% endif %}
-
-        <div class="vb-final-cta__actions">
-          {% if section.settings.primary_label != blank and section.settings.primary_link != blank %}
-            <a class="vb-final-cta__btn vb-final-cta__btn--primary" href="{{ section.settings.primary_link }}">
-              {{ section.settings.primary_label }}
-            </a>
-          {% endif %}
-          {% if section.settings.secondary_label != blank and section.settings.secondary_link != blank %}
-            <a class="vb-final-cta__btn vb-final-cta__btn--secondary" href="{{ section.settings.secondary_link }}">
-              {{ section.settings.secondary_label }}
-            </a>
-          {% endif %}
-        </div>
-
-        {% if section.settings.show_newsletter %}
-          <div class="vb-final-cta__newsletter">
-            {% form 'customer', class: 'vb-newsletter-form' %}
-              <input type="hidden" name="contact[tags]" value="newsletter">
-              <label for="vb-news-{{ section.id }}" class="visually-hidden">{{ section.settings.newsletter_placeholder }}</label>
-              <div class="vb-newsletter-form__row">
-                <input
-                  id="vb-news-{{ section.id }}"
-                  type="email"
-                  name="contact[email]"
-                  placeholder="{{ section.settings.newsletter_placeholder }}"
-                  required
-                >
-                <button type="submit">{{ section.settings.newsletter_button }}</button>
-              </div>
-              {% if form.posted_successfully? %}
-                <p class="vb-newsletter-form__message">{{ section.settings.success_text }}</p>
-              {% endif %}
-              {% if form.errors %}
-                <p class="vb-newsletter-form__message">{{ form.errors | default_errors }}</p>
-              {% endif %}
-            {% endform %}
-          </div>
-        {% endif %}
-      </div>
-
-      <div class="vb-final-cta__media">
-        {% if cta_image != blank %}
-          {{
-            cta_image
-            | image_url: width: 1200
-            | image_tag: loading: 'lazy', widths: '420,680,960,1200', sizes: '(max-width: 989px) 94vw, 36vw', alt: cta_image.alt
-          }}
-        {% else %}
-          {{ 'lifestyle-2' | placeholder_svg_tag: 'vb-placeholder' }}
-        {% endif %}
-      </div>
+<section class="section final {{ section.settings.scheme }}">
+  <div class="wrap">
+    <h2 class="h1">{{ section.settings.heading }}</h2>
+    {%- if section.settings.text != blank -%}<p class="lead">{{ section.settings.text }}</p>{%- endif -%}
+    <div class="final__formulas">
+      {%- for i in (1..3) -%}
+        {%- liquid
+          assign kp = 'formula_' | append: i | append: '_product'
+          assign kn = 'formula_' | append: i | append: '_name'
+          assign p = settings[kp]
+          if p == blank
+            assign h = 'colageno-' | append: settings[kn] | handleize
+            assign p = all_products[h]
+          endif
+        -%}
+        {%- if p != blank -%}
+          <a class="final__f" href="{{ p.url }}" style="{% render 'formula-style', fi: i %}">
+            {%- render 'formula-tub', fi: i, small: true -%}
+            <span>{{ settings[kn] }}</span>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
     </div>
   </div>
 </section>
 
-<style>
-  #shopify-section-{{ section.id }}.vb-final-cta {
-    background: var(--vb-bg);
-    color: var(--vb-text);
-    padding: 2.1rem 0 2.5rem;
-  }
-
-  #shopify-section-{{ section.id }} .vb-final-cta__card {
-    background: var(--vb-card);
-    border: 1px solid color-mix(in srgb, var(--vb-accent) 25%, #deebdf);
-    border-radius: 1.2rem;
-    overflow: hidden;
-    display: grid;
-  }
-
-  #shopify-section-{{ section.id }} .vb-final-cta__content {
-    padding: 1.1rem;
-  }
-
-  #shopify-section-{{ section.id }} .vb-final-cta__eyebrow {
-    margin: 0 0 0.45rem;
-    font-size: 0.76rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: color-mix(in srgb, var(--vb-accent) 78%, #456148);
-    font-weight: 600;
-  }
-
-  #shopify-section-{{ section.id }} .vb-final-cta h2 {
-    margin: 0;
-    font-size: clamp(1.35rem, 4.7vw, 2.15rem);
-    line-height: 1.1;
-  }
-
-  #shopify-section-{{ section.id }} .vb-final-cta__subheading {
-    margin-top: 0.6rem;
-    max-width: 52ch;
-    line-height: 1.55;
-    font-size: 0.96rem;
-    color: color-mix(in srgb, var(--vb-text) 76%, white);
-  }
-
-  #shopify-section-{{ section.id }} .vb-final-cta__actions {
-    margin-top: 0.95rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-  }
-
-  #shopify-section-{{ section.id }} .vb-final-cta__btn {
-    border-radius: 999px;
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 600;
-    padding: 0.7rem 1.1rem;
-    display: inline-flex;
-  }
-
-  #shopify-section-{{ section.id }} .vb-final-cta__btn--primary {
-    background: var(--vb-accent);
-    color: #0e1e11;
-  }
-
-  #shopify-section-{{ section.id }} .vb-final-cta__btn--secondary {
-    color: var(--vb-text);
-    border: 1px solid color-mix(in srgb, var(--vb-accent) 55%, #9ab59f);
-  }
-
-  #shopify-section-{{ section.id }} .vb-final-cta__newsletter {
-    margin-top: 0.9rem;
-  }
-
-  #shopify-section-{{ section.id }} .vb-newsletter-form__row {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 0.45rem;
-  }
-
-  #shopify-section-{{ section.id }} .vb-newsletter-form input {
-    border: 1px solid color-mix(in srgb, var(--vb-accent) 36%, #cddbcf);
-    border-radius: 999px;
-    padding: 0.72rem 0.85rem;
-    font-size: 0.88rem;
-    background: #fff;
-    color: var(--vb-text);
-  }
-
-  #shopify-section-{{ section.id }} .vb-newsletter-form button {
-    border: 0;
-    border-radius: 999px;
-    padding: 0.72rem 1rem;
-    font-size: 0.88rem;
-    font-weight: 600;
-    background: color-mix(in srgb, var(--vb-accent) 85%, #5f8468);
-    color: #0d1a10;
-    cursor: pointer;
-  }
-
-  #shopify-section-{{ section.id }} .vb-newsletter-form__message {
-    margin: 0.5rem 0 0;
-    font-size: 0.82rem;
-  }
-
-  #shopify-section-{{ section.id }} .vb-final-cta__media img,
-  #shopify-section-{{ section.id }} .vb-final-cta__media svg {
-    display: block;
-    width: 100%;
-    aspect-ratio: 16 / 11;
-    object-fit: cover;
-  }
-
-  @media screen and (min-width: 990px) {
-    #shopify-section-{{ section.id }} .vb-final-cta__card {
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-      align-items: stretch;
-    }
-
-    #shopify-section-{{ section.id }} .vb-final-cta__content {
-      padding: 1.5rem;
-      align-self: center;
-    }
-  }
-</style>
-
 {% schema %}
 {
-  "name": "Final CTA",
-  "tag": "section",
-  "class": "section section-final-cta",
+  "name": "Llamado final",
   "settings": [
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "Empieza hoy"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Arma tu rutina premium con VitalBoost"
-    },
-    {
-      "type": "richtext",
-      "id": "subheading",
-      "label": "Subheading",
-      "default": "<p>Selecciona productos para belleza, energia y bienestar integral desde una sola tienda.</p>"
-    },
-    {
-      "type": "text",
-      "id": "primary_label",
-      "label": "Primary button label",
-      "default": "Comprar ahora"
-    },
-    {
-      "type": "url",
-      "id": "primary_link",
-      "label": "Primary button link"
-    },
-    {
-      "type": "text",
-      "id": "secondary_label",
-      "label": "Secondary button label",
-      "default": "Ver todas las lineas"
-    },
-    {
-      "type": "url",
-      "id": "secondary_link",
-      "label": "Secondary button link"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_newsletter",
-      "label": "Show newsletter form",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "newsletter_placeholder",
-      "label": "Newsletter placeholder",
-      "default": "Tu email"
-    },
-    {
-      "type": "text",
-      "id": "newsletter_button",
-      "label": "Newsletter button text",
-      "default": "Suscribirme"
-    },
-    {
-      "type": "text",
-      "id": "success_text",
-      "label": "Success text",
-      "default": "Gracias por suscribirte."
-    },
-    {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Image"
-    },
-    {
-      "type": "collection",
-      "id": "fallback_collection",
-      "label": "Fallback collection for image"
-    },
-    {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Background color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text color",
-      "default": "#1f2a1f"
-    },
-    {
-      "type": "color",
-      "id": "accent_color",
-      "label": "Accent color",
-      "default": "#9bbfa4"
-    },
-    {
-      "type": "color",
-      "id": "card_color",
-      "label": "Card color",
-      "default": "#f5faf6"
-    }
+    { "type": "text", "id": "heading", "label": "Título", "default": "Empezá hoy. Se nota con constancia." },
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "La mayoría nota cambios entre las 4 y 8 semanas de uso diario. Por eso el pack de 3 es el más elegido." },
+    { "type": "select", "id": "scheme", "label": "Fondo", "default": "", "options": [
+      { "value": "", "label": "Blanco" }, { "value": "bg-mist", "label": "Celeste" }
+    ] }
   ],
-  "presets": [
-    {
-      "name": "Final CTA"
-    }
-  ]
+  "presets": [{ "name": "Llamado final" }]
 }
 {% endschema %}

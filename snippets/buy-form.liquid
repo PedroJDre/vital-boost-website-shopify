@@ -1,0 +1,88 @@
+{%- comment -%}
+  Pack selector + buy buttons for one product.
+  Params: product (required), uid (unique string), show_more_link (bool)
+  Prices per pack are computed from theme settings; the real discount is
+  applied by Shopify's automatic quantity discounts in the cart.
+{%- endcomment -%}
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign qtys = settings.pack_quantities | split: ','
+  assign discs = settings.pack_discounts | split: ','
+  assign badges = settings.pack_badges | split: ','
+  assign names = settings.pack_names | split: ','
+  assign hints = settings.pack_hints | split: ','
+  assign default_index = settings.pack_default_index | minus: 1
+  if default_index >= qtys.size
+    assign default_index = 0
+  endif
+-%}
+{%- form 'product', product, class: 'buy', data-buy-form: '', novalidate: 'novalidate' -%}
+  <input type="hidden" name="id" value="{{ variant.id }}">
+
+  {%- if product.variants.size > 1 -%}
+    <div class="field">
+      <label for="Variant-{{ uid }}">{{ product.options.first }}</label>
+      <select id="Variant-{{ uid }}" data-variant-select>
+        {%- for v in product.variants -%}
+          <option value="{{ v.id }}" data-price="{{ v.price }}" {% if v == variant %}selected{% endif %} {% unless v.available %}disabled{% endunless %}>{{ v.title }}{% unless v.available %} (sin stock){% endunless %}</option>
+        {%- endfor -%}
+      </select>
+    </div>
+  {%- endif -%}
+
+  <fieldset class="packs" data-packs data-price="{{ variant.price }}">
+    <legend>Elegí cuántos llevás</legend>
+    {%- for q in qtys -%}
+      {%- liquid
+        assign qn = q | strip | plus: 0
+        assign dn = discs[forloop.index0] | default: '0' | strip | plus: 0
+        assign full = variant.price | times: qn
+        assign keep = 100 | minus: dn
+        assign total = full | times: keep | divided_by: 100
+        assign each = total | divided_by: qn
+        assign badge = badges[forloop.index0] | strip
+        assign pname = names[forloop.index0] | strip | default: qn
+        assign phint = hints[forloop.index0] | strip
+      -%}
+      <label class="pack">
+        <input type="radio" name="quantity" value="{{ qn }}" data-discount="{{ dn }}" {% if forloop.index0 == default_index %}checked{% endif %}>
+        <span class="pack__dot" aria-hidden="true"></span>
+        <span>
+          <span class="pack__title">
+            {{ pname }}
+            {%- if dn > 0 %} <span class="badge badge--save">{{ dn }}% off</span>{% endif -%}
+            {%- if badge != blank %} <span class="badge">{{ badge }}</span>{% endif -%}
+          </span>
+          {%- if phint != blank -%}<span class="pack__hint">{{ phint }}</span>{%- endif -%}
+        </span>
+        <span class="pack__price">
+          <strong data-pack-total>{{ total | money_without_trailing_zeros }}</strong>
+          {%- if dn > 0 -%}
+            <s data-pack-full>{{ full | money_without_trailing_zeros }}</s>
+          {%- endif -%}
+          {%- if qn > 1 -%}
+            <span class="pack__each">{{ each | money_without_trailing_zeros }} c/u</span>
+          {%- endif -%}
+        </span>
+      </label>
+    {%- endfor -%}
+  </fieldset>
+
+  <p class="buy__error" role="alert" data-buy-error hidden></p>
+
+  {%- if variant.available -%}
+    <button type="submit" name="return_to" value="/checkout" class="btn btn--block" data-buy-now>
+      {{ settings.buy_now_label }}
+    </button>
+    <button type="submit" class="btn btn--ghost btn--ink btn--block" data-add-to-cart>
+      {{ settings.add_label }}
+    </button>
+  {%- else -%}
+    <button type="button" class="btn btn--block" disabled>Sin stock por ahora</button>
+  {%- endif -%}
+
+  <p class="buy__note">
+    <span>{% render 'icon', name: 'truck' %}{{ settings.shipping_note }}</span>
+    <span>{% render 'icon', name: 'shield' %}{{ settings.payment_note }}</span>
+  </p>
+{%- endform -%}

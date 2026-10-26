@@ -1,41 +1,77 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="{{ request.locale.iso_code }}">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="{{ settings.color_button }}">
+    <meta name="theme-color" content="{{ settings.color_royal }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64, height: 64 }}">
+    {%- endif -%}
 
     <title>
       {{ page_title }}
-      {% if current_tags %}
-        - {{ current_tags | join: ', ' }}
-      {% endif %}
-      {% if current_page != 1 %}
-        - {{ 'general.pagination.page' | t: page: current_page }}
-      {% endif %}
-      {% unless page_title contains shop.name %}
-        - {{ shop.name }}
-      {% endunless %}
+      {%- if current_tags %} &ndash; {{ current_tags | join: ', ' }}{% endif -%}
+      {%- if current_page != 1 %} &ndash; Página {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
     </title>
 
     {% if page_description %}
       <meta name="description" content="{{ page_description | escape }}">
     {% endif %}
 
-    {{ content_for_header }}
+    {% render 'meta-tags' %}
+
+    {{ 'gloock.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+    {{ 'nunito-sans.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+
+    <style>
+      @font-face { font-family: 'Gloock'; src: url('{{ 'gloock.woff2' | asset_url }}') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+      @font-face { font-family: 'Nunito Sans'; src: url('{{ 'nunito-sans.woff2' | asset_url }}') format('woff2'); font-weight: 200 1000; font-style: normal; font-display: swap; }
+      :root {
+        --royal: {{ settings.color_royal }};
+        --ink: {{ settings.color_ink }};
+        --mist: {{ settings.color_mist }};
+        --paper: {{ settings.color_paper }};
+        --line: {{ settings.color_ink | color_modify: 'alpha', 0.14 }};
+        --muted: {{ settings.color_ink | color_modify: 'alpha', 0.68 }};
+      }
+    </style>
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
-    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+
+    {{ content_for_header }}
   </head>
-  <body>
-    <a class="skip-link" href="#MainContent">{{ 'accessibility.skip_to_text' | t }}</a>
 
-    {% section 'header' %}
+  <body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %}">
+    <a class="skip-link" href="#main">Ir al contenido</a>
 
-    <main id="MainContent" role="main">
+    {% sections 'header-group' %}
+
+    <main id="main" tabindex="-1">
       {{ content_for_layout }}
     </main>
 
-    {% section 'footer' %}
+    {% sections 'footer-group' %}
+
+    {% section 'cart-drawer' %}
+
+    <script>
+      window.VB = {
+        routes: {
+          root: {{ routes.root_url | json }},
+          cartAdd: {{ routes.cart_add_url | append: '.js' | json }},
+          cartChange: {{ routes.cart_change_url | append: '.js' | json }},
+          cart: {{ routes.cart_url | json }}
+        },
+        moneyFormat: {{ shop.money_format | json }},
+        packs: {{ settings.pack_quantities | split: ',' | json }},
+        packDiscounts: {{ settings.pack_discounts | split: ',' | json }}
+      };
+    </script>
   </body>
 </html>
