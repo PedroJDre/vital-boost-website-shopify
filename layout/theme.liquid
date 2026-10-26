@@ -13,7 +13,11 @@
     {%- endif -%}
 
     <title>
-      {{ page_title }}
+      {%- if request.page_type == 'index' and page_title == shop.name -%}
+        {{ settings.brand_name | default: shop.name }} | Colágeno para deporte, belleza y vitalidad
+      {%- else -%}
+        {{ page_title }}
+      {%- endif -%}
       {%- if current_tags %} &ndash; {{ current_tags | join: ', ' }}{% endif -%}
       {%- if current_page != 1 %} &ndash; Página {{ current_page }}{% endif -%}
       {%- assign brand = settings.brand_name | default: shop.name -%}{%- unless page_title contains brand or page_title contains shop.name %} &ndash; {{ brand }}{% endunless -%}
