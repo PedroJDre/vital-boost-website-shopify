@@ -42,7 +42,7 @@
     {%- if section.settings.image != blank -%}
       {{ section.settings.image | image_url: width: 2200 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '700,1100,1600,2200', sizes: '(min-width: 990px) 55vw, 100vw', alt: section.settings.image.alt | default: 'Las tres fórmulas de Vital Boost', class: 'hero2__img' }}
     {%- else -%}
-      {%- render 'asset-img', name: 'ph-hero', small: 1100, large: 2200, w: 1100, h: 715, sizes: '(min-width: 990px) 55vw, 100vw', alt: 'Colágeno Belleza al frente, con Vitalidad y Deporte detrás', class: 'hero2__img', eager: true -%}
+      {%- render 'asset-img', name: 'ph-hero', small: 1100, large: 2200, w: 1100, h: 1000, sizes: '(min-width: 990px) 55vw, 100vw', alt: 'Una persona sostiene Colágeno Vitalidad y Colágeno Belleza', class: 'hero2__img', eager: true -%}
     {%- endif -%}
   </div>
 </section>

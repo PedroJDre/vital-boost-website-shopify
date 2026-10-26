@@ -114,7 +114,7 @@
 .hero2__proof li { display: flex; align-items: center; gap: 7px; }
 .hero2__proof .icon { width: 18px; height: 18px; }
 .hero2__media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #e9e9ea; }
-.hero2__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; }
+.hero2__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
 @media (min-width: 990px) {
   .hero2 { grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr); min-height: min(82vh, 760px); }
   .hero2__inner { padding: 64px 48px 64px max(40px, calc((100vw - 1240px) / 2 + 40px)); max-width: 720px; margin-left: auto; }
