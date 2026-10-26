@@ -4,7 +4,7 @@
       "type": "hero",
       "settings": {
         "heading": "Un colágeno para cada objetivo.",
-        "text": "Colágeno hidrolizado con activos que suman: para entrenar, para tu piel o para moverte mejor cada día. Una dosis diaria, sin sabor.",
+        "text": "Colágeno hidrolizado con activos que suman: para entrenar, para tu piel o para moverte mejor. Una dosis al día, sin sabor.",
         "button_label": "Elegí tu fórmula",
         "show_rating": true,
         "proof_1": "Envío gratis a todo el país",
@@ -63,40 +63,41 @@
       ]
     },
     "howto": {
-      "type": "how-to",
+      "type": "ritual",
       "settings": {
-        "heading": "Se toma en 10 segundos",
-        "text": "No tiene sabor artificial: lo sumás a lo que ya tomás todos los días.",
-        "image": "shopify://shop_images/IMG_8779.png",
-        "flip": false
+        "heading": "Diez segundos al día.",
+        "text": "Un scoop al ras (10 g) en lo que ya tomás. No tiene sabor artificial, así que no cambia nada."
       },
       "blocks": {
-        "s1": {
-          "type": "step",
+        "r1": {
+          "type": "item",
           "settings": {
+            "video": "vid-scoop-deporte",
             "title": "Un scoop al ras",
             "text": "Cada pote trae su medidor: 10 g por porción."
           }
         },
-        "s2": {
-          "type": "step",
+        "r2": {
+          "type": "item",
           "settings": {
-            "title": "Mezclalo con lo que quieras",
-            "text": "Agua, café, jugo o un batido. No cambia el sabor."
+            "video": "vid-pour-vitalidad",
+            "title": "En agua o jugo",
+            "text": "Se disuelve rápido y no cambia el sabor."
           }
         },
-        "s3": {
-          "type": "step",
+        "r3": {
+          "type": "item",
           "settings": {
+            "video": "vid-pour-belleza",
             "title": "Todos los días",
-            "text": "A la hora que te quede cómoda. La constancia es lo que hace la diferencia."
+            "text": "A la hora que te quede cómoda. La constancia es lo que se nota."
           }
         }
       },
       "block_order": [
-        "s1",
-        "s2",
-        "s3"
+        "r1",
+        "r2",
+        "r3"
       ]
     },
     "reviews": {
@@ -104,7 +105,7 @@
       "settings": {
         "heading": "Lo que cuentan quienes ya lo toman",
         "scope": "all",
-        "max": 9,
+        "max": 6,
         "scheme": "bg-mist"
       }
     },
@@ -112,25 +113,39 @@
       "type": "video-reels",
       "settings": {
         "heading": "Nuestra comunidad",
-        "text": ""
+        "text": "Lo que cuentan quienes lo suman a su rutina."
       },
       "blocks": {
         "v1": {
           "type": "video",
           "settings": {
-            "video": "shopify://files/videos/v1c044g50000d5sg10fog65g98i9i5sg.mov"
+            "asset": "ugc-deporte-1"
           }
         },
         "v2": {
           "type": "video",
           "settings": {
-            "video": "shopify://files/videos/copy_AD412A4C-0779-4C4E-8CE4-AB4B0C7675B8.mov"
+            "asset": "ugc-belleza-1"
+          }
+        },
+        "v3": {
+          "type": "video",
+          "settings": {
+            "asset": "ugc-belleza-2"
+          }
+        },
+        "v4": {
+          "type": "video",
+          "settings": {
+            "asset": "ugc-belleza-3"
           }
         }
       },
       "block_order": [
         "v1",
-        "v2"
+        "v2",
+        "v3",
+        "v4"
       ]
     },
     "quality": {
@@ -244,22 +259,25 @@
       ]
     },
     "final": {
-      "type": "final-cta",
+      "type": "image-banner",
       "settings": {
-        "heading": "Empezá hoy. Se nota con constancia.",
-        "text": "La mayoría nota cambios entre las 4 y 8 semanas de uso diario. Por eso el pack de 3 es el más elegido.",
-        "scheme": "bg-mist"
+        "heading": "Elegí la tuya.",
+        "text": "Envío gratis a todo el país. Llevando más de un pote, hasta 20% off.",
+        "video": "vid-tap-trio",
+        "asset": "ph-trio",
+        "asset_alt": "Una mano toca los potes y cambia de Deporte a Belleza y Vitalidad",
+        "show_formulas": true
       }
     }
   },
   "order": [
     "hero",
     "picker",
-    "strip",
-    "howto",
     "reviews",
-    "reels",
+    "howto",
+    "strip",
     "quality",
+    "reels",
     "faq",
     "final"
   ]

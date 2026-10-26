@@ -33,6 +33,7 @@
       { "type": "textarea", "id": "formula_1_benefits", "label": "Beneficios (uno por línea)", "default": "Acompaña la recuperación muscular\nCuida articulaciones y tendones\nEnergía sostenida para entrenar" },
       { "type": "color", "id": "formula_1_bg", "label": "Color", "default": "#2B35B4" },
       { "type": "color", "id": "formula_1_ink", "label": "Texto sobre el color", "default": "#FFFFFF" },
+      { "type": "image_picker", "id": "formula_1_photo", "label": "Foto de ambiente (selector de la home)", "info": "Vertical, con fondo del color de la fórmula. Vacío = la foto incluida en el tema." },
       { "type": "image_picker", "id": "formula_1_tub", "label": "Foto del pote sin fondo (opcional)", "info": "PNG o WebP con fondo transparente. Si lo dejás vacío se usa el recorte incluido en el tema." },
       { "type": "color", "id": "formula_1_soft", "label": "Color suave", "default": "#E5E7FA" },
       { "type": "header", "content": "Fórmula 2" },
@@ -44,6 +45,7 @@
       { "type": "textarea", "id": "formula_2_benefits", "label": "Beneficios (uno por línea)", "default": "Mejorá la firmeza y elasticidad de tu piel\nPelo y uñas más fuertes\nAntioxidantes para una piel más luminosa" },
       { "type": "color", "id": "formula_2_bg", "label": "Color", "default": "#F4C2CE" },
       { "type": "color", "id": "formula_2_ink", "label": "Texto sobre el color", "default": "#8E1238" },
+      { "type": "image_picker", "id": "formula_2_photo", "label": "Foto de ambiente (selector de la home)", "info": "Vertical, con fondo del color de la fórmula. Vacío = la foto incluida en el tema." },
       { "type": "image_picker", "id": "formula_2_tub", "label": "Foto del pote sin fondo (opcional)", "info": "PNG o WebP con fondo transparente. Si lo dejás vacío se usa el recorte incluido en el tema." },
       { "type": "color", "id": "formula_2_soft", "label": "Color suave", "default": "#FCECF0" },
       { "type": "header", "content": "Fórmula 3" },
@@ -55,6 +57,7 @@
       { "type": "textarea", "id": "formula_3_benefits", "label": "Beneficios (uno por línea)", "default": "Acompaña la movilidad articular\nMenos sensación de cansancio\nCúrcuma y zinc para tu bienestar diario" },
       { "type": "color", "id": "formula_3_bg", "label": "Color", "default": "#D9E13F" },
       { "type": "color", "id": "formula_3_ink", "label": "Texto sobre el color", "default": "#1F2A0E" },
+      { "type": "image_picker", "id": "formula_3_photo", "label": "Foto de ambiente (selector de la home)", "info": "Vertical, con fondo del color de la fórmula. Vacío = la foto incluida en el tema." },
       { "type": "image_picker", "id": "formula_3_tub", "label": "Foto del pote sin fondo (opcional)", "info": "PNG o WebP con fondo transparente. Si lo dejás vacío se usa el recorte incluido en el tema." },
       { "type": "color", "id": "formula_3_soft", "label": "Color suave", "default": "#F4F6D2" }
     ]

@@ -46,7 +46,18 @@
               <p class="stage__name">{{ settings[kn] }}</p>
               <p class="stage__actives">Colágeno + {{ settings[ka] }}</p>
             </div>
-            {%- render 'formula-tub', fi: i, class: 'stage__img' -%}
+            {%- liquid
+              assign kph = 'formula_' | append: i | append: '_photo'
+              assign phname = 'ph-' | append: settings[kn] | handleize
+              assign phalt = 'Colágeno ' | append: settings[kn]
+            -%}
+            <div class="stage__photo">
+              {%- if settings[kph] != blank -%}
+                {{ settings[kph] | image_url: width: 1500 | image_tag: loading: 'lazy', widths: '600,900,1200,1500', sizes: '(min-width: 990px) 50vw, 100vw', alt: phalt }}
+              {%- else -%}
+                {%- render 'asset-img', name: phname, small: 800, large: 1500, w: 800, h: 1200, sizes: '(min-width: 990px) 50vw, 100vw', alt: phalt -%}
+              {%- endif -%}
+            </div>
           </div>
           <div class="stage__buy">
             {%- if p != blank -%}

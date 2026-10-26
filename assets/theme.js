@@ -333,6 +333,25 @@
     });
   }
 
+  /* ---------- Lazy theme videos ---------- */
+  const lazyVideos = $$('video[data-lazy-video]');
+  const attach = (v) => { if (!v.getAttribute('src')) { v.src = v.dataset.lazyVideo; v.preload = 'auto'; } };
+  if ('IntersectionObserver' in window) {
+    const vio = new IntersectionObserver((entries) => {
+      entries.forEach(({ target: v, isIntersecting }) => {
+        if (isIntersecting) {
+          attach(v);
+          if (!v.hasAttribute('data-manual') && !reduceMotion) v.play().catch(() => {});
+        } else if (!v.hasAttribute('data-manual')) {
+          v.pause();
+        }
+      });
+    }, { rootMargin: '200px 0px' });
+    lazyVideos.forEach((v) => vio.observe(v));
+  } else {
+    lazyVideos.forEach(attach);
+  }
+
   /* ---------- Video reels ---------- */
   $$('[data-reel]').forEach((reel) => {
     const video = $('video', reel);
@@ -342,8 +361,9 @@
     const toggle = () => {
       if (video.paused) {
         $$('[data-reel] video').forEach((v) => { if (v !== video) { v.pause(); v.closest('[data-reel]').classList.remove('is-playing'); } });
+        attach(video);
         video.muted = false;
-        video.play();
+        video.play().catch(() => {});
         reel.classList.add('is-playing');
       } else {
         video.pause();

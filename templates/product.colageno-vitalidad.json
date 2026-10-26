@@ -61,40 +61,41 @@
       }
     },
     "howto": {
-      "type": "how-to",
+      "type": "ritual",
       "settings": {
-        "heading": "Se toma en 10 segundos",
-        "text": "No tiene sabor artificial: lo sumás a lo que ya tomás todos los días.",
-        "image": "shopify://shop_images/IMG_8779.png",
-        "flip": false
+        "heading": "Diez segundos al día.",
+        "text": "Un scoop al ras (10 g) en lo que ya tomás. No tiene sabor artificial, así que no cambia nada."
       },
       "blocks": {
-        "s1": {
-          "type": "step",
+        "r1": {
+          "type": "item",
           "settings": {
+            "video": "vid-scoop-deporte",
             "title": "Un scoop al ras",
             "text": "Cada pote trae su medidor: 10 g por porción."
           }
         },
-        "s2": {
-          "type": "step",
+        "r2": {
+          "type": "item",
           "settings": {
-            "title": "Mezclalo con lo que quieras",
-            "text": "Agua, café, jugo o un batido. No cambia el sabor."
+            "video": "vid-pour-vitalidad",
+            "title": "En agua o jugo",
+            "text": "Se disuelve rápido y no cambia el sabor."
           }
         },
-        "s3": {
-          "type": "step",
+        "r3": {
+          "type": "item",
           "settings": {
+            "video": "vid-pour-belleza",
             "title": "Todos los días",
-            "text": "A la hora que te quede cómoda. La constancia es lo que hace la diferencia."
+            "text": "A la hora que te quede cómoda. La constancia es lo que se nota."
           }
         }
       },
       "block_order": [
-        "s1",
-        "s2",
-        "s3"
+        "r1",
+        "r2",
+        "r3"
       ]
     },
     "related": {

@@ -20,37 +20,30 @@
     assign avg = total_r | divided_by: total_c
   endif
 -%}
-<section class="hero" style="{% if section.settings.bg != blank %}background: {{ section.settings.bg }};{% endif %}">
-  <div class="wrap hero__grid">
-    <div class="hero__copy">
+<section class="hero2" style="{% if section.settings.bg != blank %}--hero-bg: {{ section.settings.bg }};{% endif %}">
+  <div class="hero2__copy">
+    <div class="hero2__inner">
       {%- if section.settings.show_rating and total_c > 0 -%}
-        <p style="margin-bottom:18px">{% render 'stars', rating: avg, count: total_c, light: true %}</p>
+        <a class="hero2__rating" href="#resenas">{% render 'stars', rating: avg, count: total_c, light: true %}</a>
       {%- endif -%}
-      <h2 class="display">{{ section.settings.heading }}</h2>
-      {%- if section.settings.text != blank -%}<p class="lead">{{ section.settings.text }}</p>{%- endif -%}
-      <div class="hero__cta">
-        {%- if section.settings.button_label != blank -%}
-          <a href="{{ section.settings.button_link | default: '#formulas' }}" class="btn btn--white">{{ section.settings.button_label }}</a>
-        {%- endif -%}
-      </div>
-      <ul class="hero__proof" role="list">
+      <h1 class="hero2__title">{{ section.settings.heading }}</h1>
+      {%- if section.settings.text != blank -%}<p class="hero2__text">{{ section.settings.text }}</p>{%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link | default: '#formulas' }}" class="btn btn--white hero2__cta">{{ section.settings.button_label }}</a>
+      {%- endif -%}
+      <ul class="hero2__proof" role="list">
         {%- if section.settings.proof_1 != blank -%}<li>{% render 'icon', name: 'truck' %}{{ section.settings.proof_1 }}</li>{%- endif -%}
         {%- if section.settings.proof_2 != blank -%}<li>{% render 'icon', name: 'shield' %}{{ section.settings.proof_2 }}</li>{%- endif -%}
         {%- if section.settings.proof_3 != blank -%}<li>{% render 'icon', name: 'flag' %}{{ section.settings.proof_3 }}</li>{%- endif -%}
       </ul>
     </div>
-
-    <div class="hero__media" style="--ar: {{ section.settings.image.aspect_ratio | default: 1.6 }}">
-      {%- if section.settings.image != blank -%}
-        {{ section.settings.image | image_url: width: 1800 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600,900,1200,1500,1800', sizes: '(min-width: 990px) 58vw, 100vw', alt: section.settings.image.alt | default: 'Las tres fórmulas de Vital Boost' }}
-      {%- else -%}
-        <div class="hero-tubs">
-          {%- render 'formula-tub', fi: 2, class: 'hero-tubs__a', eager: true -%}
-          {%- render 'formula-tub', fi: 3, class: 'hero-tubs__c', eager: true -%}
-          {%- render 'formula-tub', fi: 1, class: 'hero-tubs__b', eager: true -%}
-        </div>
-      {%- endif -%}
-    </div>
+  </div>
+  <div class="hero2__media">
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 2200 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '700,1100,1600,2200', sizes: '(min-width: 990px) 55vw, 100vw', alt: section.settings.image.alt | default: 'Las tres fórmulas de Vital Boost', class: 'hero2__img' }}
+    {%- else -%}
+      {%- render 'asset-img', name: 'ph-hero', small: 1100, large: 2200, w: 1100, h: 715, sizes: '(min-width: 990px) 55vw, 100vw', alt: 'Colágeno Belleza al frente, con Vitalidad y Deporte detrás', class: 'hero2__img', eager: true -%}
+    {%- endif -%}
   </div>
 </section>
 
@@ -59,15 +52,15 @@
   "name": "Portada",
   "settings": [
     { "type": "text", "id": "heading", "label": "Título", "default": "Un colágeno para cada objetivo." },
-    { "type": "textarea", "id": "text", "label": "Texto", "default": "Colágeno hidrolizado con activos que suman: para entrenar, para tu piel o para moverte mejor cada día. Una dosis diaria, sin sabor." },
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "Colágeno hidrolizado con activos que suman: para entrenar, para tu piel o para moverte mejor. Una dosis al día, sin sabor." },
     { "type": "text", "id": "button_label", "label": "Botón", "default": "Elegí tu fórmula" },
     { "type": "url", "id": "button_link", "label": "Link del botón", "info": "Vacío = baja al selector de fórmulas" },
     { "type": "checkbox", "id": "show_rating", "label": "Mostrar puntaje de reseñas", "default": true },
     { "type": "text", "id": "proof_1", "label": "Dato 1", "default": "Envío gratis a todo el país" },
     { "type": "text", "id": "proof_2", "label": "Dato 2", "default": "Producto registrado (RNPA)" },
     { "type": "text", "id": "proof_3", "label": "Dato 3", "default": "Hecho en Argentina" },
-    { "type": "image_picker", "id": "image", "label": "Imagen", "info": "Vacío = composición con los tres potes" },
-    { "type": "color", "id": "bg", "label": "Color de fondo" }
+    { "type": "image_picker", "id": "image", "label": "Foto", "info": "Vacío = Belleza al frente con las otras dos detrás" },
+    { "type": "color", "id": "bg", "label": "Color del bloque de texto" }
   ],
   "presets": [{ "name": "Portada" }]
 }

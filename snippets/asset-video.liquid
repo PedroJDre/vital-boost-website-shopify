@@ -1,0 +1,12 @@
+{%- comment -%}
+  Video stored in theme assets as NAME.mp4 with NAME-poster.webp.
+  Params: name, class, loop (bool: silent autoplay loop when visible), w, h, label
+  The source is attached by theme.js when the video gets close to the viewport.
+{%- endcomment -%}
+{%- assign src = name | append: '.mp4' | asset_url -%}
+{%- assign poster = name | append: '-poster.webp' | asset_url -%}
+{%- if loop -%}
+  <video class="{{ class }}" data-lazy-video="{{ src }}" poster="{{ poster }}" muted loop playsinline preload="none" width="{{ w | default: 540 }}" height="{{ h | default: 960 }}" aria-label="{{ label | escape }}"></video>
+{%- else -%}
+  <video class="{{ class }}" data-lazy-video="{{ src }}" data-manual poster="{{ poster }}" playsinline preload="none" width="{{ w | default: 540 }}" height="{{ h | default: 960 }}" aria-label="{{ label | escape }}"></video>
+{%- endif -%}

@@ -2,11 +2,7 @@
   <div class="wrap">
     <div class="footer__grid">
       <div class="footer__brand">
-        {%- if settings.logo != blank -%}
-          {{ settings.logo | image_url: width: 300 | image_tag: alt: settings.brand_name, loading: 'lazy', widths: '150,300', sizes: '132px' }}
-        {%- else -%}
-          <p class="h3">Vital Boost</p>
-        {%- endif -%}
+        <img class="footer-logo" src="{{ 'logo-white.png' | asset_url }}" width="726" height="526" alt="{{ settings.brand_name | default: shop.name | escape }}" loading="lazy">
         {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
         <p style="display:flex;gap:8px;margin-top:18px">
           {%- if settings.social_instagram != blank -%}<a class="icon-btn" style="background:rgba(255,255,255,.1)" href="{{ settings.social_instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{% render 'icon', name: 'instagram' %}</a>{%- endif -%}

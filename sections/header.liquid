@@ -9,11 +9,7 @@
 
     <div class="site-header__logo">
       <a href="{{ routes.root_url }}" aria-label="{{ settings.brand_name | default: shop.name | escape }}, inicio">
-        {%- if settings.logo != blank -%}
-          <span class="logo-mask" style="--logo: url('{{ settings.logo | image_url: width: 400 }}'); aspect-ratio: {{ settings.logo.aspect_ratio }}" role="img" aria-label="{{ settings.brand_name | default: shop.name | escape }}"></span>
-        {%- else -%}
-          <span class="logo-text">Vital Boost</span>
-        {%- endif -%}
+        <img class="site-logo" src="{{ 'logo-ink.png' | asset_url }}" width="726" height="526" alt="{{ settings.brand_name | default: shop.name | escape }}" loading="eager">
       </a>
     </div>
 

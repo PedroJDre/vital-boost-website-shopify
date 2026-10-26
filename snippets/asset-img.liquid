@@ -1,0 +1,15 @@
+{%- comment -%}
+  Responsive image from theme assets exported as NAME-SMALL.webp and NAME-LARGE.webp.
+  Params: name, small, large, w (small width), h (small height), sizes, alt, class, eager
+{%- endcomment -%}
+{%- liquid
+  assign s_file = name | append: '-' | append: small | append: '.webp'
+  assign l_file = name | append: '-' | append: large | append: '.webp'
+  assign loading = 'lazy'
+  assign priority = 'auto'
+  if eager
+    assign loading = 'eager'
+    assign priority = 'high'
+  endif
+-%}
+<img src="{{ s_file | asset_url }}" srcset="{{ s_file | asset_url }} {{ small }}w, {{ l_file | asset_url }} {{ large }}w" sizes="{{ sizes | default: '100vw' }}" width="{{ w }}" height="{{ h }}" alt="{{ alt | escape }}" class="{{ class }}" loading="{{ loading }}" fetchpriority="{{ priority }}" decoding="async">
