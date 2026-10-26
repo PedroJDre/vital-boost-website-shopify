@@ -172,3 +172,7 @@
 .site-header__bar { padding-block: 8px; }
 .site-logo { width: 92px; }
 @media (min-width: 990px) { .site-logo { width: 104px; } }
+
+/* Room for descenders under the big formula name (p in Deporte) */
+.stage__name { line-height: 1; }
+.stage__actives { margin-top: 18px; }
