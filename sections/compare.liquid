@@ -1,0 +1,149 @@
+{%- comment -%}
+  Side-by-side comparison of the three formulas. Each "Elegir" button selects
+  that formula in the order builder (formula-picker) and scrolls to it.
+  Desktop renders a real table; mobile stacks one block per formula.
+{%- endcomment -%}
+{%- liquid
+  assign qtys = settings.pack_quantities | split: ','
+  assign discs = settings.pack_discounts | split: ','
+  assign names = settings.pack_names | split: ','
+  assign pi = section.settings.pack_row | minus: 1
+  assign pack_q = qtys[pi] | strip | plus: 0
+  assign pack_d = discs[pi] | default: '0' | strip | plus: 0
+  assign pack_name = names[pi] | strip
+  assign keep = 100 | minus: pack_d
+-%}
+<section class="compare section" id="comparar">
+  <div class="wrap">
+    <div class="compare__head">
+      <h2 class="h2">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p class="lead muted">{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+
+    <table class="compare__table">
+      <caption class="visually-hidden">Comparación de las tres fórmulas</caption>
+      <thead>
+        <tr>
+          <td></td>
+          {%- for i in (1..3) -%}
+            {%- assign kn = 'formula_' | append: i | append: '_name' -%}
+            <th scope="col" style="{% render 'formula-style', fi: i %}">{{ settings[kn] }}</th>
+          {%- endfor -%}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Para quién</th>
+          {%- for i in (1..3) -%}{%- assign k = 'formula_' | append: i | append: '_pitch' -%}<td>{{ settings[k] }}</td>{%- endfor -%}
+        </tr>
+        <tr>
+          <th scope="row">Activos</th>
+          {%- for i in (1..3) -%}{%- assign k = 'formula_' | append: i | append: '_actives' -%}<td>Colágeno hidrolizado, {{ settings[k] }}</td>{%- endfor -%}
+        </tr>
+        <tr>
+          <th scope="row">Proteína</th>
+          {%- for i in (1..3) -%}<td>{{ section.settings.protein }}</td>{%- endfor -%}
+        </tr>
+        <tr>
+          <th scope="row">Reseñas</th>
+          {%- for i in (1..3) -%}
+            {%- liquid
+              assign kp = 'formula_' | append: i | append: '_product'
+              assign kn = 'formula_' | append: i | append: '_name'
+              assign p = settings[kp]
+              if p == blank
+                assign h = 'colageno-' | append: settings[kn] | handleize
+                assign p = all_products[h]
+              endif
+            -%}
+            <td>{%- if p != blank -%}{% render 'stars', product: p %}{%- endif -%}</td>
+          {%- endfor -%}
+        </tr>
+        <tr class="compare__price">
+          <th scope="row">1 pote</th>
+          {%- for i in (1..3) -%}
+            {%- liquid
+              assign kp = 'formula_' | append: i | append: '_product'
+              assign kn = 'formula_' | append: i | append: '_name'
+              assign p = settings[kp]
+              if p == blank
+                assign h = 'colageno-' | append: settings[kn] | handleize
+                assign p = all_products[h]
+              endif
+            -%}
+            <td>{%- if p != blank -%}{{ p.price | money_without_trailing_zeros }}{%- endif -%}</td>
+          {%- endfor -%}
+        </tr>
+        {%- if pack_q > 1 -%}
+          <tr class="compare__price">
+            <th scope="row">{{ pack_name }}{% if pack_d > 0 %} <span class="compare__off">{{ pack_d }}% off</span>{% endif %}</th>
+            {%- for i in (1..3) -%}
+              {%- liquid
+                assign kp = 'formula_' | append: i | append: '_product'
+                assign kn = 'formula_' | append: i | append: '_name'
+                assign p = settings[kp]
+                if p == blank
+                  assign h = 'colageno-' | append: settings[kn] | handleize
+                  assign p = all_products[h]
+                endif
+                assign total = p.price | times: pack_q | times: keep | divided_by: 100
+                assign each = total | divided_by: pack_q
+              -%}
+              <td>{%- if p != blank -%}{{ total | money_without_trailing_zeros }} <span class="compare__each">{{ each | money_without_trailing_zeros }} por pote</span>{%- endif -%}</td>
+            {%- endfor -%}
+          </tr>
+        {%- endif -%}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          {%- for i in (1..3) -%}
+            {%- assign kn = 'formula_' | append: i | append: '_name' -%}
+            <td style="{% render 'formula-style', fi: i %}"><a class="btn btn--block compare__btn" href="#formulas" data-pick-formula="{{ i }}">Elegir {{ settings[kn] }}</a></td>
+          {%- endfor -%}
+        </tr>
+      </tfoot>
+    </table>
+
+    <div class="compare__stack">
+      {%- for i in (1..3) -%}
+        {%- liquid
+          assign kp = 'formula_' | append: i | append: '_product'
+          assign kn = 'formula_' | append: i | append: '_name'
+          assign kt = 'formula_' | append: i | append: '_pitch'
+          assign ka = 'formula_' | append: i | append: '_actives'
+          assign p = settings[kp]
+          if p == blank
+            assign h = 'colageno-' | append: settings[kn] | handleize
+            assign p = all_products[h]
+          endif
+          assign total = p.price | times: pack_q | times: keep | divided_by: 100
+          assign each = total | divided_by: pack_q
+        -%}
+        <article class="compare__card" style="{% render 'formula-style', fi: i %}">
+          <h3 class="compare__name"><span>{{ settings[kn] }}</span>{%- if p != blank -%}<span class="compare__from">{{ p.price | money_without_trailing_zeros }}</span>{%- endif -%}</h3>
+          {%- if p != blank -%}{% render 'stars', product: p %}{%- endif -%}
+          <p>{{ settings[kt] }}</p>
+          <p class="compare__actives"><span>Activos</span> {{ settings[ka] }}</p>
+          {%- if p != blank and pack_q > 1 -%}
+            <p class="compare__pack">{{ pack_name }}: <strong>{{ total | money_without_trailing_zeros }}</strong> ({{ each | money_without_trailing_zeros }} por pote)</p>
+          {%- endif -%}
+          <a class="btn btn--block compare__btn" href="#formulas" data-pick-formula="{{ i }}">Elegir {{ settings[kn] }}</a>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Comparar fórmulas",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "¿Cuál es para vos?" },
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "La base es la misma en las tres. Cambian los activos que suma cada una." },
+    { "type": "text", "id": "protein", "label": "Proteína por porción", "default": "9 g por porción" },
+    { "type": "range", "id": "pack_row", "label": "Pack que se muestra en la tabla (posición en la lista de packs)", "min": 1, "max": 4, "step": 1, "default": 3 }
+  ],
+  "presets": [{ "name": "Comparar fórmulas" }]
+}
+{% endschema %}

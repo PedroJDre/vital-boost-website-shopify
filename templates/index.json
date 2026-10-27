@@ -3,9 +3,9 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "heading": "Un colágeno para cada objetivo.",
-        "text": "Colágeno hidrolizado con activos que suman: para entrenar, para tu piel o para moverte mejor. Una dosis al día, sin sabor.",
-        "button_label": "Elegí tu fórmula",
+        "heading": "Colágeno hidrolizado, más lo que tu objetivo necesita.",
+        "text": "Tres fórmulas con la misma base y activos distintos. Elaboradas en Argentina, cada una con su registro RNPA.",
+        "button_label": "Comparar las tres",
         "show_rating": true,
         "proof_1": "Envío gratis a todo el país",
         "proof_2": "Producto registrado (RNPA)",
@@ -15,14 +15,14 @@
     "picker": {
       "type": "formula-picker",
       "settings": {
-        "heading": "¿Cuál es tu objetivo?",
-        "text": "Las tres parten de la misma base: colágeno hidrolizado con 9 g de proteína por porción. Cambia lo que suma cada una."
+        "heading": "Armá tu pedido",
+        "text": "Elegí la fórmula y cuántos potes llevás. El descuento por cantidad se aplica solo en el carrito."
       }
     },
     "strip": {
       "type": "proof-strip",
       "settings": {
-        "heading": "En todas las fórmulas",
+        "heading": "",
         "scheme": ""
       },
       "blocks": {
@@ -36,22 +36,22 @@
         "b": {
           "type": "item",
           "settings": {
-            "big": "30",
-            "label": "porciones por pote"
+            "big": "10 g",
+            "label": "por scoop, una vez al día"
           }
         },
         "c": {
           "type": "item",
           "settings": {
-            "big": "Sin TACC",
-            "label": "libre de gluten"
+            "big": "30",
+            "label": "porciones por pote"
           }
         },
         "d": {
           "type": "item",
           "settings": {
-            "big": "Sin sabor",
-            "label": "artificial: va con todo"
+            "big": "Sin TACC",
+            "label": "y sin sabor artificial"
           }
         }
       },
@@ -65,8 +65,8 @@
     "howto": {
       "type": "ritual",
       "settings": {
-        "heading": "Diez segundos al día.",
-        "text": "Un scoop al ras (10 g) en lo que ya tomás. No tiene sabor artificial, así que no cambia nada."
+        "heading": "Cómo se toma",
+        "text": "Un scoop al ras (10 g) por día, en lo que ya tomás. No tiene sabor artificial, así que no cambia nada."
       },
       "blocks": {
         "r1": {
@@ -106,7 +106,7 @@
         "heading": "Lo que cuentan quienes ya lo toman",
         "scope": "all",
         "max": 6,
-        "scheme": "bg-mist"
+        "scheme": ""
       }
     },
     "reels": {
@@ -268,14 +268,24 @@
         "asset_alt": "Una mano toca los potes y cambia de Deporte a Belleza y Vitalidad",
         "show_formulas": true
       }
+    },
+    "compare": {
+      "type": "compare",
+      "settings": {
+        "heading": "¿Cuál es para vos?",
+        "text": "La base es la misma en las tres. Cambian los activos que suma cada una.",
+        "protein": "9 g por porción",
+        "pack_row": 3
+      }
     }
   },
   "order": [
     "hero",
+    "strip",
+    "compare",
     "picker",
     "reviews",
     "howto",
-    "strip",
     "quality",
     "reels",
     "faq",

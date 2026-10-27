@@ -288,6 +288,16 @@
     }
   });
 
+  /* Compare table: "Elegir X" selects that formula in the order builder */
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('[data-pick-formula]');
+    if (!a) return;
+    const picker = $('[data-picker]');
+    if (!picker) return;
+    const tab = $(`[role="tab"][data-tab="${a.dataset.pickFormula}"]`, picker);
+    if (tab) tab.click();
+  });
+
   /* ---------- Gallery ---------- */
   $$('[data-gallery]').forEach((g) => {
     const track = $('[data-gallery-track]', g);

@@ -1,4 +1,4 @@
-<section class="ed-ritual section">
+<section class="ed-ritual section" id="como">
   <div class="wrap">
     <div class="ed-ritual__head">
       <h2 class="h1">{{ section.settings.heading }}</h2>
@@ -15,6 +15,7 @@
             {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder' }}
           {%- endif -%}
           <figcaption>
+            <span class="ed-ritual__n">Paso {{ forloop.index }}</span>
             <strong>{{ block.settings.title }}</strong>
             {%- if block.settings.text != blank -%}<span>{{ block.settings.text }}</span>{%- endif -%}
           </figcaption>

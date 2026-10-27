@@ -1,12 +1,6 @@
 {%- assign menu = linklists[section.settings.menu] -%}
 <header class="site-header" data-header style="--logo-w: {{ settings.logo_width }}px">
   <div class="wrap site-header__bar">
-    <div class="site-header__left">
-      <button type="button" class="icon-btn site-header__menu-btn" aria-label="Abrir menú" aria-controls="MenuDrawer" aria-expanded="false" data-menu-open>
-        {% render 'icon', name: 'menu' %}
-      </button>
-    </div>
-
     <div class="site-header__logo">
       <a href="{{ routes.root_url }}" aria-label="{{ settings.brand_name | default: shop.name | escape }}, inicio">
         <img class="site-logo" src="{{ 'logo-ink.png' | asset_url }}" width="726" height="526" alt="{{ settings.brand_name | default: shop.name | escape }}" loading="eager">
@@ -14,19 +8,30 @@
     </div>
 
     <nav class="site-header__nav" aria-label="Principal">
-      {%- for link in menu.links -%}
-        <a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a>
+      <a href="{{ routes.root_url }}#comparar">Comparar fórmulas</a>
+      {%- for i in (1..3) -%}
+        {%- liquid
+          assign kp = 'formula_' | append: i | append: '_product'
+          assign kn = 'formula_' | append: i | append: '_name'
+          assign p = settings[kp]
+          if p == blank
+            assign h = 'colageno-' | append: settings[kn] | handleize
+            assign p = all_products[h]
+          endif
+        -%}
+        {%- if p != blank -%}<a href="{{ p.url }}" {% if product and product.id == p.id %}aria-current="page"{% endif %}>{{ settings[kn] }}</a>{%- endif -%}
       {%- endfor -%}
+      <a href="{{ routes.root_url }}#preguntas">Preguntas</a>
     </nav>
 
     <div class="site-header__actions">
       {%- if shop.customer_accounts_enabled -%}
-        <a href="{{ routes.account_url }}" class="icon-btn" aria-label="Mi cuenta">{% render 'icon', name: 'user' %}</a>
+        <a href="{{ routes.account_url }}" class="text-btn site-header__account">Cuenta</a>
       {%- endif -%}
-      <a href="{{ routes.cart_url }}" class="icon-btn" aria-label="Carrito" data-cart-open>
-        {% render 'icon', name: 'cart' %}
-        <span class="cart-count" data-cart-count data-count="{{ cart.item_count }}">{% if cart.item_count > 0 %}{{ cart.item_count }}{% endif %}</span>
-      </a>
+      <a href="{{ routes.cart_url }}" class="text-btn" data-cart-open>Carrito <span class="cart-num" data-cart-count data-count="{{ cart.item_count }}">{% if cart.item_count > 0 %}{{ cart.item_count }}{% endif %}</span></a>
+      <button type="button" class="icon-btn site-header__menu-btn" aria-label="Abrir menú" aria-controls="MenuDrawer" aria-expanded="false" data-menu-open>
+        {% render 'icon', name: 'menu' %}
+      </button>
     </div>
   </div>
 </header>
@@ -56,8 +61,12 @@
       {%- endfor -%}
     </div>
     <div class="menu-drawer__links">
+      <a href="{{ routes.root_url }}#comparar">Comparar fórmulas</a>
+      <a href="{{ routes.root_url }}#como">Cómo se toma</a>
+      <a href="{{ routes.root_url }}#resenas">Reseñas</a>
+      <a href="{{ routes.root_url }}#preguntas">Preguntas</a>
       {%- for link in menu.links -%}
-        <a href="{{ link.url }}">{{ link.title }}</a>
+        {%- unless link.url == routes.root_url or link.url contains '/collections' or link.url contains '/search' -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endunless -%}
       {%- endfor -%}
     </div>
     {%- if shop.customer_accounts_enabled -%}

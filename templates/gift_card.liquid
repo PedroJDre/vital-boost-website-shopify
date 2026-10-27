@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Tu tarjeta de regalo de {{ shop.name }}</title>
     <style>
-      @font-face { font-family: 'Gloock'; src: url('{{ 'gloock.woff2' | asset_url }}') format('woff2'); font-display: swap; }
-      @font-face { font-family: 'Nunito Sans'; src: url('{{ 'nunito-sans.woff2' | asset_url }}') format('woff2'); font-weight: 200 1000; font-display: swap; }
-      :root { --royal: {{ settings.color_royal }}; --ink: {{ settings.color_ink }}; --mist: {{ settings.color_mist }}; --paper: {{ settings.color_paper }}; --line: rgba(18,26,82,.14); --muted: rgba(18,26,82,.68); }
+      @font-face { font-family: 'Public Sans'; src: url('{{ 'public-sans.woff' | asset_url }}') format('woff'); font-weight: 100 900; font-display: swap; }
+      :root { --royal: {{ settings.color_royal }}; --ink: {{ settings.color_ink }}; --mist: {{ settings.color_mist }}; --paper: {{ settings.color_paper }}; --line: rgba(18,26,82,.14); --muted: #3F466E; --rule: #D9DCEB; --panel: #F3F4F9; --font: 'Public Sans', system-ui, sans-serif; }
     </style>
     {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'formula.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'vendor/qrcode.js' | shopify_asset_url }}" defer></script>
     {{ content_for_header }}
   </head>
