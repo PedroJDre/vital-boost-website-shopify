@@ -12,6 +12,9 @@
   assign pack_d = discs[pi] | default: '0' | strip | plus: 0
   assign pack_name = names[pi] | strip
   assign keep = 100 | minus: pack_d
+  assign inst = settings.installments | plus: 0
+  assign td = settings.transfer_discount | plus: 0
+  assign tkeep = 100 | minus: td
 -%}
 <section class="compare section" id="comparar">
   <div class="wrap">
@@ -89,7 +92,10 @@
                 assign total = p.price | times: pack_q | times: keep | divided_by: 100
                 assign each = total | divided_by: pack_q
               -%}
-              <td>{%- if p != blank -%}{{ total | money_without_trailing_zeros }} <span class="compare__each">{{ each | money_without_trailing_zeros }} por pote</span>{%- endif -%}</td>
+              <td>{%- if p != blank -%}{{ total | money_without_trailing_zeros }} <span class="compare__each">{{ each | money_without_trailing_zeros }} por pote</span>
+                {%- if inst > 1 -%}{%- assign ia = total | divided_by: inst -%}<span class="compare__pay">{{ inst }} cuotas sin interés de {{ ia | money_without_trailing_zeros }}</span>{%- endif -%}
+                {%- if td > 0 -%}{%- assign tt = total | times: tkeep | divided_by: 100 -%}<span class="compare__pay">{{ tt | money_without_trailing_zeros }} por transferencia</span>{%- endif -%}
+              {%- endif -%}</td>
             {%- endfor -%}
           </tr>
         {%- endif -%}
@@ -126,7 +132,10 @@
           <p>{{ settings[kt] }}</p>
           <p class="compare__actives"><span>Activos</span> {{ settings[ka] }}</p>
           {%- if p != blank and pack_q > 1 -%}
-            <p class="compare__pack">{{ pack_name }}: <strong>{{ total | money_without_trailing_zeros }}</strong> ({{ each | money_without_trailing_zeros }} por pote)</p>
+            <p class="compare__pack">{{ pack_name }}: <strong>{{ total | money_without_trailing_zeros }}</strong> ({{ each | money_without_trailing_zeros }} por pote)
+              {%- if inst > 1 -%}{%- assign ia = total | divided_by: inst -%}<span class="compare__pay">{{ inst }} cuotas sin interés de {{ ia | money_without_trailing_zeros }}</span>{%- endif -%}
+              {%- if td > 0 -%}{%- assign tt = total | times: tkeep | divided_by: 100 -%}<span class="compare__pay">{{ tt | money_without_trailing_zeros }} por transferencia ({{ td }}% off)</span>{%- endif -%}
+            </p>
           {%- endif -%}
           <a class="btn btn--block compare__btn" href="#formulas" data-pick-formula="{{ i }}">Elegir {{ settings[kn] }}</a>
         </article>

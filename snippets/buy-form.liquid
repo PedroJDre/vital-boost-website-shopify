@@ -47,7 +47,7 @@
         assign phint = hints[forloop.index0] | strip
       -%}
       <label class="pack">
-        <input type="radio" name="vb_pack" value="{{ qn }}" data-qty="{{ qn }}" data-discount="{{ dn }}" {% if forloop.index0 == default_index %}checked{% endif %}>
+        <input type="radio" name="vb_pack" value="{{ qn }}" data-qty="{{ qn }}" data-discount="{{ dn }}" data-total="{{ total }}" {% if forloop.index0 == default_index %}checked{% endif %}>
         <span class="pack__dot" aria-hidden="true"></span>
         <span>
           <span class="pack__title">
@@ -67,8 +67,11 @@
           {%- endif -%}
         </span>
       </label>
+      {%- if forloop.index0 == default_index -%}{%- assign default_total = total -%}{%- endif -%}
     {%- endfor -%}
   </fieldset>
+
+  {%- render 'pay-options', total: default_total -%}
 
   <p class="buy__error" role="alert" data-buy-error hidden></p>
 

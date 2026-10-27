@@ -166,8 +166,23 @@
       const t = $('[data-pack-total]', label); if (t) t.textContent = formatMoney(total);
       const f = $('[data-pack-full]', label); if (f) f.textContent = formatMoney(full);
       const each = $('.pack__each', label); if (each) each.textContent = formatMoney(Math.floor(total / q)) + ' c/u';
+      input.dataset.total = total;
     });
+    updatePayOptions(form);
     return discs;
+  }
+
+  function updatePayOptions(form) {
+    const box = $('[data-payopts]', form);
+    const checked = $('[data-packs] input[name="vb_pack"]:checked', form);
+    if (!box || !checked) return;
+    const total = Number(checked.dataset.total || 0);
+    const inst = Number(box.dataset.inst || 0);
+    const td = Number(box.dataset.transfer || 0);
+    const ia = $('[data-inst-amount]', box);
+    if (ia && inst > 1) ia.textContent = `${inst} cuotas sin interés de ${formatMoney(Math.floor(total / inst))}`;
+    const ta = $('[data-transfer-amount]', box);
+    if (ta && td > 0) ta.textContent = formatMoney(Math.floor(total * (100 - td) / 100));
   }
 
   function selectedTotal(form) {
@@ -194,6 +209,7 @@
 
     form.addEventListener('change', (e) => {
       if (e.target.name === 'vb_pack') {
+        updatePayOptions(form);
         const sp = $('[data-sticky-price]');
         if (sp && form.closest('[data-main-buy]')) sp.textContent = selectedTotal(form);
       }

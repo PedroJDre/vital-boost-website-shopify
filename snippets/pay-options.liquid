@@ -1,0 +1,24 @@
+{%- comment -%}
+  Installments and bank-transfer price for a pack total (cents).
+  Shown only when enabled in theme settings. theme.js keeps it in sync
+  with the selected pack. Params: total, compact (bool)
+{%- endcomment -%}
+{%- liquid
+  assign inst = settings.installments | plus: 0
+  assign td = settings.transfer_discount | plus: 0
+-%}
+{%- if inst > 1 or td > 0 -%}
+  {%- liquid
+    assign inst_amount = total | divided_by: inst
+    assign keep = 100 | minus: td
+    assign transfer_total = total | times: keep | divided_by: 100
+  -%}
+  <div class="payopts{% if compact %} payopts--compact{% endif %}" data-payopts data-inst="{{ inst }}" data-transfer="{{ td }}">
+    {%- if inst > 1 -%}
+      <p><strong data-inst-amount>{{ inst }} cuotas sin interés de {{ inst_amount | money_without_trailing_zeros }}</strong></p>
+    {%- endif -%}
+    {%- if td > 0 -%}
+      <p><strong data-transfer-amount>{{ transfer_total | money_without_trailing_zeros }}</strong> pagando por transferencia ({{ td }}% off)</p>
+    {%- endif -%}
+  </div>
+{%- endif -%}
