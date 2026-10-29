@@ -80,5 +80,26 @@
         packDiscounts: {{ settings.pack_discounts | split: ',' | json }}
       };
     </script>
+
+    {%- comment -%} Feedback button (Customatic). Set or clear the app ID in Theme settings → Comentarios. {%- endcomment -%}
+    {%- if settings.customatic_app_id != blank -%}
+      <script src="https://customatic.vercel.app/widget.js" data-app-id="{{ settings.customatic_app_id | strip | escape }}" data-lang="es" data-position="left" async></script>
+      {%- if customer -%}
+        <script>
+          (function identify(tries) {
+            if (window.Customatic) {
+              window.Customatic.identify({
+                email: {{ customer.email | json }},
+                nombre: {{ customer.name | json }},
+                clienteId: {{ customer.id | json }},
+                pedidos: {{ customer.orders_count | json }}
+              });
+            } else if (tries < 40) {
+              setTimeout(function () { identify(tries + 1); }, 250);
+            }
+          })(0);
+        </script>
+      {%- endif -%}
+    {%- endif -%}
   </body>
 </html>

@@ -416,5 +416,21 @@
         "label": "TikTok"
       }
     ]
+  },
+  {
+    "name": "Comentarios (Customatic)",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Botón para que los clientes reporten problemas, ideas y comentarios. Los mensajes llegan a customatic.vercel.app."
+      },
+      {
+        "type": "text",
+        "id": "customatic_app_id",
+        "label": "ID de la app en Customatic",
+        "default": "app_afh2hevwgz2q",
+        "info": "Está en Customatic → Instalar. Dejalo vacío para sacar el botón de la tienda."
+      }
+    ]
   }
 ]

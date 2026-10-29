@@ -383,6 +383,11 @@ ul[role='list'], ol[role='list'] { list-style: none; padding: 0; }
 body.has-sticky-buy .wa { bottom: 88px; }
 @media (min-width: 990px) { body.has-sticky-buy .wa { bottom: 16px; } }
 
+/* Feedback button (Customatic): above the mobile buy bar, hidden while a drawer or the menu is open */
+body.has-sticky-buy #customatic-widget { --customatic-bottom: 84px; }
+@media (min-width: 990px) { body.has-sticky-buy #customatic-widget { --customatic-bottom: 20px; } }
+body.is-locked #customatic-widget { display: none; }
+
 /* ---------- Generic pages / forms ---------- */
 .page-narrow { max-width: 760px; margin-inline: auto; }
 .field { display: grid; gap: 6px; }
