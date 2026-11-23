@@ -346,7 +346,8 @@
     const sp = $('[data-sticky-price]', sticky);
     if (sp && form) sp.textContent = selectedTotal(form);
     const io = new IntersectionObserver(([entry]) => {
-      const show = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+      // Visible whenever the main buy form is off screen (also before reaching it: ad visitors land on the photo)
+      const show = !entry.isIntersecting;
       sticky.classList.toggle('is-visible', show);
       sticky.setAttribute('aria-hidden', String(!show));
       $('[data-sticky-go]', sticky).tabIndex = show ? 0 : -1;
